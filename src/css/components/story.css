@@ -1,0 +1,26 @@
+.story {
+  padding: 2.5rem 1.2rem;
+  background: var(--color-bg-alt);
+  border-radius: var(--border-radius-soft);
+  box-shadow: var(--box-shadow-soft);
+}
+.timeline {
+  display: grid;
+  gap: 2.2rem;
+  margin-top: 2rem;
+}
+.timeline-event {
+  background: var(--color-card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow-soft);
+  padding: 1.5rem 1.2rem;
+  border: 1.5px solid var(--color-primary-light);
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+.timeline-event img {
+  border-radius: 18px;
+  box-shadow: 0 2px 8px var(--color-shadow);
+  margin-bottom: 1rem;
+  background: var(--color-bg-alt);
+}

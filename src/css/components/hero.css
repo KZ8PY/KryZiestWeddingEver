@@ -1,0 +1,229 @@
+/* Force header countdown to always be horizontal and compact */
+#headerCountdown .countdown-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.2rem !important;
+  margin: 0 !important;
+}
+#headerCountdown .countdown-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.2rem !important;
+}
+#headerCountdown .countdown-segment {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
+}
+#headerCountdown .countdown-box {
+  font-size: 1.2rem !important;
+  min-width: 2.2rem !important;
+  min-height: 2.2rem !important;
+  border-radius: 0.4rem !important;
+  margin-bottom: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+#headerCountdown .countdown-label {
+  font-size: 0.6rem !important;
+  color: #4b2e2e !important; /* Dark roast color */
+  text-align: center !important;
+  margin-top: 0.2rem !important;
+  width: 100%;
+  display: block;
+}
+#headerCountdown .countdown-separator {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1.4rem !important;
+  height: 2.2rem !important;
+  margin: 0 0.1rem !important;
+  color: #4b2e2e !important;
+  font-weight: bold;
+  line-height: 1 !important;
+  position: relative;
+  top: 0;
+}
+/* Ensure header countdown is always horizontal and compact */
+.header-countdown .countdown-grid {
+  flex-direction: row !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  margin: 0 !important;
+}
+.header-countdown .countdown-segment {
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0.1rem !important;
+}
+.header-countdown .countdown-box {
+  font-size: 1rem !important;
+  min-width: 1.7rem !important;
+  min-height: 1.7rem !important;
+  border-radius: 0.5rem !important;
+  margin-bottom: 0 !important;
+}
+.header-countdown .countdown-label {
+  font-size: 0.5rem !important;
+  margin-top: 0 !important;
+}
+.header-countdown .countdown-separator {
+  font-size: 0.8rem !important;
+  margin: 0 0.15rem !important;
+}
+/* Modern cafe countdown style */
+.countdown-grid {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2.5rem 0 2rem 0;
+}
+.countdown-segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+.countdown-box {
+  background: #b7d7a8cc; /* matcha green */
+  color: #4b2e19; /* dark roast coffee */
+  font-family: 'Gowun Batang', 'Noto Serif KR', serif;
+  font-size: 1.5rem;
+  font-style: italic;
+  font-weight: 400;
+  border-radius: 0.7rem;
+  min-width: 2.7rem;
+  min-height: 2.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px 0 rgba(30,40,30,0.10);
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.04em;
+  transition: background 0.3s;
+}
+.countdown-label {
+  color: #4b2e19; /* dark roast coffee */
+  font-size: 0.7rem;
+  font-family: 'Noto Serif KR', serif;
+  margin-top: 0.1rem;
+  letter-spacing: 0.02em;
+  text-shadow: none;
+}
+.countdown-separator {
+  color: #b2c7a7;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0.3rem 0 0.3rem;
+  align-self: flex-end;
+  user-select: none;
+}
+.countdown-label {
+  color: #fffbe6;
+  font-size: 1.1rem;
+  font-family: 'Noto Serif KR', serif;
+  margin-left: 0.4rem;
+  margin-bottom: 0.2rem;
+  align-self: flex-end;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px #23403299;
+}
+.countdown-separator {
+  color: #b2c7a7;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0.3rem 0 0.3rem;
+  align-self: flex-end;
+  user-select: none;
+}
+.hero {
+  text-align: center;
+  padding: 5rem 1.5rem 3rem 1.5rem;
+  background: linear-gradient(120deg, var(--color-bg-alt) 0%, var(--color-primary-light) 100%);
+  border-radius: var(--border-radius-soft);
+  box-shadow: var(--box-shadow);
+  position: relative;
+  overflow: hidden;
+}
+.hero h1 {
+  font-size: 3.2rem;
+  font-family: var(--font-heading);
+  color: var(--color-primary);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 8px var(--color-bg-alt);
+}
+.hero .date {
+  font-size: 1.3rem;
+  color: var(--color-coffee);
+  font-family: var(--font-script);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.04em;
+}
+#countdown {
+  font-size: 1.1rem;
+  color: var(--color-coffee-dark);
+  margin: 1.5rem 0 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+#countdown .coffee-cup {
+  font-size: 1.3em;
+  margin: 0 0.2em;
+  vertical-align: middle;
+}
+.cta {
+  display: inline-block;
+  margin-top: 2.5rem;
+  padding: 0.85rem 2.2rem;
+  background: var(--color-primary);
+  color: var(--color-coffee-dark);
+  border-radius: 999px;
+  font-weight: 600;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  box-shadow: var(--box-shadow-soft);
+  border: none;
+  transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+  position: relative;
+  cursor: pointer;
+}
+.cta:hover, .cta:focus {
+  background: var(--color-coffee);
+  color: #fff;
+  box-shadow: var(--box-shadow);
+}
+/* Decorative leaf/bean (optional, for ::before/::after) */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: -60px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle at 40% 40%, var(--color-primary-light) 60%, transparent 100%);
+  opacity: 0.25;
+  border-radius: 50%;
+  z-index: 0;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; right: -40px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle at 60% 60%, var(--color-coffee-light) 60%, transparent 100%);
+  opacity: 0.18;
+  border-radius: 50%;
+  z-index: 0;
+}

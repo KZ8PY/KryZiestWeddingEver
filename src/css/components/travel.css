@@ -1,0 +1,18 @@
+.travel {
+  padding: 2.5rem 1.2rem;
+  background: var(--color-bg-alt);
+  border-radius: var(--border-radius-soft);
+  box-shadow: var(--box-shadow-soft);
+}
+.travel-info {
+  display: grid;
+  gap: 2rem;
+}
+.travel-card {
+  background: var(--color-card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow-soft);
+  padding: 1.5rem 1.2rem;
+  border: 1.5px solid var(--color-primary-light);
+  margin-bottom: 1.2rem;
+}

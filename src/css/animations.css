@@ -1,0 +1,36 @@
+/* Animations & transitions for Korean Cafe Wedding Theme */
+.fade-in {
+  opacity: 0;
+  animation: fadeInCafe 1.5s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes fadeInCafe {
+  0% { opacity: 0; transform: translateY(24px) scale(0.98); }
+  100% { opacity: 1; transform: none; }
+}
+.underline {
+  position: relative;
+}
+.underline::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-coffee));
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform var(--transition);
+}
+.underline:hover::after {
+  transform: scaleX(1);
+}
+/* Steam/leaf micro-interaction (for buttons, icons) */
+.steam {
+  display: inline-block;
+  vertical-align: middle;
+  animation: steamRise 2.5s infinite linear;
+}
+@keyframes steamRise {
+  0% { opacity: 0.2; transform: translateY(0) scaleX(1); }
+  50% { opacity: 0.7; transform: translateY(-10px) scaleX(1.1); }
+  100% { opacity: 0.1; transform: translateY(-20px) scaleX(0.95); }
+}

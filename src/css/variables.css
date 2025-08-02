@@ -1,0 +1,29 @@
+:root {
+  /* Korean Cafe Wedding Theme: Matcha & Coffee Spectrum */
+  --color-bg: #FAF7F0;           /* Paper White */
+  --color-bg-alt: #F5F5DC;       /* Milk Cream */
+  --color-primary: #87A96B;      /* Matcha Green */
+  --color-primary-light: #C8D5B9;/* Light Matcha */
+  --color-primary-dark: #5D6B4D; /* Deep Matcha */
+  --color-coffee: #8B4513;       /* Coffee Brown */
+  --color-coffee-light: #D2B48C; /* Light Coffee */
+  --color-coffee-dark: #4A2C2A;  /* Dark Coffee */
+  --color-accent: #87A96B;       /* Matcha as accent */
+  --color-text: #4A2C2A;         /* Dark Coffee for text */
+  --color-link: #8B4513;         /* Coffee Brown for links */
+  --color-border: #C8D5B9;       /* Light Matcha for borders */
+  --color-card-bg: #FFFFFFCC;    /* Semi-transparent white for cards */
+  --color-shadow: rgba(139,69,19,0.08); /* Coffee shadow */
+
+  /* Typography: Korean Cafe Style */
+  --font-heading: 'Gowun Batang', 'Noto Serif KR', 'Playfair Display', serif;
+  --font-script: 'Nanum Brush Script', 'Dancing Script', cursive;
+  --font-body: 'Noto Sans KR', 'Montserrat', Arial, sans-serif;
+
+  --spacing-unit: 1rem;
+  --border-radius: 18px;
+  --border-radius-soft: 32px;
+  --transition: 0.3s cubic-bezier(.4,0,.2,1);
+  --box-shadow: 0 4px 24px var(--color-shadow);
+  --box-shadow-soft: 0 2px 12px rgba(200,213,185,0.10);
+}

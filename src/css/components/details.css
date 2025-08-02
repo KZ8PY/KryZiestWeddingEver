@@ -1,0 +1,29 @@
+.details {
+  padding: 2.5rem 1.2rem;
+  background: var(--color-bg-alt);
+  border-radius: var(--border-radius-soft);
+  box-shadow: var(--box-shadow-soft);
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.menu-board {
+  background: var(--color-card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow-soft);
+  padding: 1.5rem 1.2rem;
+  border: 1.5px solid var(--color-primary-light);
+  margin-bottom: 1.2rem;
+}
+.house-rules {
+  background: var(--color-primary-light);
+  border-radius: 999px;
+  color: var(--color-coffee-dark);
+  padding: 0.7rem 1.5rem;
+  font-family: var(--font-script);
+  font-size: 1.1rem;
+  margin: 1.5rem 0 0.5rem 0;
+  display: inline-block;
+}

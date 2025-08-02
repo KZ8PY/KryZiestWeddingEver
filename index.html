@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KryZiest Wedding Ever | Krysha & Ziber</title>
+  <meta name="description" content="Join Krysha & Ziber for their romantic wedding in Puerto Princesa, May 2026. RSVP, view details, and celebrate with us!">
+  <meta property="og:title" content="KryZiest Wedding Ever">
+  <meta property="og:description" content="You're invited to Krysha & Ziber's wedding in Puerto Princesa!">
+  <meta property="og:image" content="public/images/hero/og-image.jpg">
+  <meta property="og:url" content="https://kryziestweddingever.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="public/favicon.ico">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preload" href="src/fonts/elegant.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="src/css/variables.css">
+  <link rel="stylesheet" href="src/css/base.css">
+  <link rel="stylesheet" href="src/css/layout.css">
+  <link rel="stylesheet" href="src/css/components/hero.css">
+  <link rel="stylesheet" href="src/css/animations.css">
+</head>
+<body>
+  <header class="sticky-header latte-frame">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="header-content">
+      <div class="header-title">KryZiest Wedding Ever!</div>
+      <div class="header-countdown" id="headerCountdown"></div>
+    </div>
+  </header>
+  <main>
+    <section class="hero fade-in" aria-label="Wedding Hero" id="hero">
+      <h1>Krysha & Ziber</h1>
+      <p class="date">May 2026 | Puerto Princesa City</p>
+      <div id="countdown" class="countdown-grid" aria-live="polite">
+        <div class="countdown-row">
+          <div class="countdown-segment">
+            <div class="countdown-box" id="daysBox">00</div>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-segment">
+            <div class="countdown-box" id="hoursBox">00</div>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-segment">
+            <div class="countdown-box" id="minutesBox">00</div>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-segment">
+            <div class="countdown-box" id="secondsBox">00</div>
+          </div>
+        </div>
+        <div class="countdown-row">
+          <div class="countdown-segment">
+            <div class="countdown-label">Days</div>
+          </div>
+          <div class="countdown-separator"></div>
+          <div class="countdown-segment">
+            <div class="countdown-label">Hours</div>
+          </div>
+          <div class="countdown-separator"></div>
+          <div class="countdown-segment">
+            <div class="countdown-label">Minutes</div>
+          </div>
+          <div class="countdown-separator"></div>
+          <div class="countdown-segment">
+            <div class="countdown-label">Seconds</div>
+          </div>
+        </div>
+      </div>
+      <a href="#rsvp" class="cta">RSVP Now</a>
+    </section>
+    <section class="story fade-in section" aria-label="Our Story" id="story">
+      <h2>Our Story</h2>
+      <div class="timeline">
+        <div class="timeline-event card">
+          <img src="public/images/story/first-meet.jpg" alt="First meet">
+          <h3>First Meet</h3>
+          <p>Our journey began in a cozy cafe, over a cup of coffee...</p>
+        </div>
+        <div class="timeline-event card">
+          <img src="public/images/story/proposal.jpg" alt="Proposal">
+          <h3>The Proposal</h3>
+          <p>He asked, she said yes! Surrounded by friends and family.</p>
+        </div>
+      </div>
+    </section>
+    <section class="details fade-in section" aria-label="Wedding Details" id="details">
+      <h2>Wedding Details</h2>
+      <div class="info">
+        <div class="menu-board">
+          <h3>Ceremony</h3>
+          <p>May 16, 2026 | 3:00 PM<br>St. Paul Cathedral, Puerto Princesa</p>
+        </div>
+        <div class="menu-board">
+          <h3>Reception</h3>
+          <p>5:00 PM | Cafe Aurora, Puerto Princesa</p>
+        </div>
+        <div class="menu-board">
+          <h3>Dress Code</h3>
+          <p>Modern Hanbok or Elegant Pastels</p>
+        </div>
+        <span class="house-rules">Please arrive 15 minutes early. No outside drinks, just love!</span>
+      </div>
+    </section>
+    <section class="rsvp fade-in section" aria-label="RSVP" id="rsvp">
+      <h2>RSVP</h2>
+      <form id="rsvp-form">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        <label for="plusone">Bringing a +1?</label>
+        <select id="plusone" name="plusone">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+        <label for="diet">Dietary Restrictions</label>
+        <input type="text" id="diet" name="diet">
+        <button type="submit">Confirm Reservation</button>
+      </form>
+    </section>
+    <section class="gallery fade-in section" aria-label="Photo Gallery" id="gallery">
+      <h2>Photo Gallery</h2>
+      <div class="gallery-grid">
+        <img src="public/images/gallery/1.jpg" alt="Gallery 1">
+        <img src="public/images/gallery/2.jpg" alt="Gallery 2">
+        <img src="public/images/gallery/3.jpg" alt="Gallery 3">
+      </div>
+    </section>
+    <section class="travel fade-in section" aria-label="Travel & Accommodations" id="travel">
+      <h2>Travel & Accommodations</h2>
+      <div class="travel-info">
+        <div class="travel-card">
+          <h3>How to Get There</h3>
+          <p>Fly to Puerto Princesa International Airport. Taxis and shuttles available to venues.</p>
+        </div>
+        <div class="travel-card">
+          <h3>Where to Stay</h3>
+          <p>Recommended: Cafe Aurora Hotel, Matcha Inn, Hanok Guesthouse.</p>
+        </div>
+      </div>
+    </section>
+    <section class="registry fade-in section" aria-label="Gift Registry" id="registry">
+      <h2>Gift Registry</h2>
+      <div class="registry-links">
+        <a href="#">Zola</a>
+        <a href="#">Amazon</a>
+        <a href="#">Local Charities</a>
+      </div>
+    </section>
+    <section class="contact fade-in section" aria-label="Contact Information" id="contact">
+      <h2>Contact</h2>
+      <div class="contact-info">
+        <div class="contact-card">
+          <h3>Email</h3>
+          <p>krysha.ziber@email.com</p>
+        </div>
+        <div class="contact-card">
+          <h3>Phone</h3>
+          <p>+63 912 345 6789</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <img src="public/images/icons/coffee-cup.svg" alt="Coffee Cup" class="coffee-cup-float" id="coffeeCup">
+  <button class="back-to-top-btn" id="backToTop" aria-label="Back to top">&#8679;</button>
+  <script src="src/js/countdown.js" defer></script>
+  <script src="src/js/rsvp.js" defer></script>
+  <script src="src/js/gallery.js" defer></script>
+  <script src="src/js/animations.js" defer></script>
+  <script src="src/js/main.js" defer></script>
+  <script>
+    // Update header countdown with the same value as #countdown, but remove whitespace to prevent vertical stacking
+    function syncHeaderCountdown() {
+      var mainCountdown = document.getElementById('countdown');
+      var headerCountdown = document.getElementById('headerCountdown');
+      if (mainCountdown && headerCountdown) {
+        // Remove all whitespace between tags to prevent flex from stacking vertically
+        var html = mainCountdown.innerHTML.replace(/>[\s\r\n]+</g, '><');
+        headerCountdown.innerHTML = '<div class="countdown-grid">' + html + '</div>';
+      }
+    }
+    setInterval(syncHeaderCountdown, 1000);
+
+    // Hamburger menu button (sidebar logic to be added)
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    hamburgerBtn.addEventListener('click', function() {
+      hamburgerBtn.classList.toggle('active');
+    });
+
+    // Hide header title and sub on scroll
+    const header = document.querySelector('.sticky-header.latte-frame');
+    const headerTitle = document.querySelector('.header-title');
+    const headerSub = document.querySelector('.header-sub');
+    let lastScrollY = window.scrollY;
+    function handleHeaderScroll() {
+      if (window.scrollY > 30) {
+        header.classList.add('header-hide-title');
+      } else {
+        header.classList.remove('header-hide-title');
+      }
+    }
+    window.addEventListener('scroll', handleHeaderScroll);
+    // Initial check
+    handleHeaderScroll();
+  </script>
+  <!-- Removed duplicate syncHeaderCountdown function -->
+  <script>
+    // 8-path coordinates as percentages of viewport
+    const path = [
+      {x: 50, y: 50},   // center
+      {x: 20, y: 20},   // upper left
+      {x: 50, y: 10},   // top
+      {x: 80, y: 20},   // upper right
+      {x: 20, y: 80},   // lower left
+      {x: 50, y: 90},   // bottom
+      {x: 80, y: 80},   // lower right
+      {x: 50, y: 50}    // back to center
+    ];
+    const cup = document.getElementById('coffeeCup');
+    const backToTop = document.getElementById('backToTop');
+    let ticking = false;
+    function getScrollProgress() {
+      const scrollY = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      return docHeight === 0 ? 0 : scrollY / docHeight;
+    }
+    function getCupPosition(progress) {
+      const seg = 1 / (path.length - 1);
+      let idx = Math.floor(progress / seg);
+      if (idx >= path.length - 1) idx = path.length - 2;
+      const localT = (progress - idx * seg) / seg;
+      const p0 = path[idx];
+      const p1 = path[idx + 1];
+      return {
+        x: p0.x + (p1.x - p0.x) * localT,
+        y: p0.y + (p1.y - p0.y) * localT
+      };
+    }
+    function updateCup() {
+      const progress = getScrollProgress();
+      const pos = getCupPosition(progress);
+      cup.style.transform = `translate(-50%, -50%) translate(${pos.x - 50}vw, ${pos.y - 50}vh)`;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateCup();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+    updateCup();
+    // Back to top button
+    backToTop.addEventListener('click', () => {
+      const start = getScrollProgress();
+      const duration = 900;
+      const startTime = performance.now();
+      function animateCup(time) {
+        const elapsed = time - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        const eased = t < 0.5 ? 2*t*t : -1+(4-2*t)*t; // easeInOut
+        const progress = start * (1 - eased);
+        const pos = getCupPosition(progress);
+        cup.style.transform = `translate(-50%, -50%) translate(${pos.x - 50}vw, ${pos.y - 50}vh)`;
+        if (t < 1) {
+          requestAnimationFrame(animateCup);
+        } else {
+          window.scrollTo({top: 0, behavior: 'smooth'});
+          setTimeout(updateCup, 400);
+        }
+      }
+      requestAnimationFrame(animateCup);
+    });
+  </script>
+    });
+    updateCup();
+    // Back to top button
+    backToTop.addEventListener('click', () => {
+      const start = getScrollProgress();
+      const duration = 900;
+      const startTime = performance.now();
+      function animateCup(time) {
+        const elapsed = time - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        const eased = t < 0.5 ? 2*t*t : -1+(4-2*t)*t; // easeInOut
+        const progress = start * (1 - eased);
+        const pos = getCupPosition(progress);
+        cup.style.transform = `translate(-50%, -50%) translate(${pos.x - 50}vw, ${pos.y - 50}vh)`;
+        if (t < 1) {
+          requestAnimationFrame(animateCup);
+        } else {
+          window.scrollTo({top: 0, behavior: 'smooth'});
+          setTimeout(updateCup, 400);
+        }
+      } top button
+    backToTop.addEventListener('click', () => {
+      const start = getScrollProgress();
+      const duration = 900;
+      const startTime = performance.now();
+      function animateCup(time) {
+        const elapsed = time - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        const eased = t < 0.5 ? 2*t*t : -1+(4-2*t)*t; // easeInOut
+        const progress = start * (1 - eased);
+        const pos = getCupPosition(progress);
+        cup.style.transform = `translate(-50%, -50%) translate(${pos.x - 50}vw, ${pos.y - 50}vh)`;
+        if (t < 1) {
+          requestAnimationFrame(animateCup);
+        } else {
+          window.scrollTo({top: 0, behavior: 'smooth'});
+          setTimeout(updateCup, 400);
+        }
+      }
+      requestAnimationFrame(animateCup);
+    });
+  </script>
+  <footer>
+    <p>&copy; 2025 Krysha & Ziber. All rights reserved.</p>
+    <div class="social-links">
+      <!-- Social icons -->
+    </div>
+  </footer>
+  <script src="src/js/countdown.js" defer></script>
+  <script src="src/js/main.js" defer></script>
+  <script src="src/js/animations.js" defer></script>
+  <script src="src/js/pwa.js" defer></script>
+</body>
+</html>
