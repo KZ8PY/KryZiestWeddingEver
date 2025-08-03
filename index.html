@@ -20,15 +20,12 @@
   <link rel="stylesheet" href="src/css/animations.css">
 </head>
 <body>
-  <header class="sticky-header latte-frame">
-    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <div class="header-content">
-      <div class="header-title">KryZiest Wedding Ever!</div>
-      <div class="header-countdown" id="headerCountdown"></div>
-    </div>
-  </header>
+  <!-- Floating menu button group with soft edges -->
+  <div class="floating-menu-group">
+    <img src="public/images/icons/espmachine-menu.svg" alt="Menu" class="hamburger-icon" id="hamburgerBtn" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false" tabindex="0" />
+  </div>
+  <!-- Floating rotating monogram icon -->
+  <img src="public/images/icons/cup-monogram1.svg" alt="Monogram" class="floating-monogram" />
   <main>
     <section class="hero fade-in" aria-label="Wedding Hero" id="hero">
       <h1>Krysha & Ziber</h1>
@@ -172,39 +169,11 @@
   <script src="src/js/animations.js" defer></script>
   <script src="src/js/main.js" defer></script>
   <script>
-    // Update header countdown with the same value as #countdown, but remove whitespace to prevent vertical stacking
-    function syncHeaderCountdown() {
-      var mainCountdown = document.getElementById('countdown');
-      var headerCountdown = document.getElementById('headerCountdown');
-      if (mainCountdown && headerCountdown) {
-        // Remove all whitespace between tags to prevent flex from stacking vertically
-        var html = mainCountdown.innerHTML.replace(/>[\s\r\n]+</g, '><');
-        headerCountdown.innerHTML = '<div class="countdown-grid">' + html + '</div>';
-      }
-    }
-    setInterval(syncHeaderCountdown, 1000);
-
     // Hamburger menu button (sidebar logic to be added)
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     hamburgerBtn.addEventListener('click', function() {
       hamburgerBtn.classList.toggle('active');
     });
-
-    // Hide header title and sub on scroll
-    const header = document.querySelector('.sticky-header.latte-frame');
-    const headerTitle = document.querySelector('.header-title');
-    const headerSub = document.querySelector('.header-sub');
-    let lastScrollY = window.scrollY;
-    function handleHeaderScroll() {
-      if (window.scrollY > 30) {
-        header.classList.add('header-hide-title');
-      } else {
-        header.classList.remove('header-hide-title');
-      }
-    }
-    window.addEventListener('scroll', handleHeaderScroll);
-    // Initial check
-    handleHeaderScroll();
   </script>
   <!-- Removed duplicate syncHeaderCountdown function -->
   <script>
@@ -255,48 +224,6 @@
     });
     updateCup();
     // Back to top button
-    backToTop.addEventListener('click', () => {
-      const start = getScrollProgress();
-      const duration = 900;
-      const startTime = performance.now();
-      function animateCup(time) {
-        const elapsed = time - startTime;
-        const t = Math.min(elapsed / duration, 1);
-        const eased = t < 0.5 ? 2*t*t : -1+(4-2*t)*t; // easeInOut
-        const progress = start * (1 - eased);
-        const pos = getCupPosition(progress);
-        cup.style.transform = `translate(-50%, -50%) translate(${pos.x - 50}vw, ${pos.y - 50}vh)`;
-        if (t < 1) {
-          requestAnimationFrame(animateCup);
-        } else {
-          window.scrollTo({top: 0, behavior: 'smooth'});
-          setTimeout(updateCup, 400);
-        }
-      }
-      requestAnimationFrame(animateCup);
-    });
-  </script>
-    });
-    updateCup();
-    // Back to top button
-    backToTop.addEventListener('click', () => {
-      const start = getScrollProgress();
-      const duration = 900;
-      const startTime = performance.now();
-      function animateCup(time) {
-        const elapsed = time - startTime;
-        const t = Math.min(elapsed / duration, 1);
-        const eased = t < 0.5 ? 2*t*t : -1+(4-2*t)*t; // easeInOut
-        const progress = start * (1 - eased);
-        const pos = getCupPosition(progress);
-        cup.style.transform = `translate(-50%, -50%) translate(${pos.x - 50}vw, ${pos.y - 50}vh)`;
-        if (t < 1) {
-          requestAnimationFrame(animateCup);
-        } else {
-          window.scrollTo({top: 0, behavior: 'smooth'});
-          setTimeout(updateCup, 400);
-        }
-      } top button
     backToTop.addEventListener('click', () => {
       const start = getScrollProgress();
       const duration = 900;

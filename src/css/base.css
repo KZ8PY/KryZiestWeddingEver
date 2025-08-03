@@ -165,3 +165,51 @@ hr {
 ::selection {
   background: var(--color-primary-light);
 }
+.floating-menu {
+  position: fixed;
+  top: 1.2rem;
+  left: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1200;
+}
+.floating-menu .hamburger {
+  position: static;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: 0;
+}
+.floating-menu-group {
+  position: fixed;
+  top: 1.2rem;
+  left: 1.2rem;
+  display: flex;
+  align-items: center;
+  background: #fff8f0cc;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 12px 0 #0001;
+  padding: 0.21rem 0.49rem;
+  z-index: 1200;
+  gap: 0.35rem;
+}
+.hamburger-icon {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  display: block;
+}
+.floating-monogram {
+  position: fixed;
+  top: 0.2rem;
+  right: 0.2rem;
+  width: 8rem;
+  height: 8rem;
+  z-index: 1200;
+  animation: rotate-cup 5s linear infinite;
+  pointer-events: none;
+}
+@keyframes rotate-cup {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
