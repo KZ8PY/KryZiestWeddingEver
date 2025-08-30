@@ -1,0 +1,31 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "declaration-no-important": true,
+    "color-no-hex": true,
+    "selector-max-specificity": "0,4,0",
+    "shorthand-property-no-redundant-values": true,
+    "length-zero-no-unit": true
+  },
+  "overrides": [
+    {
+      "files": ["src/css/variables.css"],
+      "rules": {
+        "color-no-hex": null,
+        "alpha-value-notation": null,
+        "color-function-notation": null,
+        "color-function-alias-notation": null,
+        "custom-property-empty-line-before": null,
+        "comment-empty-line-before": null
+      }
+    },
+    {
+      "files": ["src/css/components/hero.css"],
+      "rules": {
+        "selector-id-pattern": null,
+        "selector-max-specificity": null,
+        "no-descending-specificity": null
+      }
+    }
+  ]
+}

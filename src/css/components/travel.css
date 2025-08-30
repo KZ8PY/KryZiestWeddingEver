@@ -4,10 +4,12 @@
   border-radius: var(--border-radius-soft);
   box-shadow: var(--box-shadow-soft);
 }
+
 .travel-info {
   display: grid;
   gap: 2rem;
 }
+
 .travel-card {
   background: var(--color-card-bg);
   border-radius: var(--border-radius);

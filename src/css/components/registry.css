@@ -4,11 +4,13 @@
   border-radius: var(--border-radius-soft);
   box-shadow: var(--box-shadow-soft);
 }
+
 .registry-links {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
 }
+
 .registry-links a {
   color: var(--color-primary-dark);
   font-weight: 600;
@@ -21,8 +23,9 @@
   transition: background var(--transition), color var(--transition), box-shadow var(--transition);
   font-family: var(--font-heading);
 }
+
 .registry-links a:hover, .registry-links a:focus {
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-white);
   box-shadow: var(--box-shadow);
 }

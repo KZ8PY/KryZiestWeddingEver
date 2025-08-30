@@ -4,11 +4,13 @@
   border-radius: var(--border-radius-soft);
   box-shadow: var(--box-shadow-soft);
 }
+
 .contact-info {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
 }
+
 .contact-card {
   background: var(--color-card-bg);
   border-radius: var(--border-radius);

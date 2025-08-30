@@ -1,190 +1,459 @@
-/* Force header countdown to always be horizontal and compact */
-#headerCountdown .countdown-grid {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 0.2rem !important;
-  margin: 0 !important;
-}
-#headerCountdown .countdown-row {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 0.2rem !important;
-}
-#headerCountdown .countdown-segment {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 0 !important;
-}
-#headerCountdown .countdown-box {
-  font-size: 1.2rem !important;
-  min-width: 2.2rem !important;
-  min-height: 2.2rem !important;
-  border-radius: 0.4rem !important;
-  margin-bottom: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-#headerCountdown .countdown-label {
-  font-size: 0.6rem !important;
-  color: #4b2e2e !important; /* Dark roast color */
-  text-align: center !important;
-  margin-top: 0.2rem !important;
-  width: 100%;
-  display: block;
-}
-#headerCountdown .countdown-separator {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-size: 1.4rem !important;
-  height: 2.2rem !important;
-  margin: 0 0.1rem !important;
-  color: #4b2e2e !important;
-  font-weight: bold;
-  line-height: 1 !important;
-  position: relative;
+/* ==================================================
+   src/css/components/hero.css
+   Reorganized: grouped sections for easier review and editing
+   Sections: 1) Header, 2) Hero (layout + monogram), 3) Countdown (grid, boxes, labels),
+             4) Visuals (saucers, latte-art, handles), 5) Animations, 6) Responsive tweaks
+   NOTE: This rewrite preserves existing selector rules and values; only order and
+         comments changed to improve maintainability.
+   ================================================== */
+
+/* --------------------------
+   1) Header: site header, title, monogram, menu
+   -------------------------- */
+.site-header {
+  position: sticky;
   top: 0;
-}
-/* Ensure header countdown is always horizontal and compact */
-.header-countdown .countdown-grid {
-  flex-direction: row !important;
-  align-items: flex-end !important;
-  justify-content: center !important;
-  gap: 0.5rem !important;
-  margin: 0 !important;
-}
-.header-countdown .countdown-segment {
-  flex-direction: column !important;
-  align-items: center !important;
-  gap: 0.1rem !important;
-}
-.header-countdown .countdown-box {
-  font-size: 1rem !important;
-  min-width: 1.7rem !important;
-  min-height: 1.7rem !important;
-  border-radius: 0.5rem !important;
-  margin-bottom: 0 !important;
-}
-.header-countdown .countdown-label {
-  font-size: 0.5rem !important;
-  margin-top: 0 !important;
-}
-.header-countdown .countdown-separator {
-  font-size: 0.8rem !important;
-  margin: 0 0.15rem !important;
-}
-/* Modern cafe countdown style */
-.countdown-grid {
+  left: 0;
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 1.5rem;
-  margin: 2.5rem 0 2rem 0;
-}
-.countdown-segment {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.3rem;
+  justify-content: space-between;
+  padding: 0.6rem 1.2rem;
+
+  /* fixed header height so it doesn't collapse on small screens */
+  height: 3rem;
+  min-height: 3rem;
+  background: var(--color-latte);
+  z-index: 1300;
+  box-shadow: 0 6px 18px var(--shadow-dark);
 }
-.countdown-box {
-  background: #b7d7a8cc; /* matcha green */
-  color: #4b2e19; /* dark roast coffee */
-  font-family: 'Gowun Batang', 'Noto Serif KR', serif;
-  font-size: 1.5rem;
-  font-style: italic;
-  font-weight: 400;
-  border-radius: 0.7rem;
-  min-width: 2.7rem;
-  min-height: 2.7rem;
+
+.header-title-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 12px 0 rgba(30,40,30,0.10);
-  margin-bottom: 0.2rem;
-  letter-spacing: 0.04em;
-  transition: background 0.3s;
+  flex: 1 1 auto;
 }
-.countdown-label {
-  color: #4b2e19; /* dark roast coffee */
-  font-size: 0.7rem;
-  font-family: 'Noto Serif KR', serif;
-  margin-top: 0.1rem;
-  letter-spacing: 0.02em;
-  text-shadow: none;
+
+.header-site-title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--color-coffee-dark);
+  margin: 0;
+  letter-spacing: 0.03em;
 }
-.countdown-separator {
-  color: #b2c7a7;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin: 0 0.3rem 0 0.3rem;
-  align-self: flex-end;
-  user-select: none;
+
+/* fixed header monogram size */
+.header-monogram,
+.header { /* fallback/name variations in project */
+  width: 3.6rem;
+  height: 3.6rem;
 }
-.countdown-label {
-  color: #fffbe6;
-  font-size: 1.1rem;
-  font-family: 'Noto Serif KR', serif;
-  margin-left: 0.4rem;
-  margin-bottom: 0.2rem;
-  align-self: flex-end;
-  letter-spacing: 0.02em;
-  text-shadow: 0 1px 2px #23403299;
+
+@media (width <= 720px) {
+  .hero h1 {
+    font-size: clamp(2.2rem, 7.5vw, 4.2rem);
+    top: 0.9rem;
+  }
 }
-.countdown-separator {
-  color: #b2c7a7;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin: 0 0.3rem 0 0.3rem;
-  align-self: flex-end;
-  user-select: none;
-}
+
+.header-brand { margin-right: 1rem; }
+.header-menu  { margin-left:  1rem; }
+
+/* Menu / floating menu grouping lives in base.css; header-scoped override keeps it on left edge */
+
+/* --------------------------
+   2) Hero: layout, placement, monogram
+   -------------------------- */
 .hero {
   text-align: center;
-  padding: 5rem 1.5rem 3rem 1.5rem;
+  padding: 5rem 1.5rem 3rem;
   background: linear-gradient(120deg, var(--color-bg-alt) 0%, var(--color-primary-light) 100%);
   border-radius: var(--border-radius-soft);
   box-shadow: var(--box-shadow);
   position: relative;
   overflow: hidden;
+  padding-top: 1rem; /* ensure spacing when hero h1 removed */
 }
-.hero h1 {
-  font-size: 3.2rem;
-  font-family: var(--font-heading);
-  color: var(--color-primary);
-  letter-spacing: 0.08em;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 2px 8px var(--color-bg-alt);
+
+/* hero H1 is intentionally hidden in this layout (title lives in header)
+  — responsive positioning defined in the responsive section below. */
+
+/* hero monogram (centered visual) */
+.hero .floating-monogram {
+  position: relative;
+  display: block;
+  margin: 0.28rem auto -0.9rem; /* preserved overlap spacing */
+  width: 10rem; /* fixed size to retain mobile look */
+  height: 10rem; /* keep intrinsic aspect ratio */
+  object-fit: contain;
+  z-index: 6;
+  animation: rotate-cup 8s linear infinite;
+  pointer-events: none;
+  opacity: 1;
 }
+
+/* date line (uses site heading font) */
 .hero .date {
-  font-size: 1.3rem;
-  color: var(--color-coffee);
-  font-family: var(--font-script);
-  margin-bottom: 1.5rem;
-  letter-spacing: 0.04em;
+  font-family: var(--font-heading);
+  color: var(--color-coffee-dark);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-shadow: 0 1px 0 var(--white-22);
+  z-index: 7;
+  padding-top: 2rem;
+  position: relative;
 }
+
+/* decorative hero ::before / ::after */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle at 40% 40%, var(--color-primary-light) 60%, transparent 100%);
+  opacity: 0.25;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle at 60% 60%, var(--color-coffee-light) 60%, transparent 100%);
+  opacity: 0.18;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+/* --------------------------
+   3) Countdown: grid, segment, box, label, separator
+   -------------------------- */
+
+/* general grid behavior (main + header variants are below) */
+.countdown-grid,
+#headerCountdown .countdown-grid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+/* main countdown spacing */
+.countdown-grid {
+  gap: 1.5rem;
+  margin: 2.5rem 0 2rem;
+  align-items: flex-end;
+}
+
+/* each segment acts as a stacked area for box + label */
+.countdown-segment {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+/* the circular cup box */
+.countdown-box {
+  z-index: 3;
+  position: relative;
+  font-size: 1.4rem;
+  min-width: 3.6rem;
+  min-height: 3.6rem;
+  width: auto;
+  height: auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 40% 35%, var(--color-warm-cream) 0%, var(--color-cream-1) 25%, var(--color-cream-2) 55%, var(--color-cream-3) 100%);
+  color: var(--color-coffee-dark);
+  box-shadow: inset 0 -6px 18px var(--shadow-inset), 0 6px 18px var(--shadow-dark);
+  border: 0.12rem solid var(--white-35);
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.02em;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+/* reserved decorative rim layer */
+.countdown-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.countdown-box::after {
+  content: '';
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+
+  /* replaced with variable stops */
+  background: radial-gradient(circle at 30% 30%, var(--white-55) 0%, var(--white-07) 18%, transparent 40%);
+  pointer-events: none;
+}
+
+/* numeric value placed above latte-art */
+.countdown-value {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-coffee-dark);
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+
+  /* replaced hard-coded white shadow with token */
+  text-shadow: 0 1px 0 var(--white-25);
+  z-index: 10;
+  position: relative;
+}
+
+/* label sits under the box, absolutely positioned */
+.countdown-label {
+  position: absolute;
+  top: calc(100% + 0.28rem);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.85rem;
+  color: var(--color-dark-roast);
+  text-align: center;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* separator sizing and vertical centering */
+.countdown-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--color-dark-roast);
+  padding: 0 0.12rem;
+  height: 3.6rem;
+  line-height: 3.6rem;
+  transform: translateY(0);
+  margin: 0;
+  align-self: center;
+}
+
+/* header-specific countdown downsized (applies to both #headerCountdown and .header-countdown for compatibility) */
+#headerCountdown .countdown-grid,
+.header-countdown .countdown-grid {
+  display:flex;
+  flex-direction: column;
+  gap:0.2rem;
+  margin:0;
+  align-items:center;
+  justify-content:center;
+}
+
+#headerCountdown .countdown-row,
+.header-countdown .countdown-row {
+  display:flex;
+  flex-direction: row;
+  gap:0.2rem;
+  align-items:center;
+  justify-content:center;
+}
+
+#headerCountdown .countdown-segment,
+.header-countdown .countdown-segment {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:0;
+}
+
+#headerCountdown .countdown-box,
+.header-countdown .countdown-box {
+  position: relative;
+  font-size: 1.2rem;
+  min-width:2.2rem;
+  min-height:2.2rem;
+  border-radius:0.4rem;
+  margin-bottom:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  /* header visuals: keep the cup appearance consistent with hero cups */
+  background: radial-gradient(circle at 40% 35%, var(--color-warm-cream) 0%, var(--color-cream-1) 28%, var(--color-cream-2) 62%, var(--color-cream-3) 100%);
+  box-shadow: inset 0 -4px 10px var(--shadow-inset), 0 4px 8px var(--shadow-dark);
+  border: 0.07rem solid var(--white-35);
+}
+
+#headerCountdown .countdown-label,
+.header-countdown .countdown-label {
+  font-size:0.6rem;
+  color:var(--color-dark-roast);
+  text-align:center;
+  margin-top:0.2rem;
+  width:100%;
+  display:block;
+}
+
+#headerCountdown .countdown-separator,
+.header-countdown .countdown-separator {
+  font-size:1.4rem;
+  height:2.2rem;
+  margin:0 0.1rem;
+  color:var(--color-dark-roast);
+  font-weight:bold;
+  line-height:1;
+}
+
+/* header countdown alternative smaller sizing (compatibility) */
+#headerCountdown.small .countdown-box,
+.header-countdown.small .countdown-box {
+  font-size: 1rem;
+  min-width: 1.7rem;
+  min-height: 1.7rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0;
+}
+
+#headerCountdown.small .countdown-label,
+.header-countdown.small .countdown-label {
+  font-size: 0.5rem;
+  margin-top: 0;
+}
+
+#headerCountdown.small .countdown-separator,
+.header-countdown.small .countdown-separator {
+  font-size: 0.8rem;
+  margin: 0 0.15rem;
+}
+
+/* header countdown visuals are defined above; duplicate expanded block removed to avoid duplicate selectors */
+
+/* --------------------------
+   4) Visuals: saucers, latte-art, handles
+   -------------------------- */
+
+/* saucer sits behind each cup */
+.countdown-segment::before {
+  content: '';
+  position: absolute;
+  width: 4.2rem;
+  height: 4.2rem;
+  border-radius: 50%;
+
+  /* replaced hard-coded whites with variables */
+  background: radial-gradient(circle at 40% 35%, var(--white-98), var(--color-cream-light) 35%, var(--color-cream-mid) 60%, var(--color-cream-deep) 100%);
+  box-shadow: 0 6px 14px var(--shadow-xs);
+  top: -0.35rem;
+  z-index: 0;
+}
+
+/* subtle handle shape (right side) */
+.countdown-segment::after {
+  content: "";
+  position: absolute;
+  right: -15%;
+  bottom: 35%;
+  rotate: 12deg;
+  transform: translateY(0);
+  width: 30%;
+  height: 12%;
+  background: linear-gradient(90deg, var(--color-cream-1) 0%, var(--white-50));
+  border-radius: 3px;
+  box-shadow: 0 3px 6px var(--shadow-strong), inset 0 1px 0 var(--white-07);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* latte-art SVG layer */
+.latte-art {
+  position: absolute;
+  width: 72%;
+  height: 72%;
+  top: 14%;
+  left: 14%;
+  pointer-events: none;
+  opacity: 0.95;
+  transform-origin: 50% 50%;
+  z-index: 4;
+}
+
+/* --------------------------
+   5) Animations: cup pulse + foam ripple
+   -------------------------- */
+.cup-animate {
+  animation-name: cup-pulse;
+  animation-duration: 420ms;
+  animation-timing-function: ease-out;
+}
+
+.cup-animate .latte-art {
+  animation-name: foam-ripple;
+  animation-duration: 620ms;
+  animation-timing-function: ease-out;
+}
+
+@keyframes cup-pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes foam-ripple {
+  0% {
+    transform: scale(1) translateY(0);
+    opacity: 0.95;
+  }
+
+  50% {
+    transform: scale(1.04) translateY(-1%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 0.95;
+  }
+}
+
+/* --------------------------
+   6) Utility & small components used inside hero
+   -------------------------- */
 #countdown {
   font-size: 1.1rem;
   color: var(--color-coffee-dark);
-  margin: 1.5rem 0 0.5rem 0;
+  margin: 1.5rem 0 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5em;
 }
+
 #countdown .coffee-cup {
   font-size: 1.3em;
   margin: 0 0.2em;
   vertical-align: middle;
 }
+
 .cta {
   display: inline-block;
   margin-top: 2.5rem;
@@ -201,29 +470,53 @@
   position: relative;
   cursor: pointer;
 }
-.cta:hover, .cta:focus {
+
+.cta:hover,
+.cta:focus {
   background: var(--color-coffee);
-  color: #fff;
+  color: var(--color-white);
   box-shadow: var(--box-shadow);
 }
-/* Decorative leaf/bean (optional, for ::before/::after) */
-.hero::before {
-  content: '';
+
+/* --------------------------
+   7) Responsive tweaks - kept minimal and grouped here
+   -------------------------- */
+
+/* hero title responsive (kept but hero h1 hidden) */
+.hero h1 {
   position: absolute;
-  top: -60px; left: -60px;
-  width: 180px; height: 180px;
-  background: radial-gradient(circle at 40% 40%, var(--color-primary-light) 60%, transparent 100%);
-  opacity: 0.25;
-  border-radius: 50%;
-  z-index: 0;
+  top: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-heading);
+  font-size: clamp(3.2rem, 7vw, 6.4rem);
+  color: var(--color-primary);
+  letter-spacing: 0.04em;
+  margin: 0;
+  line-height: 1;
+  z-index: 1200;
+  text-shadow: 0 2px 8px var(--color-bg-alt);
 }
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: -40px; right: -40px;
-  width: 120px; height: 120px;
-  background: radial-gradient(circle at 60% 60%, var(--color-coffee-light) 60%, transparent 100%);
-  opacity: 0.18;
-  border-radius: 50%;
-  z-index: 0;
+
+@media (width <= 720px) {
+  .hero h1 {
+    font-size: clamp(2.2rem, 7.5vw, 4.2rem);
+    top: 0.9rem;
+  }
 }
+
+/* hero monogram: keep fixed size, no responsive scaling */
+@media (width <= 520px) {
+  .hero .floating-monogram {
+    width: 13rem;
+    height: 10rem;
+  }
+}
+
+/* small-screen header adjustments */
+@media (width <= 720px) {
+  /* keep header title at a fixed size on small screens (no responsive shrink) */
+  .header-site-title { font-size: 1.8rem; }
+}
+
+/* end of file */

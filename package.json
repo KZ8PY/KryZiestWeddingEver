@@ -1,0 +1,24 @@
+{
+  "name": "kryziestweddingever",
+  "version": "1.0.0",
+  "description": "Krysha &amp; Ziber's wedding e-invite and website. The wedding is in Puerto Princesa city and will gracefully happen, in God's time, this May of 2026.",
+  "main": "service-worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KZ8PY/KryZiestWeddingEver.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KZ8PY/KryZiestWeddingEver/issues"
+  },
+  "homepage": "https://github.com/KZ8PY/KryZiestWeddingEver#readme",
+  "devDependencies": {
+    "stylelint": "^16.23.1",
+    "stylelint-config-standard": "^39.0.0"
+  }
+}

@@ -1,5 +1,15 @@
 // Modern cafe countdown for KryZiest Wedding Ever
-const targetDate = new Date('2026-05-16T15:00:00+08:00');
+const targetDate = new Date('2026-05-08T15:00:00+08:00');
+// Track previous values to detect changes for animations
+const prev = { days: null, hours: null, minutes: null, seconds: null };
+function animateCup(id) {
+  const box = document.getElementById(id)?.closest('.countdown-box') || document.getElementById(id)?.parentElement;
+  if (!box) return;
+  box.classList.remove('cup-animate');
+  // reflow to restart animation
+  void box.offsetWidth;
+  box.classList.add('cup-animate');
+}
 function pad(num) {
   return num.toString().padStart(2, '0');
 }
@@ -14,10 +24,26 @@ function updateCountdown() {
   diff -= minutes * (1000 * 60);
   const seconds = Math.floor(diff / 1000);
 
-  if (document.getElementById('daysBox')) document.getElementById('daysBox').textContent = pad(days);
-  if (document.getElementById('hoursBox')) document.getElementById('hoursBox').textContent = pad(hours);
-  if (document.getElementById('minutesBox')) document.getElementById('minutesBox').textContent = pad(minutes);
-  if (document.getElementById('secondsBox')) document.getElementById('secondsBox').textContent = pad(seconds);
+  if (document.getElementById('daysBox')) {
+    const el = document.getElementById('daysBox');
+    const v = pad(days);
+    if (prev.days !== v) { el.textContent = v; animateCup('daysBox'); prev.days = v; }
+  }
+  if (document.getElementById('hoursBox')) {
+    const el = document.getElementById('hoursBox');
+    const v = pad(hours);
+    if (prev.hours !== v) { el.textContent = v; animateCup('hoursBox'); prev.hours = v; }
+  }
+  if (document.getElementById('minutesBox')) {
+    const el = document.getElementById('minutesBox');
+    const v = pad(minutes);
+    if (prev.minutes !== v) { el.textContent = v; animateCup('minutesBox'); prev.minutes = v; }
+  }
+  if (document.getElementById('secondsBox')) {
+    const el = document.getElementById('secondsBox');
+    const v = pad(seconds);
+    if (prev.seconds !== v) { el.textContent = v; animateCup('secondsBox'); prev.seconds = v; }
+  }
 }
 setInterval(updateCountdown, 1000);
 updateCountdown();

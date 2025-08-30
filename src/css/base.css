@@ -1,3 +1,29 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
+
+/* Base header title/sub styles (placed before sticky overrides to avoid descending specificity) */
+.header-title {
+  font-family: var(--font-heading);
+  font-size: 2.1rem;
+  color: var(--color-dark-roast); /* dark roast */
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.header-sub {
+  font-size: 1.05rem;
+  color: var(--color-warm-brown);
+  font-family: var(--font-body);
+  margin-bottom: 0.1em;
+}
+
+.sticky-header.latte-frame .header-title,
+.sticky-header.latte-frame .header-sub {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.35s cubic-bezier(.4,2,.6,1), transform 0.35s cubic-bezier(.4,2,.6,1);
+}
+
 .sticky-header.latte-frame.header-hide-title .header-title,
 .sticky-header.latte-frame.header-hide-title .header-sub {
   opacity: 0;
@@ -5,12 +31,7 @@
   pointer-events: none;
   transition: opacity 0.35s cubic-bezier(.4,2,.6,1), transform 0.35s cubic-bezier(.4,2,.6,1);
 }
-.sticky-header.latte-frame .header-title,
-.sticky-header.latte-frame .header-sub {
-  opacity: 1;
-  transform: none;
-  transition: opacity 0.35s cubic-bezier(.4,2,.6,1), transform 0.35s cubic-bezier(.4,2,.6,1);
-}
+
 /* Sticky floating header styles */
 .sticky-header.latte-frame {
   position: sticky;
@@ -18,8 +39,8 @@
   left: 0;
   width: 100vw;
   z-index: 1000;
-  background: #f7e6c4cc; /* latte, semi-transparent */
-  box-shadow: 0 6px 24px 0 rgba(60, 40, 20, 0.18), 0 1.5px 6px 0 rgba(60, 40, 20, 0.10);
+  background: var(--color-latte); /* latte, semi-transparent */
+  box-shadow: 0 6px 24px 0 var(--color-shadow), 0 1.5px 6px 0 var(--shadow-soft-dark);
   border-radius: 0 0 1.5rem 1.5rem;
   margin: 0;
   padding: 1.2rem 2.2rem 1.2rem 3.5rem;
@@ -30,11 +51,13 @@
   min-height: 5.5rem;
   transition: min-height 0.35s cubic-bezier(.4,2,.6,1), padding 0.35s cubic-bezier(.4,2,.6,1);
 }
+
 .sticky-header.latte-frame.header-hide-title {
   min-height: 2.7rem;
   padding-top: 0.3rem;
   padding-bottom: 0.3rem;
 }
+
 .header-content {
   width: 100%;
   text-align: center;
@@ -43,26 +66,8 @@
   align-items: center;
   gap: 0.2em;
 }
-.header-title {
-  font-family: var(--font-heading, 'Gowun Batang', serif);
-  font-size: 2.1rem;
-  color: #4b2e19; /* dark roast */
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-.header-sub {
-  font-size: 1.05rem;
-  color: #7c5a3a;
-  font-family: var(--font-body, 'Noto Serif KR', serif);
-  margin-bottom: 0.1em;
-}
-.header-countdown {
-  font-size: 1.5rem;
-  color: #4b2e19;
-  font-family: var(--font-heading, 'Gowun Batang', serif);
-  font-weight: 600;
-  letter-spacing: 0.03em;
-}
+
+/* Hamburger / menu button inside header */
 .hamburger {
   position: absolute;
   left: 1.2rem;
@@ -79,92 +84,109 @@
   cursor: pointer;
   z-index: 1100;
 }
+
 .hamburger span {
   display: block;
   width: 1.8rem;
   height: 0.22rem;
   margin: 0.22rem 0;
-  background: #4b2e19;
+  background: var(--color-dark-roast);
   border-radius: 1.5px;
   transition: all 0.3s cubic-bezier(.4,2,.6,1);
 }
-@media (max-width: 700px) {
+
+@media (width <= 700px) {
   .sticky-header.latte-frame {
     padding: 0.7rem 1.2rem 0.7rem 2.8rem;
     border-radius: 0 0 1rem 1rem;
     min-height: 3.5rem;
   }
+
   .sticky-header.latte-frame.header-hide-title {
     min-height: 2.1rem;
     padding-top: 0.15rem;
     padding-bottom: 0.15rem;
   }
   .header-title { font-size: 1.3rem; }
-  .header-countdown { font-size: 1.1rem; }
 }
+
 /* Reset & base styles for Korean Cafe Wedding Theme */
 * { box-sizing: border-box; }
+
 html {
   scroll-behavior: smooth; /* Ensures smooth scrolling for in-page anchors */
   background: var(--color-bg);
 }
+
 body {
   background: linear-gradient(135deg, var(--color-bg) 60%, var(--color-bg-alt) 100%);
   color: var(--color-text);
-  font-family: var(--font-body);
+  font-family: Prata, serif;
   margin: 0;
   line-height: 1.7;
   min-height: 100vh;
   letter-spacing: 0.01em;
 }
+
 h1, h2, h3, h4 {
-  font-family: var(--font-heading);
+  font-family: Prata, serif;
   color: var(--color-primary-dark);
   margin-top: 0;
   font-weight: 700;
   letter-spacing: 0.01em;
 }
+
 h1 {
   font-size: 2.7rem;
   letter-spacing: 0.04em;
 }
+
 h2 {
   font-size: 2rem;
   margin-bottom: 0.5em;
 }
+
 h3 {
   font-size: 1.3rem;
 }
+
 p, li, label, input, select, button {
   font-family: var(--font-body);
   font-size: 1rem;
 }
+
 a {
   color: var(--color-link);
   text-decoration: none;
   transition: color var(--transition), border-bottom var(--transition);
   border-bottom: 1.5px dotted var(--color-primary-light);
 }
+
 a:hover, a:focus {
   color: var(--color-primary);
   border-bottom: 2px solid var(--color-primary);
 }
+
 ul, ol {
   padding-left: 1.5em;
 }
+
 img {
   max-width: 100%;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow-soft);
 }
+
 hr {
   border: none;
   border-top: 1.5px dashed var(--color-border);
   margin: 2rem 0;
 }
+
 ::selection {
   background: var(--color-primary-light);
 }
+
 .floating-menu {
   position: fixed;
   top: 1.2rem;
@@ -174,31 +196,45 @@ hr {
   gap: 0.5rem;
   z-index: 1200;
 }
+
 .floating-menu .hamburger {
   position: static;
   width: 2.2rem;
   height: 2.2rem;
   margin: 0;
 }
+
 .floating-menu-group {
   position: fixed;
   top: 1.2rem;
   left: 1.2rem;
   display: flex;
   align-items: center;
-  background: #fff8f0cc;
+  background: var(--color-card-bg-alt);
   border-radius: 1.5rem;
-  box-shadow: 0 2px 12px 0 #0001;
+  box-shadow: 0 2px 12px 0 var(--color-subtle-shadow);
   padding: 0.21rem 0.49rem;
   z-index: 1200;
   gap: 0.35rem;
 }
+
+/* When the floating menu is placed inside the site header, pin it to the
+   left-most side of the header and position it relative to the header. */
+.site-header .floating-menu-group {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1400;
+}
+
 .hamburger-icon {
   width: 2rem;
   height: 2rem;
   cursor: pointer;
   display: block;
 }
+
 .floating-monogram {
   position: fixed;
   top: 0.2rem;
@@ -209,6 +245,7 @@ hr {
   animation: rotate-cup 5s linear infinite;
   pointer-events: none;
 }
+
 @keyframes rotate-cup {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

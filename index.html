@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>KryZiest Wedding Ever | Krysha & Ziber</title>
-  <meta name="description" content="Join Krysha & Ziber for their romantic wedding in Puerto Princesa, May 2026. RSVP, view details, and celebrate with us!">
+  <meta name="description"
+    content="Join Krysha & Ziber for their romantic wedding in Puerto Princesa, May 2026. RSVP, view details, and celebrate with us!">
   <meta property="og:title" content="KryZiest Wedding Ever">
   <meta property="og:description" content="You're invited to Krysha & Ziber's wedding in Puerto Princesa!">
   <meta property="og:image" content="public/images/hero/og-image.jpg">
@@ -19,51 +21,109 @@
   <link rel="stylesheet" href="src/css/components/hero.css">
   <link rel="stylesheet" href="src/css/animations.css">
 </head>
+
 <body>
-  <!-- Floating menu button group with soft edges -->
-  <div class="floating-menu-group">
-    <img src="public/images/icons/espmachine-menu.svg" alt="Menu" class="hamburger-icon" id="hamburgerBtn" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false" tabindex="0" />
-  </div>
-  <!-- Floating rotating monogram icon -->
-  <img src="public/images/icons/cup-monogram1.svg" alt="Monogram" class="floating-monogram" />
+  <!-- Site header: static menu + monogram -->
+  <header class="sticky-header latte-frame site-header" role="banner">
+    <div class="floating-menu-group header-menu">
+      <img src="public/images/icons/espmachine-menu.svg" alt="Menu" class="hamburger-icon" id="hamburgerBtn"
+        aria-label="Open menu" aria-controls="sidebar" aria-expanded="false" tabindex="0" />
+    </div>
+    <div class="header-title-wrap">
+      <h1 class="header-site-title">Krysha & Ziber</h1>
+    </div>
+    <div class="header-brand">
+      <!-- monogram removed per request -->
+    </div>
+  </header>
   <main>
-    <section class="hero fade-in" aria-label="Wedding Hero" id="hero">
-      <h1>Krysha & Ziber</h1>
-      <p class="date">May 2026 | Puerto Princesa City</p>
+  <section class="hero fade-in hero-topbar" aria-label="Wedding Hero" id="hero">
+  <img src="public/images/icons/cup-monogram-1x1.svg" alt="Monogram" class="floating-monogram" />
+      <p class="date">May 8, 2026 | Puerto Princesa City</p>
       <div id="countdown" class="countdown-grid" aria-live="polite">
-        <div class="countdown-row">
-          <div class="countdown-segment">
-            <div class="countdown-box" id="daysBox">00</div>
+        <div class="countdown-segment">
+          <div class="countdown-box">
+            <span class="countdown-value" id="daysBox">00</span>
+            <svg class="latte-art" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+              <defs>
+                <radialGradient id="foamGrad" cx="35%" cy="35%" r="65%">
+                  <stop offset="0%" stop-color="#fffdf3" stop-opacity="1" />
+                  <stop offset="45%" stop-color="#fff6e0" stop-opacity="0.95" />
+                  <stop offset="100%" stop-color="#f3d6b8" stop-opacity="0.9" />
+                </radialGradient>
+              </defs>
+              <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M32 38c0 0 6-6 12-6s10 4 8 8-8 6-16 6-14 0-18-4 2-8 14-10z" fill="url(#foamGrad)"
+                  opacity="0.95" stroke="rgba(255,255,255,0.35)" stroke-width="0.6" />
+                <path d="M26 30c4-4 10-6 16-6 4 0 6 2 6 2" stroke="#fffdf3" stroke-width="1.4" opacity="0.98" />
+                <path d="M30 26c6-6 14-6 18-4" stroke="#f7e2c2" stroke-width="1.2" opacity="0.95" />
+                <path d="M34 22c6-4 10-4 12-2" stroke="#e9caa5" stroke-width="1" opacity="0.9" />
+                <circle cx="36" cy="34" r="0.6" fill="#fff" opacity="0.9" />
+              </g>
+            </svg>
           </div>
-          <div class="countdown-separator">:</div>
-          <div class="countdown-segment">
-            <div class="countdown-box" id="hoursBox">00</div>
-          </div>
-          <div class="countdown-separator">:</div>
-          <div class="countdown-segment">
-            <div class="countdown-box" id="minutesBox">00</div>
-          </div>
-          <div class="countdown-separator">:</div>
-          <div class="countdown-segment">
-            <div class="countdown-box" id="secondsBox">00</div>
-          </div>
+          <div class="countdown-label">Days</div>
         </div>
-        <div class="countdown-row">
-          <div class="countdown-segment">
-            <div class="countdown-label">Days</div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-segment">
+          <div class="countdown-box">
+            <span class="countdown-value" id="hoursBox">00</span>
+            <svg class="latte-art" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+              <defs>
+                <radialGradient id="foamGrad2" cx="35%" cy="35%" r="65%">
+                  <stop offset="0%" stop-color="#fffdf3" stop-opacity="1" />
+                  <stop offset="45%" stop-color="#fff6e0" stop-opacity="0.95" />
+                  <stop offset="100%" stop-color="#f3d6b8" stop-opacity="0.9" />
+                </radialGradient>
+              </defs>
+              <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M32 38c0 0 6-6 12-6s10 4 8 8-8 6-16 6-14 0-18-4 2-8 14-10z" fill="url(#foamGrad2)"
+                  opacity="0.95" stroke="rgba(255,255,255,0.35)" stroke-width="0.6" />
+                <path d="M26 30c4-4 10-6 16-6 4 0 6 2 6 2" stroke="#fffdf3" stroke-width="1.4" opacity="0.98" />
+                <path d="M30 26c6-6 14-6 18-4" stroke="#f7e2c2" stroke-width="1.2" opacity="0.95" />
+                <path d="M34 22c6-4 10-4 12-2" stroke="#e9caa5" stroke-width="1" opacity="0.9" />
+                <circle cx="36" cy="34" r="0.6" fill="#fff" opacity="0.9" />
+              </g>
+            </svg>
           </div>
-          <div class="countdown-separator"></div>
-          <div class="countdown-segment">
-            <div class="countdown-label">Hours</div>
+          <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-segment">
+          <div class="countdown-box">
+            <span class="countdown-value" id="minutesBox">00</span>
+            <svg class="latte-art" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+              <defs>
+                <radialGradient id="foamGrad3" cx="35%" cy="35%" r="65%">
+                  <stop offset="0%" stop-color="#fffdf3" stop-opacity="1" />
+                  <stop offset="45%" stop-color="#fff6e0" stop-opacity="0.95" />
+                  <stop offset="100%" stop-color="#f3d6b8" stop-opacity="0.9" />
+                </radialGradient>
+              </defs>
+              <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M32 38c0 0 6-6 12-6s10 4 8 8-8 6-16 6-14 0-18-4 2-8 14-10z" fill="url(#foamGrad3)"
+                  opacity="0.95" stroke="rgba(255,255,255,0.35)" stroke-width="0.6" />
+                <path d="M26 30c4-4 10-6 16-6 4 0 6 2 6 2" stroke="#fffdf3" stroke-width="1.4" opacity="0.98" />
+                <path d="M30 26c6-6 14-6 18-4" stroke="#f7e2c2" stroke-width="1.2" opacity="0.95" />
+                <path d="M34 22c6-4 10-4 12-2" stroke="#e9caa5" stroke-width="1" opacity="0.9" />
+                <circle cx="36" cy="34" r="0.6" fill="#fff" opacity="0.9" />
+              </g>
+            </svg>
           </div>
-          <div class="countdown-separator"></div>
-          <div class="countdown-segment">
-            <div class="countdown-label">Minutes</div>
+          <div class="countdown-label">Minutes</div>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-segment">
+          <div class="countdown-box">
+            <span class="countdown-value" id="secondsBox">00</span>
+            <svg class="latte-art" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <path d="M24 28c6-6 10-6 12-4 1 1 1 3 0 4-2 2-6 2-12 2s-10 0-12-2c-1-1-1-3 0-4 2-2 6-2 12-2z"
+                fill="#fff4e6" opacity="0.9" />
+              <path d="M18 22c3-3 6-3 8-2" stroke="#f7e2c2" stroke-width="1.2" fill="none" stroke-linecap="round"
+                stroke-linejoin="round" opacity="0.95" />
+            </svg>
           </div>
-          <div class="countdown-separator"></div>
-          <div class="countdown-segment">
-            <div class="countdown-label">Seconds</div>
-          </div>
+          <div class="countdown-label">Seconds</div>
         </div>
       </div>
       <a href="#rsvp" class="cta">RSVP Now</a>
@@ -171,7 +231,7 @@
   <script>
     // Hamburger menu button (sidebar logic to be added)
     const hamburgerBtn = document.getElementById('hamburgerBtn');
-    hamburgerBtn.addEventListener('click', function() {
+    hamburgerBtn.addEventListener('click', function () {
       hamburgerBtn.classList.toggle('active');
     });
   </script>
@@ -179,14 +239,14 @@
   <script>
     // 8-path coordinates as percentages of viewport
     const path = [
-      {x: 50, y: 50},   // center
-      {x: 20, y: 20},   // upper left
-      {x: 50, y: 10},   // top
-      {x: 80, y: 20},   // upper right
-      {x: 20, y: 80},   // lower left
-      {x: 50, y: 90},   // bottom
-      {x: 80, y: 80},   // lower right
-      {x: 50, y: 50}    // back to center
+      { x: 50, y: 50 },   // center
+      { x: 20, y: 20 },   // upper left
+      { x: 50, y: 10 },   // top
+      { x: 80, y: 20 },   // upper right
+      { x: 20, y: 80 },   // lower left
+      { x: 50, y: 90 },   // bottom
+      { x: 80, y: 80 },   // lower right
+      { x: 50, y: 50 }    // back to center
     ];
     const cup = document.getElementById('coffeeCup');
     const backToTop = document.getElementById('backToTop');
@@ -231,14 +291,14 @@
       function animateCup(time) {
         const elapsed = time - startTime;
         const t = Math.min(elapsed / duration, 1);
-        const eased = t < 0.5 ? 2*t*t : -1+(4-2*t)*t; // easeInOut
+        const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; // easeInOut
         const progress = start * (1 - eased);
         const pos = getCupPosition(progress);
         cup.style.transform = `translate(-50%, -50%) translate(${pos.x - 50}vw, ${pos.y - 50}vh)`;
         if (t < 1) {
           requestAnimationFrame(animateCup);
         } else {
-          window.scrollTo({top: 0, behavior: 'smooth'});
+          window.scrollTo({ top: 0, behavior: 'smooth' });
           setTimeout(updateCup, 400);
         }
       }
@@ -256,4 +316,5 @@
   <script src="src/js/animations.js" defer></script>
   <script src="src/js/pwa.js" defer></script>
 </body>
+
 </html>

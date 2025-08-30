@@ -12,13 +12,45 @@
   --color-text: #4A2C2A;         /* Dark Coffee for text */
   --color-link: #8B4513;         /* Coffee Brown for links */
   --color-border: #C8D5B9;       /* Light Matcha for borders */
-  --color-card-bg: #FFFFFFCC;    /* Semi-transparent white for cards */
+  --color-card-bg: #FFFC;    /* Semi-transparent white for cards */
   --color-shadow: rgba(139,69,19,0.08); /* Coffee shadow */
+  /* Additional derived colors used by components */
+  --color-latte: #f7e6c4cc;      /* Latte background used in header */
+  --color-dark-roast: #4b2e19;   /* Dark roast / label color used in components */
+  --color-warm-brown: #7c5a3a;   /* Warm brown accent */
+  --color-warm-cream: #fff9e6;   /* cream tones for cup gradients */
+  --color-cream-1: #f6e6cc;
+  --color-cream-2: #e7cfae;
+  --color-cream-3: #d6a77f;
+  --color-card-bg-alt: #fff8f0cc; /* alternate card bg used for floating groups */
+  --color-subtle-shadow: #0001;  /* very subtle shadow hex in some places */
+
+  /* utility colors added during audit */
+  --color-white: #fff;
+  --overlay-dark: rgba(0,0,0,0.8);
+  --color-cream-light: #fafafa;
+  --color-cream-mid: #efeae5;
+  --color-cream-deep: #e6dccd;
+  /* white / overlay opacity tokens */
+  --white-98: rgba(255,255,255,0.98);
+  --white-55: rgba(255,255,255,0.55);
+  --white-35: rgba(255,255,255,0.35);
+  --white-25: rgba(255,255,255,0.25);
+  --white-22: rgba(255,255,255,0.22);
+  --white-07: rgba(255,255,255,0.07);
+  --white-50: rgba(255,255,255,0.5);
+  /* darker shadow variant for visual depth */
+  --shadow-dark: rgba(60,40,20,0.08);
+  /* additional shadow tokens used by components */
+  --shadow-inset: rgba(30,20,10,0.12);
+  --shadow-soft-dark: rgba(60,40,20,0.10);
+  --shadow-xs: rgba(30,20,10,0.06);
+  --shadow-strong: rgba(0,0,0,0.22);
 
   /* Typography: Korean Cafe Style */
-  --font-heading: 'Gowun Batang', 'Noto Serif KR', 'Playfair Display', serif;
+  --font-heading: 'Prata', 'Gowun Batang', 'Noto Serif KR', serif;
   --font-script: 'Nanum Brush Script', 'Dancing Script', cursive;
-  --font-body: 'Noto Sans KR', 'Montserrat', Arial, sans-serif;
+  --font-body: 'Prata', 'Noto Sans KR', 'Montserrat', arial, sans-serif;
 
   --spacing-unit: 1rem;
   --border-radius: 18px;
