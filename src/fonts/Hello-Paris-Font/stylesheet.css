@@ -1,0 +1,72 @@
+@font-face {
+    font-family: 'Hello Paris';
+    src: url('HelloParisSerif-Medium.eot');
+    src: local('Hello Paris Medium'), local('HelloParisSerif-Medium'),
+        url('HelloParisSerif-Medium.eot?#iefix') format('embedded-opentype'),
+        url('HelloParisSerif-Medium.woff2') format('woff2'),
+        url('HelloParisSerif-Medium.woff') format('woff'),
+        url('HelloParisSerif-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hello Paris';
+    src: url('HelloParisSerif-Regular.eot');
+    src: local('Hello Paris'), local('HelloParisSerif-Regular'),
+        url('HelloParisSerif-Regular.eot?#iefix') format('embedded-opentype'),
+        url('HelloParisSerif-Regular.woff2') format('woff2'),
+        url('HelloParisSerif-Regular.woff') format('woff'),
+        url('HelloParisSerif-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hello Paris Extra';
+    src: url('HelloParisSerif-ExtraLight.eot');
+    src: local('Hello Paris Extra Light'), local('HelloParisSerif-ExtraLight'),
+        url('HelloParisSerif-ExtraLight.eot?#iefix') format('embedded-opentype'),
+        url('HelloParisSerif-ExtraLight.woff2') format('woff2'),
+        url('HelloParisSerif-ExtraLight.woff') format('woff'),
+        url('HelloParisSerif-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hello Paris';
+    src: url('HelloParisSerif-Light.eot');
+    src: local('Hello Paris Light'), local('HelloParisSerif-Light'),
+        url('HelloParisSerif-Light.eot?#iefix') format('embedded-opentype'),
+        url('HelloParisSerif-Light.woff2') format('woff2'),
+        url('HelloParisSerif-Light.woff') format('woff'),
+        url('HelloParisSerif-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hello Paris';
+    src: url('HelloParisSerif-Bold.eot');
+    src: local('Hello Paris Bold'), local('HelloParisSerif-Bold'),
+        url('HelloParisSerif-Bold.eot?#iefix') format('embedded-opentype'),
+        url('HelloParisSerif-Bold.woff2') format('woff2'),
+        url('HelloParisSerif-Bold.woff') format('woff'),
+        url('HelloParisSerif-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hello Paris Script';
+    src: url('HelloParisScript.eot');
+    src: local('Hello Paris Script'), local('HelloParisScript'),
+        url('HelloParisScript.eot?#iefix') format('embedded-opentype'),
+        url('HelloParisScript.woff2') format('woff2'),
+        url('HelloParisScript.woff') format('woff'),
+        url('HelloParisScript.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+

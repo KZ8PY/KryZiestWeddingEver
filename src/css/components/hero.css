@@ -7,10 +7,15 @@
          comments changed to improve maintainability.
    ================================================== */
 
+
 /* --------------------------
    1) Header: site header, title, monogram, menu
    -------------------------- */
 .site-header {
+  /* expose a header height token so components (hero) can offset safely
+    If the header size changes, update this variable or set it at runtime. */
+  --site-header-height: 4rem;
+
   position: sticky;
   top: 0;
   left: 0;
@@ -18,14 +23,33 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.6rem 1.2rem;
-
-  /* fixed header height so it doesn't collapse on small screens */
-  height: 3rem;
-  min-height: 3rem;
-  background: var(--color-latte);
+  padding: 0; /* header now minimal; title lives in hero */
+  
+  /* remove reserved height so hero can span to top */
+  height: auto;
+  min-height: 0;
+  background: transparent;
   z-index: 1300;
-  box-shadow: 0 6px 18px var(--shadow-dark);
+
+  /* remove panel visuals so header is invisible (panel removed) */
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* Stronger override for the sticky/layered header variant to remove its panel entirely */
+.sticky-header.latte-frame, .site-header.sticky-header.latte-frame {
+  /* keep header visually empty when using sticky latte-frame variant */
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  min-height: 0;
+}
+
+/* fade the header title slightly when the page is scrolled */
+.site-header.scrolled .header-site-title {
+  opacity: 0.6;
+  transition: opacity 200ms ease;
 }
 
 .header-title-wrap {
@@ -33,6 +57,26 @@
   align-items: center;
   justify-content: center;
   flex: 1 1 auto;
+}
+
+/* center the site title inside the hero now that it lives there */
+.hero .header-site-title {
+  margin: clamp(0.4rem, 2.5vw, 1rem) auto 0.6rem;
+  font-size: clamp(0.96rem, 3vw + 0.35rem, 3.0rem);
+
+  /* nudge title to align with hamburger on narrow viewports */
+  padding-left: clamp(0.5rem, 4vw, 2rem);
+  z-index: 20;
+  font-family: var(--font-tan-pearl);
+  color: inherit;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+  display: inline-block;
+  line-height: 1.1;
+  max-width: 100%;
+  vertical-align: middle;
+  top: 3rem;
 }
 
 .header-site-title {
@@ -51,9 +95,10 @@
 }
 
 @media (width <= 720px) {
-  .hero h1 {
-    font-size: clamp(2.2rem, 7.5vw, 4.2rem);
-    top: 0.9rem;
+  /* tighten the clamp on smaller screens and ensure the selector matches the header title
+     so the single-line behavior remains consistent */
+  .hero .header-site-title {
+    font-size: clamp(1rem, 6vw, 2.4rem);
   }
 }
 
@@ -67,13 +112,29 @@
    -------------------------- */
 .hero {
   text-align: center;
-  padding: 5rem 1.5rem 3rem;
+  
+  /* make hero flush with header: remove framed card appearance */
+
+  /* responsive top offset: include header height and safe-area inset so
+    the hero content (title) isn't clipped by the sticky header. The
+    clamp keeps the visual nudge responsive while the calc adds the
+    header-safe offset. */
+  padding: calc(var(--site-header-height, 4rem) + clamp(1.6rem, 3.6vw + 0.6rem, 4.8rem) + env(safe-area-inset-top, 0px) + 16px) 1.5rem 3rem;
   background: linear-gradient(120deg, var(--color-bg-alt) 0%, var(--color-primary-light) 100%);
-  border-radius: var(--border-radius-soft);
-  box-shadow: var(--box-shadow);
+  border-radius: 0; /* no rounded frame */
+  box-shadow: none; /* remove card shadow */
   position: relative;
+
+  /* make hero shorter: prefer ~70vh minus header so content sits higher on page */
+  min-height: calc(70vh - var(--site-header-height, 4rem));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  /* prevent the hero itself from scrolling vertically */
   overflow: hidden;
-  padding-top: 1rem; /* ensure spacing when hero h1 removed */
+  margin-top: 0; /* ensure no gap under header */
 }
 
 /* hero H1 is intentionally hidden in this layout (title lives in header)
@@ -83,7 +144,7 @@
 .hero .floating-monogram {
   position: relative;
   display: block;
-  margin: 0.28rem auto -0.9rem; /* preserved overlap spacing */
+  margin: 0.28rem auto 0; /* remove negative bottom margin that can push content */
   width: 10rem; /* fixed size to retain mobile look */
   height: 10rem; /* keep intrinsic aspect ratio */
   object-fit: contain;
@@ -97,7 +158,9 @@
 .hero .date {
   font-family: var(--font-heading);
   color: var(--color-coffee-dark);
-  font-size: 1.05rem;
+  
+  /* increased 20% from 1.05rem to improve legibility */
+  font-size: 1.26rem;
   font-weight: 700;
   text-shadow: 0 1px 0 var(--white-22);
   z-index: 7;
@@ -123,7 +186,9 @@
   content: '';
   position: absolute;
   bottom: -40px;
-  right: -40px;
+
+  /* keep decorative circle but clamp so it never pushes past the viewport */
+  right: clamp(-40px, -6vw, 0px);
   width: 120px;
   height: 120px;
   background: radial-gradient(circle at 60% 60%, var(--color-coffee-light) 60%, transparent 100%);
@@ -177,10 +242,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 40% 35%, var(--color-warm-cream) 0%, var(--color-cream-1) 25%, var(--color-cream-2) 55%, var(--color-cream-3) 100%);
+
+  /* background: radial-gradient(circle at 40% 35%, var(--color-warm-cream) 0%, var(--color-cream-1) 25%, var(--color-cream-2) 55%, var(--color-cream-3) 100%); */
   color: var(--color-coffee-dark);
   box-shadow: inset 0 -6px 18px var(--shadow-inset), 0 6px 18px var(--shadow-dark);
-  border: 0.12rem solid var(--white-35);
+
+  /* visual rim handled by ::before; keep element border transparent to avoid double rings */
+  border: 0.12rem solid transparent;
   margin-bottom: 0.2rem;
   letter-spacing: 0.02em;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
@@ -190,20 +258,27 @@
 .countdown-box::before {
   content: '';
   position: absolute;
-  inset: 0;
   border-radius: 50%;
   pointer-events: none;
+
+
+  /* thin cream-colored ring to match saucer and handle */
   z-index: 1;
+
+  /* expand slightly outward so the ring sits in the border area; keep thin */
+  inset: -0.06rem;
+  background: radial-gradient(circle, transparent 0 88%, var(--color-cream-light) 88% 100%);
 }
 
 .countdown-box::after {
   content: '';
   position: absolute;
-  inset: 6%;
+  inset: 0.05%;
   border-radius: 50%;
 
-  /* replaced with variable stops */
-  background: radial-gradient(circle at 30% 30%, var(--white-55) 0%, var(--white-07) 18%, transparent 40%);
+  /* paint the inner latte surface above the white base so the center reads latte while rim stays white */
+  background: radial-gradient(circle at 40% 35%, var(--color-warm-cream) 0%, var(--color-cream-1) 25%, var(--color-cream-2) 55%, var(--color-cream-3) 100%);
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -212,7 +287,7 @@
   font-family: var(--font-heading);
   font-weight: 700;
   color: var(--color-coffee-dark);
-  font-size: 1.05rem;
+  font-size: 1.26rem;
   letter-spacing: 0.02em;
 
   /* replaced hard-coded white shadow with token */
@@ -292,6 +367,8 @@
 
   /* header visuals: keep the cup appearance consistent with hero cups */
   background: radial-gradient(circle at 40% 35%, var(--color-warm-cream) 0%, var(--color-cream-1) 28%, var(--color-cream-2) 62%, var(--color-cream-3) 100%);
+  
+    /* rim border should be white porcelain; the visual ring is handled by ::before */
   box-shadow: inset 0 -4px 10px var(--shadow-inset), 0 4px 8px var(--shadow-dark);
   border: 0.07rem solid var(--white-35);
 }
@@ -352,8 +429,8 @@
   height: 4.2rem;
   border-radius: 50%;
 
-  /* replaced hard-coded whites with variables */
-  background: radial-gradient(circle at 40% 35%, var(--white-98), var(--color-cream-light) 35%, var(--color-cream-mid) 60%, var(--color-cream-deep) 100%);
+  /* replaced semi-transparent whites with opaque tokens so saucer is solid */
+  background: radial-gradient(circle at 40% 35%, var(--color-white) 0%, var(--color-cream-light) 35%, var(--color-cream-mid) 60%, var(--color-cream-deep) 100%);
   box-shadow: 0 6px 14px var(--shadow-xs);
   top: -0.35rem;
   z-index: 0;
@@ -363,15 +440,19 @@
 .countdown-segment::after {
   content: "";
   position: absolute;
-  right: -15%;
+
+  /* handle should not overflow the segment container; clamp negative offset */
+  right: clamp(-40px, -15%, 0px);
   bottom: 35%;
   rotate: 12deg;
   transform: translateY(0);
   width: 30%;
   height: 12%;
-  background: linear-gradient(90deg, var(--color-cream-1) 0%, var(--white-50));
+
+  /* make handle opaque using solid white */
+  background: linear-gradient(90deg, var(--color-cream-1) 0%, var(--color-white));
   border-radius: 3px;
-  box-shadow: 0 3px 6px var(--shadow-strong), inset 0 1px 0 var(--white-07);
+  box-shadow: 0 3px 6px var(--shadow-strong), inset 0 1px 0 var(--color-white);
   z-index: 2;
   pointer-events: none;
 }
@@ -384,7 +465,7 @@
   top: 14%;
   left: 14%;
   pointer-events: none;
-  opacity: 0.95;
+  opacity: 1;
   transform-origin: 50% 50%;
   z-index: 4;
 }
@@ -499,10 +580,8 @@
 }
 
 @media (width <= 720px) {
-  .hero h1 {
-    font-size: clamp(2.2rem, 7.5vw, 4.2rem);
-    top: 0.9rem;
-  }
+  /* removed .hero h1 rule to avoid conflicting font-size rules; header title is targeted
+     via .hero .header-site-title for consistent single-line behavior */
 }
 
 /* hero monogram: keep fixed size, no responsive scaling */
@@ -515,8 +594,9 @@
 
 /* small-screen header adjustments */
 @media (width <= 720px) {
-  /* keep header title at a fixed size on small screens (no responsive shrink) */
-  .header-site-title { font-size: 1.8rem; }
+  /* keep header title at a fixed size on small screens but target the hero-scoped title
+     so our single-line, overflow handling remains in place */
+  .hero .header-site-title { font-size: 1.8rem; }
 }
 
 /* end of file */

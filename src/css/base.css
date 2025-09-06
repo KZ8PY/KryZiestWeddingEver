@@ -1,16 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
-
-/* Base header title/sub styles (placed before sticky overrides to avoid descending specificity) */
-.header-title {
-  font-family: var(--font-heading);
-  font-size: 2.1rem;
-  color: var(--color-dark-roast); /* dark roast */
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
-.header-sub {
+.header-sub { /* reduced by 40% from 1.3rem */
   font-size: 1.05rem;
   color: var(--color-warm-brown);
   font-family: var(--font-body);
@@ -37,7 +26,7 @@
   position: sticky;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   z-index: 1000;
   background: var(--color-latte); /* latte, semi-transparent */
   box-shadow: 0 6px 24px 0 var(--color-shadow), 0 1.5px 6px 0 var(--shadow-soft-dark);
@@ -50,6 +39,11 @@
   box-sizing: border-box;
   min-height: 5.5rem;
   transition: min-height 0.35s cubic-bezier(.4,2,.6,1), padding 0.35s cubic-bezier(.4,2,.6,1);
+}
+
+/* Prevent accidental horizontal scroll caused by 100vw or wide elements */
+html, body {
+  overflow-x: hidden;
 }
 
 .sticky-header.latte-frame.header-hide-title {
@@ -113,15 +107,11 @@
 /* Reset & base styles for Korean Cafe Wedding Theme */
 * { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth; /* Ensures smooth scrolling for in-page anchors */
-  background: var(--color-bg);
-}
 
 body {
   background: linear-gradient(135deg, var(--color-bg) 60%, var(--color-bg-alt) 100%);
   color: var(--color-text);
-  font-family: Prata, serif;
+  font-family: var(--font-body);
   margin: 0;
   line-height: 1.7;
   min-height: 100vh;
@@ -129,25 +119,15 @@ body {
 }
 
 h1, h2, h3, h4 {
-  font-family: Prata, serif;
+  font-family: var(--font-heading);
   color: var(--color-primary-dark);
   margin-top: 0;
   font-weight: 700;
   letter-spacing: 0.01em;
 }
 
-h1 {
-  font-size: 2.7rem;
-  letter-spacing: 0.04em;
-}
-
-h2 {
-  font-size: 2rem;
-  margin-bottom: 0.5em;
-}
-
 h3 {
-  font-size: 1.3rem;
+  font-size: 1rem;
 }
 
 p, li, label, input, select, button {
@@ -171,17 +151,12 @@ ul, ol {
   padding-left: 1.5em;
 }
 
-img {
-  max-width: 100%;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow-soft);
+/* Only valid h2 and h3 blocks below */
+h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.5em;
 }
 
-hr {
-  border: none;
-  border-top: 1.5px dashed var(--color-border);
-  margin: 2rem 0;
-}
 
 ::selection {
   background: var(--color-primary-light);
@@ -218,14 +193,14 @@ hr {
   gap: 0.35rem;
 }
 
-/* When the floating menu is placed inside the site header, pin it to the
-   left-most side of the header and position it relative to the header. */
+/* Ensure the floating menu stays fixed to the viewport (top-left) so it
+   remains visible regardless of header layout. */
 .site-header .floating-menu-group {
-  position: absolute;
+  position: fixed;
   left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1400;
+  top: 0.8rem;
+  transform: none;
+  z-index: 2200; /* place above hero visuals */
 }
 
 .hamburger-icon {
@@ -244,6 +219,11 @@ hr {
   z-index: 1200;
   animation: rotate-cup 5s linear infinite;
   pointer-events: none;
+}
+
+@keyframes rotate-cup {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @keyframes rotate-cup {

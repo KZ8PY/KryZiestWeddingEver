@@ -1,5 +1,6 @@
 // Modern cafe countdown for KryZiest Wedding Ever
-const targetDate = new Date('2026-05-08T15:00:00+08:00');
+// Target: May 8, 2026 at 14:00 (2:00 PM) local timezone (+08:00)
+const targetDate = new Date('2026-05-08T14:00:00+08:00');
 // Track previous values to detect changes for animations
 const prev = { days: null, hours: null, minutes: null, seconds: null };
 function animateCup(id) {
