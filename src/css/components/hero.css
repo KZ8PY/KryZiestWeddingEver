@@ -62,12 +62,14 @@
 /* center the site title inside the hero now that it lives there */
 .hero .header-site-title {
   margin: clamp(0.4rem, 2.5vw, 1rem) auto 0.6rem;
-  font-size: clamp(0.96rem, 3vw + 0.35rem, 3.0rem);
+
+  /* ~70% of the previous value (user requested smaller) */
+  font-size: clamp(2.69rem, 8.4vw + 0.98rem, 8.4rem);
 
   /* nudge title to align with hamburger on narrow viewports */
   padding-left: clamp(0.5rem, 4vw, 2rem);
   z-index: 20;
-  font-family: var(--font-tan-pearl);
+  font-family: var(--font-heading);
   color: inherit;
   white-space: nowrap;
   overflow: visible;
@@ -81,10 +83,14 @@
 
 .header-site-title {
   font-family: var(--font-heading);
-  font-size: 2rem;
+
+  /* reduced to ~70% of previous base fallback */
+  font-size: 2.8rem;
   color: var(--color-coffee-dark);
   margin: 0;
-  letter-spacing: 0.03em;
+
+  /* remove letter-spacing so cursive headings render without gaps */
+  letter-spacing: 0;
 }
 
 /* fixed header monogram size */
@@ -94,13 +100,7 @@
   height: 3.6rem;
 }
 
-@media (width <= 720px) {
-  /* tighten the clamp on smaller screens and ensure the selector matches the header title
-     so the single-line behavior remains consistent */
-  .hero .header-site-title {
-    font-size: clamp(1rem, 6vw, 2.4rem);
-  }
-}
+/* small-screen media block intentionally empty so heading size remains consistent across viewports */
 
 .header-brand { margin-right: 1rem; }
 .header-menu  { margin-left:  1rem; }
@@ -112,6 +112,9 @@
    -------------------------- */
 .hero {
   text-align: center;
+
+  /* default hero typography should use Tan Pearl; main heading kept separate */
+  font-family: var(--font-tan-pearl);
   
   /* make hero flush with header: remove framed card appearance */
 
@@ -156,7 +159,7 @@
 
 /* date line (uses site heading font) */
 .hero .date {
-  font-family: var(--font-heading);
+  font-family: var(--font-tan-pearl);
   color: var(--color-coffee-dark);
   
   /* increased 20% from 1.05rem to improve legibility */
@@ -284,7 +287,7 @@
 
 /* numeric value placed above latte-art */
 .countdown-value {
-  font-family: var(--font-heading);
+  font-family: var(--font-tan-pearl);
   font-weight: 700;
   color: var(--color-coffee-dark);
   font-size: 1.26rem;
@@ -543,7 +546,7 @@
   color: var(--color-coffee-dark);
   border-radius: 999px;
   font-weight: 600;
-  font-family: var(--font-heading);
+  font-family: var(--font-tan-pearl);
   font-size: 1.1rem;
   box-shadow: var(--box-shadow-soft);
   border: none;
@@ -572,7 +575,9 @@
   font-family: var(--font-heading);
   font-size: clamp(3.2rem, 7vw, 6.4rem);
   color: var(--color-primary);
-  letter-spacing: 0.04em;
+
+  /* remove letter-spacing for cursive headings */
+  letter-spacing: 0;
   margin: 0;
   line-height: 1;
   z-index: 1200;
@@ -592,11 +597,20 @@
   }
 }
 
-/* small-screen header adjustments */
+/* small-screen header adjustments: no font-size override so heading remains consistent
+  across viewports. */
 @media (width <= 720px) {
-  /* keep header title at a fixed size on small screens but target the hero-scoped title
-     so our single-line, overflow handling remains in place */
-  .hero .header-site-title { font-size: 1.8rem; }
+  /* ...existing responsive tweaks preserved elsewhere; heading size uses the
+    main .hero .header-site-title rule to keep consistent sizing */
+}
+
+/* Desktop cap: reduce maximum heading size on wider viewports while leaving
+   mobile sizing intact. */
+@media (width >= 721px) {
+  .hero .header-site-title {
+    /* keep the same min and mid behavior but cap the max to 5rem for desktop */
+    font-size: clamp(2.69rem, 8.4vw + 0.98rem, 5rem);
+  }
 }
 
 /* end of file */

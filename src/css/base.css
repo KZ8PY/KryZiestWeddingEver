@@ -89,20 +89,8 @@ html, body {
   transition: all 0.3s cubic-bezier(.4,2,.6,1);
 }
 
-@media (width <= 700px) {
-  .sticky-header.latte-frame {
-    padding: 0.7rem 1.2rem 0.7rem 2.8rem;
-    border-radius: 0 0 1rem 1rem;
-    min-height: 3.5rem;
-  }
-
-  .sticky-header.latte-frame.header-hide-title {
-    min-height: 2.1rem;
-    padding-top: 0.15rem;
-    padding-bottom: 0.15rem;
-  }
-  .header-title { font-size: 1.3rem; }
-}
+/* Removed small-screen header responsiveness: header padding and min-height
+  remain constant across viewport widths. */
 
 /* Reset & base styles for Korean Cafe Wedding Theme */
 * { box-sizing: border-box; }
@@ -118,6 +106,7 @@ body {
   letter-spacing: 0.01em;
 }
 
+/* Global headings (excluding hero-specific title selectors) */
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
   color: var(--color-primary-dark);
@@ -126,8 +115,15 @@ h1, h2, h3, h4 {
   letter-spacing: 0.01em;
 }
 
+/* Increase global heading sizes by ~2x. Note: this intentionally
+   does not affect `.hero .header-site-title` or `.hero h1`. */
+h1 {
+  /* adjusted to 80% of previous size */
+  font-size: 3.2rem;
+}
+
 h3 {
-  font-size: 1rem;
+  font-size: 1.6rem;
 }
 
 p, li, label, input, select, button {
@@ -153,7 +149,7 @@ ul, ol {
 
 /* Only valid h2 and h3 blocks below */
 h2 {
-  font-size: 1.15rem;
+  font-size: 1.84rem;
   margin-bottom: 0.5em;
 }
 

@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+/* Self-hosted Great Vibes (optional): place WOFF2/WOFF files at
+  src/fonts/great-vibes/GreatVibes-Regular.woff2 and .woff if you want to
+  self-host later. The Google-hosted import above will load the font now. */
+
 :root {
   /* Korean Cafe Wedding Theme: Matcha & Coffee Spectrum */
   --color-bg: #FAF7F0;           /* Paper White */
@@ -52,7 +58,8 @@
     --font-tan-pearl must not reference --font-heading to avoid circular refs */
   --font-tan-pearl: 'Tan Pearl', serif;
 
-  --font-heading: var(--font-tan-pearl);
+  /* use Great Vibes for headings, fall back to the self-hosted Tan Pearl */
+  --font-heading: 'Great Vibes', var(--font-tan-pearl);
   --font-script: var(--font-tan-pearl);
   --font-body: var(--font-tan-pearl);
 
