@@ -6,7 +6,7 @@ self.addEventListener('install', event => {
       return cache.addAll([
         '/',
         '/index.html',
-        '/savethedate-rsvp/',
+        'savethedate-rsvp/',
         '/src/css/base.css',
         '/src/css/variables.css',
         '/src/css/layout.css',
