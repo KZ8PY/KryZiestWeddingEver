@@ -34,4 +34,49 @@ window.addEventListener('DOMContentLoaded', () => {
     // Run after a tick to allow layout to stabilize
     requestAnimationFrame(setHeaderHeightVar);
   }
+
+  // Sidebar toggle behavior (hamburger)
+  (function initSidebar() {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarClose = document.getElementById('sidebarClose');
+    if (!hamburgerBtn || !sidebar) return;
+
+    // overlay element (single-instance)
+    let overlay = document.querySelector('.sidebar-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'sidebar-overlay';
+      document.body.appendChild(overlay);
+    }
+
+    const openSidebar = () => {
+      hamburgerBtn.classList.add('active');
+      hamburgerBtn.setAttribute('aria-expanded', 'true');
+      sidebar.classList.add('open');
+      sidebar.setAttribute('aria-hidden', 'false');
+      overlay.classList.add('visible');
+      document.body.classList.add('no-scroll');
+    };
+    const closeSidebar = () => {
+      hamburgerBtn.classList.remove('active');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+      sidebar.classList.remove('open');
+      sidebar.setAttribute('aria-hidden', 'true');
+      overlay.classList.remove('visible');
+      document.body.classList.remove('no-scroll');
+    };
+
+    hamburgerBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const expanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
+      if (expanded) closeSidebar(); else openSidebar();
+    });
+    overlay.addEventListener('click', closeSidebar);
+    if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+    // Close when clicking a nav link
+    sidebar.querySelectorAll('a').forEach(a => a.addEventListener('click', closeSidebar));
+    // Close on Escape
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSidebar(); });
+  })();
 });

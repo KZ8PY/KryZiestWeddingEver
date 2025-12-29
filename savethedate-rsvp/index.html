@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/">
+  <title>Save the Date | Ziber&Krysha</title>
+  <meta name="description" content="Save the Date video and RSVP for Ziber & Krysha's wedding">
+  <link rel="icon" href="public/favicon.ico">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="src/css/variables.css">
+  <link rel="stylesheet" href="src/css/base.css">
+  <link rel="stylesheet" href="src/css/layout.css">
+  <link rel="stylesheet" href="src/css/components/hero.css">
+  <link rel="stylesheet" href="src/css/animations.css">
+  <link rel="stylesheet" href="src/css/components/sidebar.css">
+  <style>
+    /* Hide the hamburger icon on this page */
+    #hamburgerBtn { display: none !important; }
+
+    /* Responsive video: preserve aspect ratio and scale fluidly. */
+    /* Video container aligned with page content, no rounded corners or shadow */
+    .video-wrap {
+      width: min(1100px, 92vw);
+      margin: 1.5rem auto;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+    }
+    .video-wrap video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover; /* fills the frame, may crop edges */
+      /* Crop 4px from both left and right by slightly expanding
+        the video and shifting it left; wrapper overflow:hidden prevents scroll */
+      width: calc(100% + 8px);
+      margin-left: -4px;
+      background: #000;
+    }
+    .video-wrap:focus-within { outline: 3px solid rgba(0,0,0,0.06); }
+  </style>
+</head>
+
+<body>
+  <header class="sticky-header latte-frame site-header" role="banner">
+    <div class="header-brand">
+      <h1 class="header-site-title">Ziber &amp; Krysha</h1>
+    </div>
+  </header>
+
+  <aside id="sidebar" class="site-sidebar" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="close-btn" id="sidebarClose" aria-label="Close menu">✕</button>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="/">Home</a></li>
+          <li><a href="/savethedate-rsvp/">RSVP</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main>
+    <section id="save-date" class="fade-in section" aria-label="Save the Date video">
+      <h2>Save the Date!</h2>
+      <p>We sincerely hope that you'll celebrate with us on this special moment.</p>
+      <div class="video-wrap">
+        <video id="std-video" controls playsinline preload="metadata" poster="public/images/hero/save-the-date-thumb.jpg" aria-label="Save the Date video" controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;">
+          <source src="public/videos/save-the-date.mp4" type="video/mp4">
+          <!-- Optional captions track (uncomment and add file if available)
+          <track kind="captions" src="public/videos/save-the-date.vtt" srclang="en" label="English">
+          -->
+          Your browser does not support the video tag. <a href="https://youtu.be/VIDEO_ID">View on YouTube</a>.
+        </video>
+      </div>
+    </section>
+
+    <section id="rsvp" class="fade-in section" aria-label="RSVP">
+      <!-- <h2>rsvp</h2> -->
+      <h2>More details will be provided soon...</h2>
+      <!-- <p class="rsvp-coming-soon">More details will be provided soon.</p> -->
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Ziber & Krysha. All rights reserved.</p>
+  </footer>
+
+  <script src="src/js/main.js" defer></script>
+  <script src="src/js/rsvp.js" defer></script>
+  <script src="src/js/pwa.js" defer></script>
+  <script>
+    // Extra protection to discourage downloading: prevent context menu and set controlsList where supported
+    (function () {
+      const v = document.getElementById('std-video');
+      if (!v) return;
+      try {
+        v.controlsList = (v.controlsList && v.controlsList.add) ? undefined : v.getAttribute('controlsList');
+      } catch (e) {
+        // ignore
+      }
+      v.addEventListener('contextmenu', (e) => e.preventDefault());
+      // Disable remote playback APIs if available
+      if ('disableRemotePlayback' in v) v.disableRemotePlayback = true;
+    })();
+  </script>
+</body>
+
+</html>
