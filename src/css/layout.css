@@ -5,7 +5,7 @@
   padding: 2.5rem 1.2rem;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2.5rem;
+  gap: 0;
 }
 
 @media (width >= 700px) {
@@ -25,7 +25,7 @@
   background: var(--color-bg-alt);
   border-radius: var(--border-radius-soft);
   box-shadow: var(--box-shadow);
-  margin-bottom: 2.5rem;
+  margin-bottom: 0;
   padding: 2.5rem 1.5rem;
 }
 
@@ -34,11 +34,11 @@
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow-soft);
   padding: 2rem 1.2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
   border: 1.5px solid var(--color-border);
 }
 
 .spacious {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
+  margin-top: 0;
+  margin-bottom: 0;
 }
