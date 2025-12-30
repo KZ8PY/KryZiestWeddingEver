@@ -144,20 +144,48 @@
    preserving the panel's rounded corners and shadow defined by .section.
    Uses existing color tokens to produce a graded, slightly textured surface. */
 #save-date {
-  background-image:
-    linear-gradient(120deg, var(--color-bg-alt) 0%, var(--color-primary-light) 60%, rgb(255 255 255 / 50%) 100%),
-    radial-gradient(circle at 12% 18%, rgb(255 255 255 / 60%), transparent 28%),
-    radial-gradient(circle at 82% 78%, var(--color-cream-light) 0%, transparent 30%),
-    repeating-linear-gradient(45deg, rgb(255 255 255 / 2%) 0 1px, transparent 1px 6px);
-  background-blend-mode: overlay, screen, soft-light, multiply;
-  background-size: cover, 180px 180px, 140px 140px, auto;
-  background-position: center, 10% 10%, 85% 80%, 0 0;
+  /* Make the panel read like the circular countdown cups: a warm, cream-forward latte surface */
 
-  /* keep existing radius & shadow from .section */
+  /* center the gradient on the panel and use an ellipse so it adapts to rectangular shapes */
+  background: radial-gradient(ellipse at center, var(--color-warm-cream) 0%, var(--color-warm-cream) 20%, var(--color-cream-1) 45%, var(--color-primary-light) 80%, var(--color-bg-alt) 100%);
+  background-position: center center;
+  background-size: 140% 140%;
+  background-repeat: no-repeat;
+
+  /* stronger inner depth and slightly brighter outer shadow for contrast */
+  box-shadow: inset 0 -8px 22px rgb(0 0 0 / 6%), 0 8px 22px var(--shadow-dark);
   border-radius: var(--border-radius-soft);
-  box-shadow: var(--box-shadow);
-  border: 1px solid rgb(0 0 0 / 2%);
+  border: 1px solid rgb(255 255 255 / 4%); /* lighter rim */
   color: var(--color-coffee-dark);
+  position: relative;
+  overflow: hidden; /* contain texture overlay */
+}
+
+/* subtle decorative rim like the cup ::before but adapted for rectangular panels */
+
+/* Subtle glossy rim / highlight */
+#save-date::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(circle, transparent 65%, rgb(255 255 255 / 03%) 78%, rgb(255 255 255 / 02%) 92%);
+  mix-blend-mode: screen;
+  z-index: 2;
+}
+
+/* Low-opacity procedural noise texture to read as 'latte texture' without external assets */
+#save-date::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0.12'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  z-index: 1;
 }
 
 
