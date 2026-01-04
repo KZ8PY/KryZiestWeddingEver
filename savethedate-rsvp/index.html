@@ -149,7 +149,96 @@
       // Disable remote playback APIs if available
       if ('disableRemotePlayback' in v) v.disableRemotePlayback = true;
     })();
+
+    // Ensure mobile fullscreen preserves entire video frame (no cropping)
+    (function () {
+      const v = document.getElementById('std-video');
+      if (!v) return;
+
+      function applyContain() {
+        v.style.objectFit = 'contain';
+        v.style.width = '100vw';
+        v.style.height = '100vh';
+        v.style.maxWidth = 'none';
+        v.style.maxHeight = 'none';
+        v.style.borderRadius = '0';
+        v.style.boxShadow = 'none';
+        v.style.margin = '0';
+        v.style.background = '#000';
+      }
+
+      function resetStyles() {
+        v.style.objectFit = '';
+        v.style.width = '';
+        v.style.height = '';
+        v.style.maxWidth = '';
+        v.style.maxHeight = '';
+        v.style.borderRadius = '';
+        v.style.boxShadow = '';
+        v.style.margin = '';
+        v.style.background = '';
+      }
+
+      function onFullChange() {
+        const el = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || null;
+        if (el) applyContain();
+        else resetStyles();
+      }
+
+      document.addEventListener('fullscreenchange', onFullChange);
+      document.addEventListener('webkitfullscreenchange', onFullChange);
+      document.addEventListener('msfullscreenchange', onFullChange);
+
+      // iOS Safari uses different events on the media element
+      v.addEventListener('webkitbeginfullscreen', applyContain);
+      v.addEventListener('webkitendfullscreen', resetStyles);
+    })();
   </script>
+
+    <script>
+      // Inject a high-specificity fullscreen stylesheet to catch mobile browser quirks
+      (function () {
+        const css = `
+          *:fullscreen, *:-webkit-full-screen, *:-ms-fullscreen,
+          video:fullscreen, video:-webkit-full-screen, video:-ms-fullscreen,
+          .video-wrap:fullscreen, .video-wrap:-webkit-full-screen, .video-wrap:-ms-fullscreen,
+          html:fullscreen, html:-webkit-full-screen, :fullscreen .video-wrap, :-webkit-full-screen .video-wrap {
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: none !important;
+            max-height: none !important;
+            object-fit: contain !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            margin: 0 !important;
+            background: #000 !important;
+            transform: none !important;
+            left: 0 !important;
+            top: 0 !important;
+          }
+        `;
+        const s = document.createElement('style');
+        s.setAttribute('data-injected-fullscreen', '1');
+        s.appendChild(document.createTextNode(css));
+        document.head.appendChild(s);
+
+        // also provide a helper to force important styles on the element
+        window.__enforceFullscreenContain = function (el) {
+          if (!el) return;
+          try {
+            el.style.setProperty('object-fit', 'contain', 'important');
+            el.style.setProperty('width', '100vw', 'important');
+            el.style.setProperty('height', '100vh', 'important');
+            el.style.setProperty('max-width', 'none', 'important');
+            el.style.setProperty('max-height', 'none', 'important');
+            el.style.setProperty('border-radius', '0', 'important');
+            el.style.setProperty('box-shadow', 'none', 'important');
+          } catch (e) {
+            // ignore
+          }
+        };
+      })();
+    </script>
 </body>
 
 </html>
