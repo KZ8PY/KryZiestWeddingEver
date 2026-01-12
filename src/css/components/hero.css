@@ -79,6 +79,9 @@
   max-width: 100%;
   vertical-align: middle;
   top: 3rem;
+  transform-origin: center;
+  animation: hero-title-expand 1.9s cubic-bezier(0.23, 1, 0.32, 1) 0.4s both;
+  opacity: 0;
 }
 
 .header-site-title {
@@ -91,6 +94,39 @@
 
   /* remove letter-spacing so cursive headings render without gaps */
   letter-spacing: 0;
+}
+
+/* Invite copy that sits above the hero title; shared between the hero and header */
+.hero-invite {
+  display: block;
+  text-align: center;
+  font-family: var(--font-tan-pearl);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-dark-roast);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.site-header .hero-invite {
+  margin-bottom: 0.35rem;
+  font-size: 0.45rem;
+  letter-spacing: 0.17em;
+}
+
+.hero .hero-invite {
+  margin-bottom: 0.55rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+}
+
+@media (width <= 520px) {
+  .hero .hero-invite {
+    font-size: 0.5rem;
+    letter-spacing: 0.14em;
+  }
 }
 
 /* fixed header monogram size */
@@ -115,21 +151,16 @@
 
   /* default hero typography should use Tan Pearl; main heading kept separate */
   font-family: var(--font-tan-pearl);
-  
-  /* make hero flush with header: remove framed card appearance */
 
-  /* responsive top offset: include header height and safe-area inset so
-    the hero content (title) isn't clipped by the sticky header. The
-    clamp keeps the visual nudge responsive while the calc adds the
-    header-safe offset. */
-  padding: calc(var(--site-header-height, 4rem) + clamp(1.6rem, 3.6vw + 0.6rem, 4.8rem) + env(safe-area-inset-top, 0px) + 16px) 1.5rem 3rem;
+  /* keep hero flush with header but reduce the vertical padding for a tighter layout */
+  padding: calc(var(--site-header-height, 4rem) + clamp(0.2rem, 1vw + 0.2rem, 1rem) + env(safe-area-inset-top, 0px) + 1px) 1.5rem 2.5rem;
   background: linear-gradient(120deg, var(--color-bg-alt) 0%, var(--color-primary-light) 100%);
   border-radius: 0; /* no rounded frame */
   box-shadow: none; /* remove card shadow */
   position: relative;
 
-  /* make hero shorter: prefer ~70vh minus header so content sits higher on page */
-  min-height: calc(70vh - var(--site-header-height, 4rem));
+  /* reduce the hero height so the page doesn’t start too low */
+  min-height: calc(60vh - var(--site-header-height, 4rem));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -186,6 +217,27 @@
   opacity: 0.06;
   mix-blend-mode: multiply;
   z-index: 1;
+}
+
+/* Apply the same warm, latte-like panel surface to the main site hero
+   so the landing hero reads like the Save The Date panel. Using #hero
+   provides higher specificity than .hero and will override the
+   default linear gradient defined earlier. */
+#hero {
+  /* center the gradient on the hero and use an ellipse so it adapts to
+     a wide, rectangular hero area */
+  background: radial-gradient(ellipse at center, var(--color-warm-cream) 0%, var(--color-warm-cream) 20%, var(--color-cream-1) 45%, var(--color-primary-light) 80%, var(--color-bg-alt) 100%);
+  background-position: center center;
+  background-size: 140% 140%;
+  background-repeat: no-repeat;
+
+  /* match the panel depth and subtle rim used by #save-date */
+  box-shadow: inset 0 -8px 22px rgb(0 0 0 / 6%), 0 8px 22px var(--shadow-dark);
+  border-radius: var(--border-radius-soft);
+  border: 1px solid rgb(255 255 255 / 4%);
+  color: var(--color-coffee-dark);
+  position: relative;
+  overflow: hidden;
 }
 
 
@@ -568,6 +620,23 @@
   }
 }
 
+@keyframes hero-title-expand {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+
+  60% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 /* --------------------------
    6) Utility & small components used inside hero
    -------------------------- */
@@ -615,22 +684,17 @@
    7) Responsive tweaks - kept minimal and grouped here
    -------------------------- */
 
-/* hero title responsive (kept but hero h1 hidden) */
+/* hero title responsive + natural layout */
 .hero h1 {
-  position: absolute;
-  top: 1.2rem;
-  left: 50%;
-  transform: translateX(-50%);
+  position: static;
   font-family: var(--font-heading);
-  font-size: clamp(3.2rem, 7vw, 6.4rem);
-  color: var(--color-primary);
-
-  /* remove letter-spacing for cursive headings */
-  letter-spacing: 0;
+  font-size: clamp(2.5rem, 4vw, 4.2rem);
+  color: var(--color-coffee-dark);
   margin: 0;
-  line-height: 1;
-  z-index: 1200;
-  text-shadow: 0 2px 8px var(--color-bg-alt);
+  line-height: 1.1;
+  text-align: center;
+  letter-spacing: 0;
+  text-shadow: 0 2px 6px rgb(74 44 42 / 40%);
 }
 
 @media (width <= 720px) {

@@ -164,10 +164,10 @@
       }
       v.addEventListener('contextmenu', (e) => e.preventDefault());
       // Disable remote playback APIs if available
-      if ('disableRemotePlayback' in v) v.disableRemotePlayback = true;
+      if ('disableRemotePlayback' in v) v.dlayback = true;
     })();
 
-    // Ensure mobile fullscreen preserves entire video frame (no cropping)
+    // Ensure mobile fullscreen preserves the entire video frame when entering fullscreen.
     (function () {
       const v = document.getElementById('std-video');
       if (!v) return;
