@@ -20,6 +20,8 @@
   --color-border: #C8D5B9;       /* Light Matcha for borders */
   --color-card-bg: #FFFC;    /* Semi-transparent white for cards */
   --color-shadow: rgba(139,69,19,0.08); /* Coffee shadow */
+  --focus-ring: rgba(139, 69, 19, 0.76);
+  --focus-ring-offset: 4px;
   /* Additional derived colors used by components */
   --color-latte: #f7e6c4cc;      /* Latte background used in header */
   --color-dark-roast: #4b2e19;   /* Dark roast / label color used in components */

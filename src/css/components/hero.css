@@ -66,8 +66,8 @@
   /* ~70% of the previous value (user requested smaller) */
   font-size: clamp(2.69rem, 8.4vw + 0.98rem, 8.4rem);
 
-  /* nudge title to align with hamburger on narrow viewports */
-  padding-left: clamp(0.5rem, 4vw, 2rem);
+  /* keep hero title centered relative to the section */
+  align-self: center;
   z-index: 20;
   font-family: var(--font-heading);
   color: inherit;
