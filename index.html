@@ -232,8 +232,7 @@
       </div>
     </section>
   </main>
-  <img src="public/images/icons/coffee-cup.svg" alt="Coffee Cup" class="coffee-cup-float" id="coffeeCup">
-  <button class="back-to-top-btn" id="backToTop" aria-label="Back to top">&#8679;</button>
+  <button class="back-to-top-btn floating-menu" id="backToTop" aria-label="Back to top">&#8679;</button>
   <script src="src/js/countdown.js" defer></script>
   <script src="src/js/rsvp.js" defer></script>
   <script src="src/js/gallery.js" defer></script>
@@ -241,81 +240,11 @@
   <script src="src/js/main.js" defer></script>
   <script src="src/js/pwa.js" defer></script>
   <!-- Sidebar behavior handled in src/js/main.js -->
-  <!-- Removed duplicate syncHeaderCountdown function -->
-  <script>
-    // 8-path coordinates as percentages of viewport
-    const path = [
-      { x: 50, y: 50 },   // center
-      { x: 20, y: 20 },   // upper left
-      { x: 50, y: 10 },   // top
-      { x: 80, y: 20 },   // upper right
-      { x: 20, y: 80 },   // lower left
-      { x: 50, y: 90 },   // bottom
-      { x: 80, y: 80 },   // lower right
-      { x: 50, y: 50 }    // back to center
-    ];
-    const cup = document.getElementById('coffeeCup');
-    const backToTop = document.getElementById('backToTop');
-    let ticking = false;
-    function getScrollProgress() {
-      const scrollY = window.scrollY;
-      const docHeight = document.body.scrollHeight - window.innerHeight;
-      return docHeight === 0 ? 0 : scrollY / docHeight;
-    }
-    function getCupPosition(progress) {
-      const seg = 1 / (path.length - 1);
-      let idx = Math.floor(progress / seg);
-      if (idx >= path.length - 1) idx = path.length - 2;
-      const localT = (progress - idx * seg) / seg;
-      const p0 = path[idx];
-      const p1 = path[idx + 1];
-      return {
-        x: p0.x + (p1.x - p0.x) * localT,
-        y: p0.y + (p1.y - p0.y) * localT
-      };
-    }
-    function updateCup() {
-      const progress = getScrollProgress();
-      const pos = getCupPosition(progress);
-      cup.style.transform = `translate(-50%, -50%) translate(${pos.x - 50}vw, ${pos.y - 50}vh)`;
-    }
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateCup();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
-    updateCup();
-    // Back to top button
-    backToTop.addEventListener('click', () => {
-      const start = getScrollProgress();
-      const duration = 900;
-      const startTime = performance.now();
-      function animateCup(time) {
-        const elapsed = time - startTime;
-        const t = Math.min(elapsed / duration, 1);
-        const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; // easeInOut
-        const progress = start * (1 - eased);
-        const pos = getCupPosition(progress);
-        cup.style.transform = `translate(-50%, -50%) translate(${pos.x - 50}vw, ${pos.y - 50}vh)`;
-        if (t < 1) {
-          requestAnimationFrame(animateCup);
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          setTimeout(updateCup, 400);
-        }
-      }
-      requestAnimationFrame(animateCup);
-    });
-  </script>
   <footer>
     <p>&copy; 2026 Ziber & Krysha. All rights reserved.</p>
-    <div class="social-links">
-      <!-- Social icons -->
-    </div>
+      <div class="social-links">
+        <!-- Social icons -->
+      </div>
   </footer>
   
 </body>

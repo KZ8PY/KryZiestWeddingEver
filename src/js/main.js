@@ -79,4 +79,27 @@ window.addEventListener('DOMContentLoaded', () => {
     // Close on Escape
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSidebar(); });
   })();
+
+  // Back-to-top visibility & scroll handling (appears near bottom of page)
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    const updateBackToTop = () => {
+      const scrollY = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const progress = docHeight <= 0 ? 0 : scrollY / docHeight;
+      if (progress >= 0.7) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    };
+
+    window.addEventListener('scroll', () => {
+      updateBackToTop();
+    }, { passive: true });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    updateBackToTop();
+  }
 });

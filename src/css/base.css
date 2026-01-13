@@ -211,6 +211,34 @@ h2 {
   z-index: 1200;
 }
 
+.floating-menu.back-to-top-btn {
+  inset: auto 1.2rem 1.2rem auto;
+}
+
+.back-to-top-btn {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-card-bg-alt);
+  color: var(--color-coffee-dark);
+  font-size: 1.35rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 14%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease, transform 200ms ease;
+  display: inline-flex;
+}
+
+.back-to-top-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
 .floating-menu .hamburger {
   position: static;
   width: 2.2rem;
