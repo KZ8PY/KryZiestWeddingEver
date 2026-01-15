@@ -102,7 +102,7 @@
   text-align: center;
   font-family: var(--font-tan-pearl);
   font-size: 0.65rem;
-  font-weight: 900;
+  font-weight: 700;
   color: var(--color-dark-roast);
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -153,7 +153,7 @@
   font-family: var(--font-tan-pearl);
 
   /* keep hero flush with header but reduce the vertical padding for a tighter layout */
-  padding: calc(var(--site-header-height, 4rem) + clamp(0.2rem, 1vw + 0.2rem, 1rem) + env(safe-area-inset-top, 0px) + 1px) 1.5rem 2.5rem;
+  padding: calc(var(--site-header-height, 4rem) + clamp(0.2rem, 1vw + 0.2rem, 1rem) + env(safe-area-inset-top, 0px) + 1px) 1.5rem 5rem;
   background: linear-gradient(120deg, var(--color-bg-alt) 0%, var(--color-primary-light) 100%);
   border-radius: 0; /* no rounded frame */
   box-shadow: none; /* remove card shadow */
@@ -169,6 +169,70 @@
   /* prevent the hero itself from scrolling vertically */
   overflow: hidden;
   margin-top: 0; /* ensure no gap under header */
+}
+
+.welcome-song-panel {
+  width: 100%;
+  background: radial-gradient(circle at center, var(--color-primary-light) 0%, var(--color-primary-light) 40%, color-mix(in srgb, var(--color-primary-light) 60%, var(--color-primary) 40%) 70%, color-mix(in srgb, var(--color-primary) 70%, var(--color-primary-dark) 30%) 100%);
+  border-radius: 1.5rem;
+  padding: clamp(1rem, 2vw, 1.5rem) clamp(1rem, 4vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: stretch;
+  color: var(--color-coffee-dark);
+  box-shadow: var(--box-shadow);
+  max-width: none;
+}
+
+.welcome-panel-welcome,
+.welcome-panel-song {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  text-align: center;
+  color: inherit;
+  border: none;
+}
+
+.welcome-panel-welcome h2 {
+  margin: 0;
+  font-size: clamp(1.75rem, 3vw, 2rem);
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+}
+
+.welcome-panel h3 {
+  margin: 0.25rem 0 0.35rem;
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.welcome-panel-welcome .eyebrow,
+.welcome-panel-song .eyebrow {
+  font-size: 0.55rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-dark-roast);
+}
+
+.welcome-panel-song-player {
+  margin-top: 0.5rem;
+}
+
+.welcome-panel-song-player audio {
+  width: 100%;
+  border-radius: 0.45rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  display: block;
 }
 
 /* Apply a richer, latte-like background to the Save The Date panel while
