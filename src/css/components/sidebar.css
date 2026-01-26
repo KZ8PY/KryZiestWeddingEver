@@ -35,11 +35,13 @@
   visibility: hidden;
   transition: opacity 220ms ease;
   z-index: 1100;
+  pointer-events: none;
 }
 
 .sidebar-overlay.visible {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 .site-sidebar .close-btn {

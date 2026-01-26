@@ -6,6 +6,7 @@
   margin-bottom: 0.1em;
 }
 
+/* Sticky floating header styles */
 .sticky-header.latte-frame .header-title,
 .sticky-header.latte-frame .header-sub {
   opacity: 1;
@@ -27,7 +28,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 2500;
   background: var(--color-latte); /* latte, semi-transparent */
   box-shadow: 0 6px 24px 0 var(--color-shadow), 0 1.5px 6px 0 var(--shadow-soft-dark);
   border-radius: 0 0 1.5rem 1.5rem;
@@ -261,6 +262,7 @@ h2 {
   z-index: 1200;
   gap: 0.35rem;
   transition: left 260ms cubic-bezier(.2,.9,.3,1);
+  pointer-events: auto;
 }
 
 /* Ensure the floating menu stays fixed to the viewport (top-left) so it
@@ -269,23 +271,59 @@ h2 {
   position: fixed;
   left: 0;
   top: 0.8rem;
-  transform: none;
   z-index: 2200; /* place above hero visuals */
 }
 
-/* When the sidebar is open, nudge the floating menu to sit at the sidebar's right edge */
-.sidebar-open .site-header .floating-menu-group {
-  left: calc(var(--sidebar-width) + 0.75rem);
-}
-
 .hamburger-icon {
-  width: 2rem;
-  height: 2rem;
+  background: none;
+  border: 0;
+  padding: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  display: block;
+  pointer-events: auto;
+  position: relative;
+  z-index: 2300;
 }
 
-.floating-monogram {
+.hamburger-icon:hover {
+  cursor: pointer;
+}
+
+.hamburger-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 800ms cubic-bezier(.2,.9,.3,1);
+  will-change: transform;
+}
+
+/* Flip the hamburger icon horizontally when menu is open */
+.hamburger-icon.is-open img {
+  transform: rotateY(180deg);
+}
+
+
+.sidebar-open .site-header .floating-menu-group { /* stylelint-disable-line rule-empty-line-before */
+  /* overlap slightly so the floating toggle visually hugs the sidebar */
+  left: calc(var(--sidebar-width) - 0.35rem);
+}
+
+/* When the sidebar is open, slightly reduce the floating hamburger size
+   so it tucks in visually. Keep a smooth transition so the change is subtle. */
+.sidebar-open .hamburger-icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  transition: width 220ms cubic-bezier(.2,.9,.3,1), height 220ms cubic-bezier(.2,.9,.3,1), transform 220ms ease;
+}
+
+
+.floating-monogram { /* stylelint-disable-line rule-empty-line-before */
   position: fixed;
   top: 0.2rem;
   right: 0.2rem;
@@ -295,6 +333,7 @@ h2 {
   animation: rotate-cup 5s linear infinite;
   pointer-events: none;
 }
+
 
 @keyframes rotate-cup {
   0% { transform: rotate(0deg); }
