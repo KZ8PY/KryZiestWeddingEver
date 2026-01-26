@@ -116,14 +116,16 @@ window.addEventListener('DOMContentLoaded', () => {
         const len = Math.max(1, text.length);
         const duration = Math.min(0.045 * len + 0.6, 4); // seconds, scaled by length
         span.style.setProperty('--write-duration', `${duration}s`);
-        // trigger the left-to-right text reveal
+        // trigger the left-to-right handwritten-style reveal
         requestAnimationFrame(() => span.classList.add('writing'));
 
-        // finalize after duration: remove animation class and mark done
-        setTimeout(() => {
+        // mark done after animation completes (fallback timer included)
+        const finish = () => {
           span.classList.remove('writing');
           span.classList.add('done');
-        }, Math.round(duration * 1000) + 60);
+        };
+        span.addEventListener('animationend', finish, { once: true });
+        setTimeout(finish, Math.round(duration * 1000) + 200);
 
         obs.unobserve(h);
       });
