@@ -22,7 +22,9 @@
 }
 
 .section {
-  background: var(--color-bg-alt);
+  /* Make section backgrounds transparent so the page-level gradient
+     shows through and adjacent panels visually blend seamlessly. */
+  background: transparent;
   border-radius: 0; /* removed rounded corners per preview request */
   box-shadow: none; /* remove panel drop shadow */
   margin-bottom: 0;
