@@ -9,41 +9,14 @@
   z-index: 0;
 }
 
-.fade-in::before {
-  /* full-viewport bright overlay that slides/fades downward */
-  content: '';
-  position: fixed; /* cover the whole viewport */
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgb(255 255 255 / 100%) 0%, rgb(255 255 255 / 95%) 20%, rgb(255 255 255 / 60%) 45%, rgb(255 255 255 / 0%) 100%);
-  transform-origin: top left;
-  animation: reveal-bright-viewport 900ms cubic-bezier(.2,.9,.3,1) forwards;
-  z-index: 99999;
-}
-
-@keyframes reveal-bright-viewport {
-  0% {
-    opacity: 1;
-    transform: translateY(0%);
-  }
-
-  50% {
-    opacity: 0.9;
-    transform: translateY(10%);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(120%);
-  }
-}
+/* remove per-element overlay; use a single full-viewport overlay instead */
 
 /* Simple page white-fade overlay used for a subtle load transition.
    It covers the full viewport and fades out from white to transparent. */
 .page-fade-overlay {
   position: fixed;
   inset: 0;
-  background: #fff;
+  background: white;
   z-index: 999999; /* very high so it sits above everything */
   pointer-events: none;
   animation: page-fade-out 700ms ease-out forwards;
