@@ -1,6 +1,7 @@
 /* Sidebar component styles */
 :root {
-  --sidebar-width: 280px;
+  /* Reduced to 75% of the original 280px for a slimmer sidebar */
+  --sidebar-width: 210px;
   --sidebar-surface: rgb(255 255 255 / 30%);
 }
 
@@ -14,7 +15,9 @@
   box-shadow: 2px 0 18px rgb(0 0 0 / 12%);
   transition: left 260ms cubic-bezier(.2,.9,.3,1);
   z-index: 1200;
-  padding: 1.25rem;
+  padding: 1.25rem 0;
+
+  /* keep vertical padding but remove horizontal padding so link hovers reach edges */
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(12px);
@@ -46,6 +49,7 @@
   line-height: 1;
   align-self: flex-end;
   cursor: pointer;
+  display: none; /* hidden because floating toggle is used */
 }
 
 /* Navigation list */
@@ -62,6 +66,21 @@
   color: var(--text, rgb(34 34 34));
   text-decoration: none;
   font-weight: 600;
+  border-bottom: none;
+}
+
+/* Highlight navigation items on hover and keyboard focus using matcha background */
+.site-sidebar nav a:hover,
+.site-sidebar nav a:focus,
+.site-sidebar nav a:focus-visible {
+  background: var(--color-bg-alt);
+  color: var(--color-primary-dark);
+  border-radius: 0; /* no rounded corners */
+  box-shadow: none; /* remove raised effect */
+  outline: none;
+  display: block;
+  width: 100%;
+  border-bottom: none; /* enforce no underline on hover */
 }
 
 body.no-scroll {

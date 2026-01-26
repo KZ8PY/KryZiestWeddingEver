@@ -53,7 +53,13 @@ window.addEventListener('DOMContentLoaded', () => {
     const openSidebar = () => {
       hamburgerBtn.classList.add('active');
       hamburgerBtn.setAttribute('aria-expanded', 'true');
+      // swap icon to a simple X (data URL svg) while preserving original src
+      if (!hamburgerBtn.dataset.origSrc) hamburgerBtn.dataset.origSrc = hamburgerBtn.src || '';
+      const closeSvg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='28' height='28'><line x1='4' y1='4' x2='20' y2='20' stroke='%234A2C2A' stroke-width='2.2' stroke-linecap='round'/><line x1='20' y1='4' x2='4' y2='20' stroke='%234A2C2A' stroke-width='2.2' stroke-linecap='round'/></svg>";
+      try { hamburgerBtn.src = closeSvg; } catch (err) { /* ignore if not img */ }
+      hamburgerBtn.setAttribute('aria-label', 'Close menu');
       sidebar.classList.add('open');
+      document.body.classList.add('sidebar-open');
       sidebar.setAttribute('aria-hidden', 'false');
       overlay.classList.add('visible');
       document.body.classList.add('no-scroll');
@@ -61,7 +67,11 @@ window.addEventListener('DOMContentLoaded', () => {
     const closeSidebar = () => {
       hamburgerBtn.classList.remove('active');
       hamburgerBtn.setAttribute('aria-expanded', 'false');
+      // restore original hamburger icon if we swapped it
+      try { if (hamburgerBtn.dataset.origSrc) hamburgerBtn.src = hamburgerBtn.dataset.origSrc; } catch (err) {}
+      hamburgerBtn.setAttribute('aria-label', 'Open menu');
       sidebar.classList.remove('open');
+      document.body.classList.remove('sidebar-open');
       sidebar.setAttribute('aria-hidden', 'true');
       overlay.classList.remove('visible');
       document.body.classList.remove('no-scroll');

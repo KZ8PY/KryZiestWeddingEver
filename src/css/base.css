@@ -102,6 +102,7 @@ body {
   font-family: var(--font-body);
   font-weight: 600;
   margin: 0;
+  text-align: center;
   line-height: 1.7;
   min-height: 100vh;
   letter-spacing: 0.01em;
@@ -114,6 +115,7 @@ h1, h2, h3, h4 {
   margin-top: 0;
   font-weight: 700;
   letter-spacing: 0.01em;
+  text-align: center;
 }
 
 /* Increase global heading sizes by ~2x. Note: this intentionally
@@ -258,6 +260,7 @@ h2 {
   padding: 0.21rem 0.49rem;
   z-index: 1200;
   gap: 0.35rem;
+  transition: left 260ms cubic-bezier(.2,.9,.3,1);
 }
 
 /* Ensure the floating menu stays fixed to the viewport (top-left) so it
@@ -268,6 +271,11 @@ h2 {
   top: 0.8rem;
   transform: none;
   z-index: 2200; /* place above hero visuals */
+}
+
+/* When the sidebar is open, nudge the floating menu to sit at the sidebar's right edge */
+.sidebar-open .site-header .floating-menu-group {
+  left: calc(var(--sidebar-width) + 0.75rem);
 }
 
 .hamburger-icon {
