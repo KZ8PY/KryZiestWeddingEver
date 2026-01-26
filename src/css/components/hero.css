@@ -136,6 +136,8 @@
   height: 3.6rem;
 }
 
+/* Hero date GIF sizing will be applied alongside the primary .hero .date rules below */
+
 /* small-screen media block intentionally empty so heading size remains consistent across viewports */
 
 .header-brand { margin-right: 1rem; }
@@ -173,15 +175,15 @@
 
 .welcome-song-panel {
   width: 100%;
-  background: radial-gradient(circle at center, var(--color-primary-light) 0%, var(--color-primary-light) 40%, color-mix(in srgb, var(--color-primary-light) 60%, var(--color-primary) 40%) 70%, color-mix(in srgb, var(--color-primary) 70%, var(--color-primary-dark) 30%) 100%);
-  border-radius: 1.5rem;
+  background: radial-gradient(circle at center, var(--color-cream-mid) 0%, var(--color-bg-alt) 40%, color-mix(in srgb, var(--color-bg-alt) 60%, var(--color-coffee-light) 40%) 70%, color-mix(in srgb, var(--color-primary-light) 70%, var(--color-primary) 30%) 100%);
+  border-radius: 0; /* remove rounded corners per request */
   padding: clamp(1rem, 2vw, 1.5rem) clamp(1rem, 4vw, 2rem);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   align-items: stretch;
   color: var(--color-coffee-dark);
-  box-shadow: var(--box-shadow);
+  box-shadow: none; /* remove panel drop shadow for welcome */
   max-width: none;
 }
 
@@ -227,7 +229,7 @@
 
 .welcome-panel-song-player audio {
   width: 100%;
-  border-radius: 0.45rem;
+  border-radius: 0; /* remove rounded corners */
   background: transparent;
   border: none;
   outline: none;
@@ -248,7 +250,7 @@
   background-repeat: no-repeat;
 
   /* stronger inner depth and slightly brighter outer shadow for contrast */
-  box-shadow: inset 0 -8px 22px rgb(0 0 0 / 6%), 0 8px 22px var(--shadow-dark);
+  box-shadow: none; /* remove drop shadow from save-date panel */
   border-radius: var(--border-radius-soft);
   border: 1px solid rgb(255 255 255 / 4%); /* lighter rim */
   color: var(--color-coffee-dark);
@@ -296,8 +298,10 @@
   background-repeat: no-repeat;
 
   /* match the panel depth and subtle rim used by #save-date */
-  box-shadow: inset 0 -8px 22px rgb(0 0 0 / 6%), 0 8px 22px var(--shadow-dark);
-  border-radius: var(--border-radius-soft);
+  box-shadow: none; /* remove hero panel drop shadow */
+
+  /* border-radius: var(--border-radius-soft); */
+  border-radius: 0; /* no rounded corners in hero */
   border: 1px solid rgb(255 255 255 / 4%);
   color: var(--color-coffee-dark);
   position: relative;
@@ -332,8 +336,31 @@
   font-weight: 700;
   text-shadow: 0 1px 0 var(--white-22);
   z-index: 7;
-  padding-top: 2rem;
+  margin-bottom: 0; /* remove default paragraph margins so the GIF aligns exactly */
   position: relative;
+
+  /* center the gif inside the date container and make it responsive */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero .hero-date-gif {
+  max-width: 120%;
+  height: auto;
+  display: block;
+}
+
+@media (width >= 720px) {
+  .hero .hero-date-gif {
+    max-width: 700px;
+  }
+}
+
+@media (width <= 420px) {
+  .hero .hero-date-gif {
+    max-width: 120%;
+  }
 }
 
 /* decorative hero ::before / ::after */

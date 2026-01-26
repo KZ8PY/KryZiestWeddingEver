@@ -88,6 +88,86 @@ window.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSidebar(); });
   })();
 
+  // Write-in animation for section headers (starts from Warm Welcome)
+  (function initWriteHeaders() {
+    const selector = '.welcome-panel-welcome h2, .section h2';
+    const headings = Array.from(document.querySelectorAll(selector))
+      .filter(h => !h.closest('#hero'));
+    if (!headings.length) return;
+
+    // Prepare: wrap heading text immediately so it won't be visible before animation.
+    headings.forEach((h) => {
+      if (h.querySelector('.write-letter')) return;
+
+      const text = h.textContent.trim();
+      if (!text) return;
+
+      const frag = document.createDocumentFragment();
+      let letterIndex = 0;
+
+      for (const ch of text) {
+        if (ch === ' ') {
+          frag.appendChild(document.createTextNode(' '));
+          continue;
+        }
+
+        const span = document.createElement('span');
+        span.className = 'write-letter';
+        span.textContent = ch;
+        span.style.setProperty('--i', String(letterIndex));
+        letterIndex += 1;
+        frag.appendChild(span);
+      }
+
+      h.textContent = '';
+      h.appendChild(frag);
+      h.classList.add('write-ready');
+
+      // Simple pacing: fixed per-letter delay + quick fade.
+      h.style.setProperty('--letter-delay', '100ms');
+      h.style.setProperty('--letter-duration', '400ms');
+      h.dataset.letterCount = String(letterIndex);
+    });
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const h = entry.target;
+        if (h.dataset.writingStarted) { obs.unobserve(h); return; }
+        h.dataset.writingStarted = '1';
+
+        const letters = h.querySelectorAll('.write-letter');
+        if (!letters.length) { obs.unobserve(h); return; }
+
+        // Trigger the letter-by-letter reveal.
+        // Two rAFs ensures the "hidden" styles are committed before animation starts.
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => h.classList.add('writing'));
+        });
+
+        // mark done after animation completes (fallback timer included)
+        const finish = () => {
+          h.classList.remove('writing');
+          h.classList.add('done');
+        };
+
+        const styles = getComputedStyle(h);
+        const delayMs = Number.parseFloat(styles.getPropertyValue('--letter-delay'));
+        const durMs = Number.parseFloat(styles.getPropertyValue('--letter-duration'));
+        const count = Number.parseInt(h.dataset.letterCount || '0', 10);
+        const fallbackMs = (Number.isFinite(delayMs) && Number.isFinite(durMs) && Number.isFinite(count))
+          ? Math.round(Math.max(0, count - 1) * delayMs + durMs + 200)
+          : 2200;
+
+        setTimeout(finish, fallbackMs);
+
+        obs.unobserve(h);
+      });
+    }, { threshold: 0.5 });
+
+    headings.forEach(h => observer.observe(h));
+  })();
+
   // Back-to-top visibility & scroll handling (appears near bottom of page)
   const backToTop = document.getElementById('backToTop');
   if (backToTop) {
@@ -110,4 +190,36 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     updateBackToTop();
   }
+
+  // "Coming soon" tooltip buttons (e.g., Prenup Photos)
+  (function initComingSoonButtons() {
+    const buttons = document.querySelectorAll('.coming-soon-btn[data-tooltip]');
+    if (!buttons.length) return;
+
+    buttons.forEach((btn) => {
+      const show = () => {
+        const tip = btn.closest('.prenup-cta')?.querySelector('.coming-soon-tip') || null;
+        if (!tip) return;
+
+        tip.textContent = btn.getAttribute('data-tooltip') || 'COMING SOON';
+        tip.hidden = false;
+        window.clearTimeout(tip.__hideTimer);
+        tip.__hideTimer = window.setTimeout(() => {
+          tip.hidden = true;
+        }, 1200);
+      };
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        show();
+      });
+
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          show();
+        }
+      });
+    });
+  })();
 });

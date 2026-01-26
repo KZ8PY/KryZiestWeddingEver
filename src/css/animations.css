@@ -1,18 +1,85 @@
 /* Animations & transitions for Korean Cafe Wedding Theme */
+
+/* Reveal-from-bright: slide a bright overlay away to reveal content
+   This avoids fading + rising; content is visible immediately while
+   a short bright sweep slides up and out. Applied to elements with
+   the existing `fade-in` class so markup doesn't need changes. */
 .fade-in {
-  opacity: 0;
-  animation: fade-in-cafe 1.5s cubic-bezier(.4,0,.2,1) forwards;
+  position: relative;
+  z-index: 0;
 }
 
-@keyframes fade-in-cafe {
-  0% {
-    opacity: 0;
-    transform: translateY(24px) scale(0.98);
+/* remove per-element overlay; use a single full-viewport overlay instead */
+
+/* Simple page white-fade overlay used for a subtle load transition.
+   It covers the full viewport and fades out from white to transparent. */
+.page-fade-overlay {
+  position: fixed;
+  inset: 0;
+  background: white;
+  z-index: 999999; /* very high so it sits above everything */
+  pointer-events: none;
+  animation: page-fade-out 1500ms ease-out forwards;
+}
+
+@keyframes page-fade-out {
+  from {
+    opacity: 1;
   }
 
-  100% {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Section header reveal: simple letter-by-letter fade-in.
+  No overlays, masks, or clip effects. */
+.js .welcome-panel-welcome h2,
+.js .section h2 {
+  visibility: hidden;
+}
+
+.js .welcome-panel-welcome h2.write-ready,
+.js .section h2.write-ready {
+  visibility: visible;
+}
+
+.write-letter {
+  display: inline-block;
+  opacity: 0;
+  will-change: opacity;
+  text-transform: none;
+}
+
+.write-ready.writing .write-letter {
+  animation: letter-fade-in var(--letter-duration, 320ms) ease-out forwards;
+  animation-delay: calc(var(--i, 0) * var(--letter-delay, 36ms));
+}
+
+.write-ready.done .write-letter {
+  opacity: 1;
+  animation: none;
+}
+
+@keyframes letter-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
     opacity: 1;
-    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .welcome-panel-welcome h2,
+  .js .section h2 {
+    visibility: visible;
+  }
+
+  .write-letter {
+    opacity: 1;
+    animation: none;
   }
 }
 
