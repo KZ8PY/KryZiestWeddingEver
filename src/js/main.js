@@ -110,4 +110,36 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     updateBackToTop();
   }
+
+  // "Coming soon" tooltip buttons (e.g., Prenup Photos)
+  (function initComingSoonButtons() {
+    const buttons = document.querySelectorAll('.coming-soon-btn[data-tooltip]');
+    if (!buttons.length) return;
+
+    buttons.forEach((btn) => {
+      const show = () => {
+        const tip = btn.closest('.prenup-cta')?.querySelector('.coming-soon-tip') || null;
+        if (!tip) return;
+
+        tip.textContent = btn.getAttribute('data-tooltip') || 'COMING SOON';
+        tip.hidden = false;
+        window.clearTimeout(tip.__hideTimer);
+        tip.__hideTimer = window.setTimeout(() => {
+          tip.hidden = true;
+        }, 1200);
+      };
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        show();
+      });
+
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          show();
+        }
+      });
+    });
+  })();
 });

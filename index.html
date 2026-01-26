@@ -41,8 +41,18 @@
     <button class="close-btn" id="sidebarClose" aria-label="Close menu">✕</button>
     <nav aria-label="Primary">
       <ul>
-        <li><a href="/">Home</a></li>
+        <li><a href="#hero">Home</a></li>
         <li><a href="savethedate-rsvp/">RSVP</a></li>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#details">Wedding Details</a></li>
+        <li><a href="#dress-code">Dress Code</a></li>
+        <li><a href="#gift-guide">Gift Guide</a></li>
+        <li><a href="#venue">The Venue</a></li>
+        <li><a href="#stay">Places to Stay</a></li>
+        <li><a href="#faq">Frequently Asked Questions</a></li>
+        <li><a href="#prenup">Prenup Photos</a></li>
+        <li><a href="#monogram">Monogram</a></li>
+        <li><a href="#contact">Contact Us</a></li>
       </ul>
     </nav>
   </aside>
@@ -171,70 +181,138 @@
     </section>
     <section class="details fade-in section" aria-label="Wedding Details" id="details">
       <h2>Wedding Details</h2>
-      <div class="info">
-        <div class="menu-board">
-          <h3>Ceremony</h3>
-          <p>May 16, 2026 | 3:00 PM<br>St. Paul Cathedral, Puerto Princesa</p>
-        </div>
-        <div class="menu-board">
-          <h3>Reception</h3>
-          <p>5:00 PM | Cafe Aurora, Puerto Princesa</p>
-        </div>
-        <div class="menu-board">
-          <h3>Dress Code</h3>
-          <p>Modern Hanbok or Elegant Pastels</p>
-        </div>
-        <span class="house-rules">Please arrive 15 minutes early. No outside drinks, just love!</span>
+      <p class="section-note">Photos and official details will be added here soon.</p>
+      <div class="details-media-grid">
+        <figure class="details-media">
+          <img src="public/images/hero/hero-img.jpg" alt="Wedding details photo placeholder 1">
+          <figcaption>Details photo (coming soon)</figcaption>
+        </figure>
+        <figure class="details-media">
+          <img src="public/images/hero/Cover-ZK8.png" alt="Wedding details photo placeholder 2">
+          <figcaption>Details photo (coming soon)</figcaption>
+        </figure>
+        <figure class="details-media">
+          <img src="public/images/hero/save-the-date-thumb.jpg" alt="Wedding details photo placeholder 3">
+          <figcaption>Details photo (coming soon)</figcaption>
+        </figure>
       </div>
     </section>
-    <!-- RSVP form moved to the Save The Date page: savethedate-rsvp/index.html -->
-    <section class="gallery fade-in section" aria-label="Photo Gallery" id="gallery">
-      <h2>Photo Gallery</h2>
-      <div class="gallery-grid">
-        <img src="public/images/gallery/1.jpg" alt="Gallery 1">
-        <img src="public/images/gallery/2.jpg" alt="Gallery 2">
-        <img src="public/images/gallery/3.jpg" alt="Gallery 3">
+
+    <section class="dress-code fade-in section" aria-label="Dress Code" id="dress-code">
+      <h2>Dress Code</h2>
+      <p class="section-note">Details will be added later.</p>
+    </section>
+
+    <section class="gift-guide fade-in section" aria-label="Gift Guide" id="gift-guide">
+      <h2>Gift Guide</h2>
+      <p class="section-note">Your presence is the greatest gift. Gift guide details will be shared soon.</p>
+    </section>
+
+    <section class="venue fade-in section" aria-label="The Venue" id="venue">
+      <h2>The Venue</h2>
+      <div class="venue-grid">
+        <article class="venue-card">
+          <h3>CEREMONY</h3>
+          <img src="public/images/hero/hero-img.jpg" alt="Ceremony venue photo placeholder">
+          <iframe
+            title="Ceremony location map"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=St.%20Paul%20Cathedral%20Puerto%20Princesa&output=embed"></iframe>
+          <p class="venue-link"><a href="https://www.google.com/maps/search/?api=1&query=St.%20Paul%20Cathedral%20Puerto%20Princesa" target="_blank" rel="noopener">Open in Google Maps</a></p>
+        </article>
+
+        <article class="venue-card">
+          <h3>RECEPTION</h3>
+          <img src="public/images/hero/Cover-ZK8.png" alt="Reception venue photo placeholder">
+          <iframe
+            title="Reception location map"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Cafe%20Aurora%20Puerto%20Princesa&output=embed"></iframe>
+          <p class="venue-link"><a href="https://www.google.com/maps/search/?api=1&query=Cafe%20Aurora%20Puerto%20Princesa" target="_blank" rel="noopener">Open in Google Maps</a></p>
+        </article>
       </div>
     </section>
-    <section class="travel fade-in section" aria-label="Travel & Accommodations" id="travel">
-      <h2>Travel & Accommodations</h2>
-      <div class="travel-info">
-        <div class="travel-card">
-          <h3>How to Get There</h3>
-          <p>Fly to Puerto Princesa International Airport. Taxis and shuttles available to venues.</p>
-        </div>
-        <div class="travel-card">
-          <h3>Where to Stay</h3>
-          <p>Recommended: Cafe Aurora Hotel, Matcha Inn, Hanok Guesthouse.</p>
-        </div>
+
+    <section class="stay fade-in section" aria-label="Places to Stay" id="stay">
+      <h2>Places to Stay</h2>
+      <div class="stay-grid" role="list">
+        <a class="stay-card" role="listitem" href="https://www.google.com/maps/search/?api=1&query=Cafe%20Aurora%20Hotel%20Puerto%20Princesa" target="_blank" rel="noopener">
+          <h3>Cafe Aurora Hotel</h3>
+          <p>Open in Google Maps</p>
+        </a>
+        <a class="stay-card" role="listitem" href="https://www.google.com/maps/search/?api=1&query=Matcha%20Inn%20Puerto%20Princesa" target="_blank" rel="noopener">
+          <h3>Matcha Inn</h3>
+          <p>Open in Google Maps</p>
+        </a>
+        <a class="stay-card" role="listitem" href="https://www.google.com/maps/search/?api=1&query=Hanok%20Guesthouse%20Puerto%20Princesa" target="_blank" rel="noopener">
+          <h3>Hanok Guesthouse</h3>
+          <p>Open in Google Maps</p>
+        </a>
       </div>
     </section>
-    <section class="registry fade-in section" aria-label="Gift Registry" id="registry">
-      <h2>Gift Registry</h2>
-      <div class="registry-links">
-        <a href="#">Zola</a>
-        <a href="#">Amazon</a>
-        <a href="#">Local Charities</a>
+
+    <section class="faq fade-in section" aria-label="Frequently Asked Questions" id="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>
+            <span class="faq-icon" aria-hidden="true">+</span>
+            <span class="faq-q">What time should we arrive?</span>
+          </summary>
+          <div class="faq-a">
+            <p>Please arrive at least 15 minutes early so we can start on time.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span class="faq-icon" aria-hidden="true">+</span>
+            <span class="faq-q">Can I bring a plus one?</span>
+          </summary>
+          <div class="faq-a">
+            <p>We’ll confirm plus-one availability per invitation. More details soon.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span class="faq-icon" aria-hidden="true">+</span>
+            <span class="faq-q">What should I wear?</span>
+          </summary>
+          <div class="faq-a">
+            <p>Dress code guidance will be shared in the Dress Code section once finalized.</p>
+          </div>
+        </details>
       </div>
     </section>
-    <section class="contact fade-in section" aria-label="Contact Information" id="contact">
-      <h2>Contact</h2>
-      <div class="contact-info">
-        <div class="contact-card">
-          <h3>Email</h3>
-          <p>krysha.ziber@email.com</p>
-        </div>
-        <div class="contact-card">
-          <h3>Phone</h3>
-          <p>+63 912 345 6789</p>
-        </div>
+
+    <section class="prenup fade-in section" aria-label="Prenup Photos" id="prenup">
+      <h2>Prenup Photos</h2>
+      <img class="prenup-placeholder" src="public/images/hero/save-the-date-preview-1200x630.jpg" alt="Prenup photos placeholder">
+      <div class="prenup-cta">
+        <button type="button" class="coming-soon-btn" aria-disabled="true" data-tooltip="COMING SOON">PRENUP PHOTOS</button>
+        <span class="coming-soon-tip" aria-live="polite" hidden>COMING SOON</span>
+      </div>
+    </section>
+
+    <section class="monogram-section fade-in section" aria-label="Monogram" id="monogram">
+      <img class="monogram-image" src="public/images/icons/KZ-Monogram.png" alt="KZ Monogram">
+    </section>
+
+    <section class="contact fade-in section" aria-label="Contact Us" id="contact">
+      <h2>Contact Us</h2>
+      <div class="contact-actions">
+        <!-- Replace the Messenger handle/link when ready (example: https://m.me/your.page.username) -->
+        <a class="contact-action" href="https://m.me/" target="_blank" rel="noopener">Message us on Messenger</a>
+        <a class="contact-action" href="tel:+639123456789">Call: +63 912 345 6789</a>
       </div>
     </section>
   </main>
   <button class="back-to-top-btn floating-menu" id="backToTop" aria-label="Back to top">&#8679;</button>
   <script src="src/js/countdown.js" defer></script>
   <script src="src/js/rsvp.js" defer></script>
-  <script src="src/js/gallery.js" defer></script>
   <script src="src/js/animations.js" defer></script>
   <script src="src/js/main.js" defer></script>
   <script src="src/js/pwa.js" defer></script>
