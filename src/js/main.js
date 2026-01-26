@@ -105,6 +105,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const text = h.textContent.trim();
         if (!text) { obs.unobserve(h); return; }
 
+
         const span = document.createElement('span');
         span.className = 'write-mask';
         span.textContent = text;
@@ -113,12 +114,17 @@ window.addEventListener('DOMContentLoaded', () => {
         h.appendChild(span);
 
         const len = Math.max(1, text.length);
-        const duration = Math.min(0.06 * len + 0.6, 4); // seconds
-        span.style.animation = `write ${duration}s steps(${len}, end) forwards`;
+        const duration = Math.min(0.045 * len + 0.6, 4); // seconds, scaled by length
+        span.style.setProperty('--write-duration', `${duration}s`);
+        // trigger overlay slide
+        // small timeout to ensure style applied and element in DOM
+        requestAnimationFrame(() => span.classList.add('writing'));
 
-        span.addEventListener('animationend', () => {
+        // remove caret/overlay after duration
+        setTimeout(() => {
+          span.classList.remove('writing');
           span.classList.add('done');
-        }, { once: true });
+        }, (duration * 1000) + 60);
 
         obs.unobserve(h);
       });

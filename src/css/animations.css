@@ -23,42 +23,56 @@
 }
 
 @keyframes page-fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 /* Typing / write-in animation for section headers */
 .write-mask {
   display: inline-block;
+  position: relative;
   white-space: nowrap;
-  overflow: hidden;
-  width: 0;
-  vertical-align: bottom;
   color: inherit;
 }
 
+/* overlay that slides right to reveal the text beneath; duration controlled
+   via --write-duration on the element (set by JS). */
 .write-mask::after {
   content: '';
-  display: inline-block;
-  width: 1px;
-  height: 1em;
-  background: currentcolor;
-  margin-left: 0.06em;
-  vertical-align: middle;
-  animation: caret-blink 1s steps(2,start) infinite;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(255 255 255 / 98%) 0%, rgb(255 255 255 / 95%) 30%, rgb(255 255 255 / 85%) 60%, rgb(255 255 255 / 0%) 100%);
+  transform: translateX(0%);
+  will-change: transform, opacity;
+}
+
+.write-mask.writing::after {
+  animation: write-slide var(--write-duration, 2s) linear forwards;
 }
 
 .write-mask.done::after {
   opacity: 0;
 }
 
-@keyframes write {
-  to { width: 100%; }
-}
+@keyframes write-slide {
+  0% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
 
-@keyframes caret-blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+  70% {
+    opacity: 0.95;
+  }
+
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
 }
 
 .underline {
