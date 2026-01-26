@@ -88,6 +88,45 @@ window.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSidebar(); });
   })();
 
+  // Write-in animation for section headers (starts from Warm Welcome)
+  (function initWriteHeaders() {
+    const selector = '.welcome-panel-welcome h2, .section h2';
+    const headings = Array.from(document.querySelectorAll(selector))
+      .filter(h => !h.closest('#hero'));
+    if (!headings.length) return;
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const h = entry.target;
+        if (h.dataset.writingStarted) { obs.unobserve(h); return; }
+        h.dataset.writingStarted = '1';
+
+        const text = h.textContent.trim();
+        if (!text) { obs.unobserve(h); return; }
+
+        const span = document.createElement('span');
+        span.className = 'write-mask';
+        span.textContent = text;
+        // Replace heading text with masked span
+        h.textContent = '';
+        h.appendChild(span);
+
+        const len = Math.max(1, text.length);
+        const duration = Math.min(0.06 * len + 0.6, 4); // seconds
+        span.style.animation = `write ${duration}s steps(${len}, end) forwards`;
+
+        span.addEventListener('animationend', () => {
+          span.classList.add('done');
+        }, { once: true });
+
+        obs.unobserve(h);
+      });
+    }, { threshold: 0.5 });
+
+    headings.forEach(h => observer.observe(h));
+  })();
+
   // Back-to-top visibility & scroll handling (appears near bottom of page)
   const backToTop = document.getElementById('backToTop');
   if (backToTop) {

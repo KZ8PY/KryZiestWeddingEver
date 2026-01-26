@@ -27,6 +27,40 @@
   to { opacity: 0; }
 }
 
+/* Typing / write-in animation for section headers */
+.write-mask {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  vertical-align: bottom;
+  color: inherit;
+}
+
+.write-mask::after {
+  content: '';
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  background: currentcolor;
+  margin-left: 0.06em;
+  vertical-align: middle;
+  animation: caret-blink 1s steps(2,start) infinite;
+}
+
+.write-mask.done::after {
+  opacity: 0;
+}
+
+@keyframes write {
+  to { width: 100%; }
+}
+
+@keyframes caret-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
 .underline {
   position: relative;
 }
