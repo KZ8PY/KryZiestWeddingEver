@@ -1,19 +1,57 @@
 /* Animations & transitions for Korean Cafe Wedding Theme */
+
+/* Reveal-from-bright: slide a bright overlay away to reveal content
+   This avoids fading + rising; content is visible immediately while
+   a short bright sweep slides up and out. Applied to elements with
+   the existing `fade-in` class so markup doesn't need changes. */
 .fade-in {
-  opacity: 0;
-  animation: fade-in-cafe 1.5s cubic-bezier(.4,0,.2,1) forwards;
+  position: relative;
+  z-index: 0;
 }
 
-@keyframes fade-in-cafe {
+.fade-in::before {
+  /* full-viewport bright overlay that slides/fades downward */
+  content: '';
+  position: fixed; /* cover the whole viewport */
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgb(255 255 255 / 100%) 0%, rgb(255 255 255 / 95%) 20%, rgb(255 255 255 / 60%) 45%, rgb(255 255 255 / 0%) 100%);
+  transform-origin: top left;
+  animation: reveal-bright-viewport 900ms cubic-bezier(.2,.9,.3,1) forwards;
+  z-index: 99999;
+}
+
+@keyframes reveal-bright-viewport {
   0% {
-    opacity: 0;
-    transform: translateY(24px) scale(0.98);
+    opacity: 1;
+    transform: translateY(0%);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: translateY(10%);
   }
 
   100% {
-    opacity: 1;
-    transform: none;
+    opacity: 0;
+    transform: translateY(120%);
   }
+}
+
+/* Simple page white-fade overlay used for a subtle load transition.
+   It covers the full viewport and fades out from white to transparent. */
+.page-fade-overlay {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 999999; /* very high so it sits above everything */
+  pointer-events: none;
+  animation: page-fade-out 700ms ease-out forwards;
+}
+
+@keyframes page-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 .underline {

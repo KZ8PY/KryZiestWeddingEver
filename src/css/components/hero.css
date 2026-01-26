@@ -174,14 +174,14 @@
 .welcome-song-panel {
   width: 100%;
   background: radial-gradient(circle at center, var(--color-primary-light) 0%, var(--color-primary-light) 40%, color-mix(in srgb, var(--color-primary-light) 60%, var(--color-primary) 40%) 70%, color-mix(in srgb, var(--color-primary) 70%, var(--color-primary-dark) 30%) 100%);
-  border-radius: 1.5rem;
+  border-radius: 0; /* remove rounded corners per request */
   padding: clamp(1rem, 2vw, 1.5rem) clamp(1rem, 4vw, 2rem);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   align-items: stretch;
   color: var(--color-coffee-dark);
-  box-shadow: var(--box-shadow);
+  box-shadow: none; /* remove panel drop shadow for welcome */
   max-width: none;
 }
 
@@ -227,7 +227,7 @@
 
 .welcome-panel-song-player audio {
   width: 100%;
-  border-radius: 0.45rem;
+  border-radius: 0; /* remove rounded corners */
   background: transparent;
   border: none;
   outline: none;
@@ -248,7 +248,7 @@
   background-repeat: no-repeat;
 
   /* stronger inner depth and slightly brighter outer shadow for contrast */
-  box-shadow: inset 0 -8px 22px rgb(0 0 0 / 6%), 0 8px 22px var(--shadow-dark);
+  box-shadow: none; /* remove drop shadow from save-date panel */
   border-radius: var(--border-radius-soft);
   border: 1px solid rgb(255 255 255 / 4%); /* lighter rim */
   color: var(--color-coffee-dark);
@@ -296,8 +296,10 @@
   background-repeat: no-repeat;
 
   /* match the panel depth and subtle rim used by #save-date */
-  box-shadow: inset 0 -8px 22px rgb(0 0 0 / 6%), 0 8px 22px var(--shadow-dark);
-  border-radius: var(--border-radius-soft);
+  box-shadow: none; /* remove hero panel drop shadow */
+
+  /* border-radius: var(--border-radius-soft); */
+  border-radius: 0; /* no rounded corners in hero */
   border: 1px solid rgb(255 255 255 / 4%);
   color: var(--color-coffee-dark);
   position: relative;

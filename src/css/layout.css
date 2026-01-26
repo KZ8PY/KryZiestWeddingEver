@@ -24,7 +24,7 @@
 .section {
   background: var(--color-bg-alt);
   border-radius: 0; /* removed rounded corners per preview request */
-  box-shadow: var(--box-shadow);
+  box-shadow: none; /* remove panel drop shadow */
   margin-bottom: 0;
   padding: 2.5rem 1.5rem;
 }
@@ -51,7 +51,7 @@
   margin: 0;
   background: var(--color-card-bg);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow-soft);
+  box-shadow: none;
   border: 1.5px solid var(--color-border);
   overflow: hidden;
 }
@@ -85,7 +85,7 @@
 .venue-card {
   background: var(--color-card-bg);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow-soft);
+  box-shadow: none;
   border: 1.5px solid var(--color-border);
   overflow: hidden;
   padding: 1rem;
@@ -133,7 +133,7 @@
   color: inherit;
   background: var(--color-card-bg);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow-soft);
+  box-shadow: none;
   border: 1.5px solid var(--color-border);
   padding: 1.25rem 1rem;
   transition: transform 160ms ease, background 160ms ease;
@@ -163,7 +163,7 @@
 .faq-item {
   background: var(--color-card-bg);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow-soft);
+  box-shadow: none;
   border: 1.5px solid var(--color-border);
   overflow: hidden;
 }
@@ -212,7 +212,7 @@
   display: block;
   margin: 1rem auto 0.75rem;
   border-radius: var(--border-radius-soft);
-  box-shadow: var(--box-shadow-soft);
+  box-shadow: none;
 }
 
 .prenup-cta {
@@ -242,7 +242,7 @@
   border-radius: 999px;
   padding: 0.45rem 0.8rem;
   font-size: 0.75rem;
-  box-shadow: var(--box-shadow-soft);
+  box-shadow: none;
 }
 
 /* Monogram-only section */
@@ -274,7 +274,7 @@
   background: var(--color-card-bg);
   color: inherit;
   text-decoration: none;
-  box-shadow: var(--box-shadow-soft);
+  box-shadow: none;
 }
 
 .contact-action:hover {
@@ -284,7 +284,7 @@
 .card {
   background: var(--color-card-bg);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow-soft);
+  box-shadow: none;
   padding: 2rem 1.2rem;
   margin-bottom: 0;
   border: 1.5px solid var(--color-border);
