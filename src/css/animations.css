@@ -62,14 +62,27 @@
     clip-path: inset(0 100% 0 0);
   }
 
-  35% {
+  55% {
     opacity: 0.85;
+    filter: blur(1px);
   }
 
   100% {
     opacity: 1;
     filter: blur(0);
     clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .write-mask {
+    opacity: 1;
+    filter: none;
+    clip-path: inset(0 0 0 0);
+  }
+
+  .write-mask.writing {
+    animation: none;
   }
 }
 

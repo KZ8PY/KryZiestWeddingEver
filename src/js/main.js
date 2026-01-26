@@ -114,7 +114,8 @@ window.addEventListener('DOMContentLoaded', () => {
         h.appendChild(span);
 
         const len = Math.max(1, text.length);
-        const duration = Math.min(0.045 * len + 0.6, 4); // seconds, scaled by length
+        // Slower, more "handwritten" pacing.
+        const duration = Math.min(0.09 * len + 0.8, 6); // seconds, scaled by length
         span.style.setProperty('--write-duration', `${duration}s`);
         // trigger the left-to-right handwritten-style reveal
         requestAnimationFrame(() => span.classList.add('writing'));
