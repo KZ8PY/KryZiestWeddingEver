@@ -19,7 +19,7 @@
   background: white;
   z-index: 999999; /* very high so it sits above everything */
   pointer-events: none;
-  animation: page-fade-out 700ms ease-out forwards;
+  animation: page-fade-out 1500ms ease-out forwards;
 }
 
 @keyframes page-fade-out {
