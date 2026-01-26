@@ -23,7 +23,7 @@
 
 .section {
   background: var(--color-bg-alt);
-  border-radius: var(--border-radius-soft);
+  border-radius: 0; /* removed rounded corners per preview request */
   box-shadow: var(--box-shadow);
   margin-bottom: 0;
   padding: 2.5rem 1.5rem;
