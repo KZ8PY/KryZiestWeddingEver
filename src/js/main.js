@@ -95,6 +95,40 @@ window.addEventListener('DOMContentLoaded', () => {
       .filter(h => !h.closest('#hero'));
     if (!headings.length) return;
 
+    // Prepare: wrap heading text immediately so it won't be visible before animation.
+    headings.forEach((h) => {
+      if (h.querySelector('.write-letter')) return;
+
+      const text = h.textContent.trim();
+      if (!text) return;
+
+      const frag = document.createDocumentFragment();
+      let letterIndex = 0;
+
+      for (const ch of text) {
+        if (ch === ' ') {
+          frag.appendChild(document.createTextNode(' '));
+          continue;
+        }
+
+        const span = document.createElement('span');
+        span.className = 'write-letter';
+        span.textContent = ch;
+        span.style.setProperty('--i', String(letterIndex));
+        letterIndex += 1;
+        frag.appendChild(span);
+      }
+
+      h.textContent = '';
+      h.appendChild(frag);
+      h.classList.add('write-ready');
+
+      // Simple pacing: fixed per-letter delay + quick fade.
+      h.style.setProperty('--letter-delay', '100ms');
+      h.style.setProperty('--letter-duration', '400ms');
+      h.dataset.letterCount = String(letterIndex);
+    });
+
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
@@ -102,31 +136,30 @@ window.addEventListener('DOMContentLoaded', () => {
         if (h.dataset.writingStarted) { obs.unobserve(h); return; }
         h.dataset.writingStarted = '1';
 
-        const text = h.textContent.trim();
-        if (!text) { obs.unobserve(h); return; }
+        const letters = h.querySelectorAll('.write-letter');
+        if (!letters.length) { obs.unobserve(h); return; }
 
-
-        const span = document.createElement('span');
-        span.className = 'write-mask';
-        span.textContent = text;
-        // Replace heading text with masked span
-        h.textContent = '';
-        h.appendChild(span);
-
-        const len = Math.max(1, text.length);
-        // Slower, more "handwritten" pacing.
-        const duration = Math.min(0.09 * len + 0.8, 6); // seconds, scaled by length
-        span.style.setProperty('--write-duration', `${duration}s`);
-        // trigger the left-to-right handwritten-style reveal
-        requestAnimationFrame(() => span.classList.add('writing'));
+        // Trigger the letter-by-letter reveal.
+        // Two rAFs ensures the "hidden" styles are committed before animation starts.
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => h.classList.add('writing'));
+        });
 
         // mark done after animation completes (fallback timer included)
         const finish = () => {
-          span.classList.remove('writing');
-          span.classList.add('done');
+          h.classList.remove('writing');
+          h.classList.add('done');
         };
-        span.addEventListener('animationend', finish, { once: true });
-        setTimeout(finish, Math.round(duration * 1000) + 200);
+
+        const styles = getComputedStyle(h);
+        const delayMs = Number.parseFloat(styles.getPropertyValue('--letter-delay'));
+        const durMs = Number.parseFloat(styles.getPropertyValue('--letter-duration'));
+        const count = Number.parseInt(h.dataset.letterCount || '0', 10);
+        const fallbackMs = (Number.isFinite(delayMs) && Number.isFinite(durMs) && Number.isFinite(count))
+          ? Math.round(Math.max(0, count - 1) * delayMs + durMs + 200)
+          : 2200;
+
+        setTimeout(finish, fallbackMs);
 
         obs.unobserve(h);
       });

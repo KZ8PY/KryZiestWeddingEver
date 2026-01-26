@@ -136,6 +136,8 @@
   height: 3.6rem;
 }
 
+/* Hero date GIF sizing will be applied alongside the primary .hero .date rules below */
+
 /* small-screen media block intentionally empty so heading size remains consistent across viewports */
 
 .header-brand { margin-right: 1rem; }
@@ -173,9 +175,7 @@
 
 .welcome-song-panel {
   width: 100%;
-
-  /* lighter, cream-forward radial for the welcome area */
-  background: radial-gradient(circle at center, var(--color-warm-cream) 0%, var(--color-cream-1) 40%, var(--color-primary-light) 75%, var(--color-bg-alt) 100%);
+  background: radial-gradient(circle at center, var(--color-cream-mid) 0%, var(--color-bg-alt) 40%, color-mix(in srgb, var(--color-bg-alt) 60%, var(--color-coffee-light) 40%) 70%, color-mix(in srgb, var(--color-primary-light) 70%, var(--color-primary) 30%) 100%);
   border-radius: 0; /* remove rounded corners per request */
   padding: clamp(1rem, 2vw, 1.5rem) clamp(1rem, 4vw, 2rem);
   display: flex;
@@ -336,8 +336,31 @@
   font-weight: 700;
   text-shadow: 0 1px 0 var(--white-22);
   z-index: 7;
-  padding-top: 2rem;
+  margin-bottom: 0; /* remove default paragraph margins so the GIF aligns exactly */
   position: relative;
+
+  /* center the gif inside the date container and make it responsive */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero .hero-date-gif {
+  max-width: 120%;
+  height: auto;
+  display: block;
+}
+
+@media (width >= 720px) {
+  .hero .hero-date-gif {
+    max-width: 700px;
+  }
+}
+
+@media (width <= 420px) {
+  .hero .hero-date-gif {
+    max-width: 120%;
+  }
 }
 
 /* decorative hero ::before / ::after */

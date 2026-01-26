@@ -32,56 +32,53 @@
   }
 }
 
-/* Handwritten-style reveal for section headers:
-   the text itself fades in while a left->right clip expands.
-   No overlay elements; works well for cursive headings. */
-.write-mask {
+/* Section header reveal: simple letter-by-letter fade-in.
+  No overlays, masks, or clip effects. */
+.js .welcome-panel-welcome h2,
+.js .section h2 {
+  visibility: hidden;
+}
+
+.js .welcome-panel-welcome h2.write-ready,
+.js .section h2.write-ready {
+  visibility: visible;
+}
+
+.write-letter {
   display: inline-block;
-  white-space: nowrap;
-  color: inherit;
   opacity: 0;
-  filter: blur(3px);
-  will-change: opacity, clip-path, filter;
-  clip-path: inset(0 100% 0 0);
+  will-change: opacity;
+  text-transform: none;
 }
 
-.write-mask.writing {
-  animation: write-reveal var(--write-duration, 2.2s) cubic-bezier(.2,.9,.3,1) forwards;
+.write-ready.writing .write-letter {
+  animation: letter-fade-in var(--letter-duration, 320ms) ease-out forwards;
+  animation-delay: calc(var(--i, 0) * var(--letter-delay, 36ms));
 }
 
-.write-mask.done {
+.write-ready.done .write-letter {
   opacity: 1;
-  filter: none;
-  clip-path: inset(0 0 0 0);
+  animation: none;
 }
 
-@keyframes write-reveal {
-  0% {
+@keyframes letter-fade-in {
+  from {
     opacity: 0;
-    filter: blur(4px);
-    clip-path: inset(0 100% 0 0);
   }
 
-  55% {
-    opacity: 0.85;
-    filter: blur(1px);
-  }
-
-  100% {
+  to {
     opacity: 1;
-    filter: blur(0);
-    clip-path: inset(0 0 0 0);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .write-mask {
-    opacity: 1;
-    filter: none;
-    clip-path: inset(0 0 0 0);
+  .js .welcome-panel-welcome h2,
+  .js .section h2 {
+    visibility: visible;
   }
 
-  .write-mask.writing {
+  .write-letter {
+    opacity: 1;
     animation: none;
   }
 }
