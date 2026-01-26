@@ -116,15 +116,14 @@ window.addEventListener('DOMContentLoaded', () => {
         const len = Math.max(1, text.length);
         const duration = Math.min(0.045 * len + 0.6, 4); // seconds, scaled by length
         span.style.setProperty('--write-duration', `${duration}s`);
-        // trigger overlay slide
-        // small timeout to ensure style applied and element in DOM
+        // trigger the left-to-right text reveal
         requestAnimationFrame(() => span.classList.add('writing'));
 
-        // remove caret/overlay after duration
+        // finalize after duration: remove animation class and mark done
         setTimeout(() => {
           span.classList.remove('writing');
           span.classList.add('done');
-        }, (duration * 1000) + 60);
+        }, Math.round(duration * 1000) + 60);
 
         obs.unobserve(h);
       });
