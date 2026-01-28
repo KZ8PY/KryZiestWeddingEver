@@ -1,8 +1,8 @@
 .gallery {
   padding: 2.5rem 1.2rem;
-  background: var(--color-bg-alt);
+  background: transparent;
   border-radius: var(--border-radius-soft);
-  box-shadow: var(--box-shadow-soft);
+  box-shadow: none;
 }
 
 .gallery-grid {
