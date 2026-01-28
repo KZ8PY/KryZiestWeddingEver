@@ -1,8 +1,8 @@
 .registry {
   padding: 2.5rem 1.2rem;
-  background: transparent;
+  background: var(--color-bg-alt);
   border-radius: var(--border-radius-soft);
-  box-shadow: none;
+  box-shadow: var(--box-shadow-soft);
 }
 
 .registry-links {

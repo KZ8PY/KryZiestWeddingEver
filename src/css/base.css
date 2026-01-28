@@ -47,10 +47,6 @@ html, body {
   overflow-x: hidden;
 }
 
-html {
-  background: var(--color-bg);
-}
-
 .sticky-header.latte-frame.header-hide-title {
   min-height: 2.7rem;
   padding-top: 0.3rem;
@@ -102,7 +98,7 @@ html {
 
 
 body {
-  background: transparent;
+  background: linear-gradient(135deg, var(--color-bg) 60%, var(--color-bg-alt) 100%);
   color: var(--color-text);
   font-family: var(--font-body);
   font-weight: 600;
@@ -111,277 +107,6 @@ body {
   line-height: 1.7;
   min-height: 100vh;
   letter-spacing: 0.01em;
-  position: relative;
-  isolation: isolate;
-}
-
-/* Latte swirl background (decorative, behind all content) */
-#latte-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-
-  /* Keep repaints contained to the background stack */
-  contain: paint;
-}
-
-#latte-bg .latte-layer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  contain: paint;
-}
-
-/* 65 explicit stops (50+ intermediate) for ultra-smooth blending */
-#latte-bg .latte-gradient {
-  z-index: 1;
-  background: linear-gradient(
-    to bottom,
-    #4a2c2a 0%,
-    #4e2e29 1.75%,
-    #522f27 3.5%,
-    #563126 5.25%,
-    #5a3224 7%,
-    #5e3423 8.75%,
-    #623521 10.5%,
-    #663720 12.25%,
-    #6a381e 14%,
-    #6f3a1d 15.75%,
-    #733c1c 17.5%,
-    #773d1a 19.25%,
-    #7b3f19 21%,
-    #7f4017 22.75%,
-    #834216 24.5%,
-    #874314 26.25%,
-    #8b4513 28%,
-    #8f4c1b 29.5%,
-    #945322 31%,
-    #985a2a 32.5%,
-    #9d6131 34%,
-    #a16839 35.5%,
-    #a66f40 37%,
-    #aa7648 38.5%,
-    #ae7c50 40%,
-    #b38357 41.5%,
-    #b78a5f 43%,
-    #bc9166 44.5%,
-    #c0986e 46%,
-    #c59f75 47.5%,
-    #c9a67d 49%,
-    #cead84 50.5%,
-    #d2b48c 52%,
-    #cdb38a 53%,
-    #c9b388 54%,
-    #c4b286 55%,
-    #bfb184 56%,
-    #bbb182 57%,
-    #b6b080 58%,
-    #b1af7e 59%,
-    #acae7c 60%,
-    #a8ae79 61%,
-    #a3ad77 62%,
-    #9eac75 63%,
-    #9aac73 64%,
-    #95ab71 65%,
-    #90aa6f 66%,
-    #8caa6d 67%,
-    #87a96b 68%,
-    #8eae73 70%,
-    #95b37c 72%,
-    #9db884 74%,
-    #a4bc8c 76%,
-    #abc195 78%,
-    #b2c69d 80%,
-    #b9cba5 82%,
-    #c0d0ae 84%,
-    #c8d5b6 86%,
-    #cfdabe 88%,
-    #d6dfc6 90%,
-    #dde4cf 92%,
-    #e4e8d7 94%,
-    #eceddf 96%,
-    #f3f2e8 98%,
-    #faf7f0 100%
-  );
-  background-size: 100% 140%;
-  background-position: 50% 0%;
-  will-change: background-position, filter;
-  animation: latteGradientDrift 55s ease-in-out infinite alternate;
-}
-
-@keyframes latteGradientDrift {
-  0% { background-position: 50% 0%; filter: saturate(1.02) contrast(1.01); }
-  100% { background-position: 50% 22%; filter: saturate(1.06) contrast(1.02); }
-}
-
-/* Rotating radial overlays for depth */
-#latte-bg .latte-orbs {
-  z-index: 1;
-  mix-blend-mode: soft-light;
-  opacity: 1;
-  transform: translate3d(var(--latte-parallax-x, 0px), var(--latte-parallax-y, 0px), 0);
-  will-change: transform;
-}
-
-/* Hero-like circular gradients (blobs) drifting across the entire background */
-#latte-bg .latte-blobs {
-  z-index: 2;
-  mix-blend-mode: overlay;
-  opacity: 1;
-  transform: translate3d(var(--latte-parallax-x, 0px), var(--latte-parallax-y, 0px), 0);
-  will-change: transform;
-}
-
-#latte-bg .latte-blob {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: var(--blob-size, 520px);
-  height: var(--blob-size, 520px);
-  border-radius: 50%;
-  filter: blur(var(--blob-blur, 6px));
-  opacity: var(--blob-opacity, 0.22);
-  /* Avoid will-change on many nodes; it can increase memory/overheads */
-  pointer-events: none;
-
-  /* Defined circular gradients like hero ::before/::after, but layered for latte depth */
-  background:
-    radial-gradient(circle at 42% 36%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 48%),
-    radial-gradient(circle at 58% 62%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 44%),
-    radial-gradient(circle at 40% 40%, var(--blob-color, rgba(135, 169, 107, 0.20)) 0%, rgba(0,0,0,0) 74%);
-}
-
-#latte-bg .latte-orb {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background-repeat: no-repeat;
-  will-change: transform;
-}
-
-#latte-bg .latte-orb.lg1 {
-  background-image:
-    radial-gradient(ellipse 800px 600px at 28% 22%, rgba(74, 44, 42, 0.14) 0%, rgba(74, 44, 42, 0) 72%),
-    radial-gradient(ellipse 700px 520px at 66% 36%, rgba(139, 69, 19, 0.12) 0%, rgba(139, 69, 19, 0) 70%),
-    radial-gradient(ellipse 680px 680px at 44% 72%, rgba(210, 180, 140, 0.10) 0%, rgba(210, 180, 140, 0) 72%),
-    radial-gradient(ellipse 760px 560px at 72% 74%, rgba(135, 169, 107, 0.10) 0%, rgba(135, 169, 107, 0) 72%);
-  animation: latteOrbSpin 40s linear infinite;
-}
-
-#latte-bg .latte-orb.lg2 {
-  mix-blend-mode: overlay;
-  background-image:
-    radial-gradient(ellipse 780px 610px at 62% 24%, rgba(139, 69, 19, 0.09) 0%, rgba(139, 69, 19, 0) 72%),
-    radial-gradient(ellipse 680px 760px at 36% 64%, rgba(210, 180, 140, 0.08) 0%, rgba(210, 180, 140, 0) 70%),
-    radial-gradient(ellipse 640px 520px at 52% 44%, rgba(135, 169, 107, 0.08) 0%, rgba(135, 169, 107, 0) 70%);
-  animation: latteOrbSpin2 40s linear infinite;
-}
-
-@keyframes latteOrbSpin {
-  0% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.06); }
-  100% { transform: rotate(360deg) scale(1); }
-}
-
-@keyframes latteOrbSpin2 {
-  0% { transform: rotate(0deg) scale(1.02); }
-  50% { transform: rotate(180deg) scale(0.98); }
-  100% { transform: rotate(360deg) scale(1.02); }
-}
-
-#latte-bg .latte-orb.md1 {
-  mix-blend-mode: overlay;
-  background-image:
-    radial-gradient(ellipse 600px 820px at 38% 42%, rgba(139, 69, 19, 0.10) 0%, rgba(139, 69, 19, 0) 72%),
-    radial-gradient(ellipse 560px 640px at 64% 56%, rgba(210, 180, 140, 0.08) 0%, rgba(210, 180, 140, 0) 70%);
-  animation: latteOrbReverse 30s linear infinite;
-}
-
-#latte-bg .latte-orb.md2 {
-  mix-blend-mode: soft-light;
-  background-image:
-    radial-gradient(ellipse 620px 520px at 56% 44%, rgba(135, 169, 107, 0.09) 0%, rgba(135, 169, 107, 0) 70%),
-    radial-gradient(ellipse 520px 620px at 44% 62%, rgba(250, 247, 240, 0.10) 0%, rgba(250, 247, 240, 0) 72%);
-  animation: latteOrbReverse2 30s linear infinite;
-}
-
-@keyframes latteOrbReverse {
-  0% { transform: translate3d(-1%, 1%, 0) rotate(0deg) scale(1); }
-  50% { transform: translate3d(1%, -1%, 0) rotate(-180deg) scale(1.05); }
-  100% { transform: translate3d(-1%, 1%, 0) rotate(-360deg) scale(1); }
-}
-
-@keyframes latteOrbReverse2 {
-  0% { transform: translate3d(1%, -1%, 0) rotate(0deg) scale(1.02); }
-  50% { transform: translate3d(-1%, 1%, 0) rotate(-180deg) scale(0.98); }
-  100% { transform: translate3d(1%, -1%, 0) rotate(-360deg) scale(1.02); }
-}
-
-/* SVG wave layers (blurred for liquid blending) */
-#latte-bg .latte-waves {
-  z-index: 2;
-}
-
-#latte-bg svg.latte-wave {
-  position: absolute;
-  left: -6%;
-  width: 112%;
-  height: 180px;
-  filter: blur(var(--latte-wave-blur, 12px));
-  opacity: 1;
-  will-change: transform;
-}
-
-/* Performance tiering: reduce layer complexity on lower-end devices */
-#latte-bg.latte-tier-low .latte-orb.md2 {
-  display: none;
-}
-
-#latte-bg.latte-tier-low .latte-orb.md1 {
-  opacity: 0.75;
-}
-
-#latte-bg svg.latte-wave.wave1 { top: 18%; }
-#latte-bg svg.latte-wave.wave2 { top: 48%; }
-#latte-bg svg.latte-wave.wave3 { top: 75%; }
-
-#latte-bg svg.latte-wave path {
-  transform-origin: 50% 50%;
-}
-
-/* Foam texture overlay */
-#latte-bg .latte-foam {
-  z-index: 3;
-  background-image:
-    radial-gradient(circle at 18% 22%, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0) 56%),
-    radial-gradient(circle at 72% 28%, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0) 58%),
-    radial-gradient(circle at 36% 74%, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 60%),
-    radial-gradient(circle at 82% 72%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 62%);
-  opacity: 0.7;
-  animation: latteFoamPulse 20s ease-in-out infinite;
-}
-
-@keyframes latteFoamPulse {
-  0% { opacity: 0.6; }
-  50% { opacity: 0.8; }
-  100% { opacity: 0.6; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #latte-bg .latte-gradient,
-  #latte-bg .latte-orb,
-  #latte-bg .latte-blob,
-  #latte-bg .latte-foam {
-    animation: none !important;
-  }
 }
 
 /* Global headings (excluding hero-specific title selectors) */
@@ -605,7 +330,17 @@ h2 {
   width: 8rem;
   height: 8rem;
   z-index: 1200;
-  animation: none !important;
+  animation: rotate-cup 5s linear infinite;
   pointer-events: none;
 }
 
+
+@keyframes rotate-cup {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes rotate-cup {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
