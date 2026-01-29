@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="src/css/components/hero.css">
   <link rel="stylesheet" href="src/css/animations.css">
   <link rel="stylesheet" href="src/css/components/sidebar.css">
+  <link rel="stylesheet" href="src/css/components/glass.css">
 </head>
 
 <body>
@@ -46,7 +47,6 @@
     <nav aria-label="Primary">
       <ul>
         <li><a href="#hero">Home</a></li>
-        <li><a href="savethedate-rsvp/">RSVP</a></li>
         <li><a href="#story">Our Story</a></li>
         <li><a href="#details">Wedding Details</a></li>
         <li><a href="#dress-code">Dress Code</a></li>
@@ -55,8 +55,8 @@
         <li><a href="#stay">Places to Stay</a></li>
         <li><a href="#faq">F.A.Q.</a></li>
         <li><a href="#prenup">Prenup Photos</a></li>
-        <li><a href="#monogram">Monogram</a></li>
         <li><a href="#contact">Contact Us</a></li>
+        <li><a href="savethedate-rsvp/">RSVP</a></li>
       </ul>
     </nav>
   </aside>
@@ -227,7 +227,7 @@
       <div class="venue-grid">
         <article class="venue-card">
           <h3>Ceremony</h3>
-          <img src="public/images/hero/hero-img.jpg" alt="Ceremony venue photo placeholder">
+          <img src="public/images/venue/church.svg" alt="Church (ceremony) illustration">
           <iframe
             title="Ceremony location map"
             loading="lazy"
@@ -237,7 +237,7 @@
 
         <article class="venue-card">
           <h3>Reception</h3>
-          <img src="public/images/hero/Cover-ZK8.png" alt="Reception venue photo placeholder">
+          <img src="public/images/venue/reception.svg" alt="Reception venue illustration">
           <iframe
             title="Reception location map"
             loading="lazy"
@@ -249,36 +249,48 @@
 
     <section class="stay fade-in section" aria-label="Places to Stay" id="stay">
       <h2>Places to Stay</h2>
-      <div class="stay-grid" role="list">
-        <div class="stay-card" role="listitem">
-          <h3>Hue Hotels</h3>
-          <a class="maps-btn" href="https://maps.app.goo.gl/6uao1mvzfk9WbNvHA" target="_blank" rel="noopener" aria-label="Open Hue Hotels in Google Maps">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
-          </a>
-        </div>
-        <div class="stay-card" role="listitem">
-          <h3>Holiday Suites</h3>
-          <a class="maps-btn" href="https://maps.app.goo.gl/Xvqy5dVijLYpzWjq6" target="_blank" rel="noopener" aria-label="Open Holiday Suites in Google Maps">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
-          </a>
-        </div>
-        <div class="stay-card" role="listitem">
-          <h3>Go Hotels</h3>
-          <a class="maps-btn" href="https://maps.app.goo.gl/CbtaXqrV1SYR9qyf9" target="_blank" rel="noopener" aria-label="Open Go Hotels in Google Maps">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
-          </a>
-        </div>
-        <div class="stay-card" role="listitem">
-          <h3>Southwind Resort</h3>
-          <a class="maps-btn" href="https://maps.app.goo.gl/hBaaFdr2vqigjDF87" target="_blank" rel="noopener" aria-label="Open Southwind Resort in Google Maps">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
-          </a>
-        </div>
-        <div class="stay-card" role="listitem">
-          <h3>Hotel Centro</h3>
-          <a class="maps-btn" href="https://maps.app.goo.gl/QBwPJb3LtZFBPrLu7" target="_blank" rel="noopener" aria-label="Open Hotel Centro in Google Maps">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
-          </a>
+      <div class="frosted-panel stay-panel" aria-label="Hotel map links">
+        <div class="stay-grid" role="list">
+          <div role="listitem">
+            <a class="contact-action stay-hotel-btn" href="https://maps.app.goo.gl/6uao1mvzfk9WbNvHA" target="_blank" rel="noopener" aria-label="Open Hue Hotels in Google Maps">
+              <span class="stay-hotel-name">Hue Hotels</span>
+              <span class="stay-hotel-badge" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+              </span>
+            </a>
+          </div>
+          <div role="listitem">
+            <a class="contact-action stay-hotel-btn" href="https://maps.app.goo.gl/Xvqy5dVijLYpzWjq6" target="_blank" rel="noopener" aria-label="Open Holiday Suites in Google Maps">
+              <span class="stay-hotel-name">Holiday Suites</span>
+              <span class="stay-hotel-badge" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+              </span>
+            </a>
+          </div>
+          <div role="listitem">
+            <a class="contact-action stay-hotel-btn" href="https://maps.app.goo.gl/CbtaXqrV1SYR9qyf9" target="_blank" rel="noopener" aria-label="Open Go Hotels in Google Maps">
+              <span class="stay-hotel-name">Go Hotels</span>
+              <span class="stay-hotel-badge" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+              </span>
+            </a>
+          </div>
+          <div role="listitem">
+            <a class="contact-action stay-hotel-btn" href="https://maps.app.goo.gl/hBaaFdr2vqigjDF87" target="_blank" rel="noopener" aria-label="Open Southwind Resort in Google Maps">
+              <span class="stay-hotel-name">Southwind Resort</span>
+              <span class="stay-hotel-badge" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+              </span>
+            </a>
+          </div>
+          <div role="listitem">
+            <a class="contact-action stay-hotel-btn" href="https://maps.app.goo.gl/QBwPJb3LtZFBPrLu7" target="_blank" rel="noopener" aria-label="Open Hotel Centro in Google Maps">
+              <span class="stay-hotel-name">Hotel Centro</span>
+              <span class="stay-hotel-badge" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

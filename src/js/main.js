@@ -1,6 +1,6 @@
 // Main JS: navigation, smooth scroll
 window.addEventListener('DOMContentLoaded', () => {
-  // Decorative latte background (injected once per page) + rAF-driven sizing/parallax.
+  // Decorative latte background (injected once per page) + rAF-driven sizing.
   (function initLatteBackground() {
     if (document.getElementById('latte-bg')) return;
 
@@ -28,52 +28,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
       <div class="latte-layer latte-blobs" id="latte-blobs" aria-hidden="true"></div>
 
-      <div class="latte-layer latte-waves">
-        <svg class="latte-wave wave1" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <path fill="rgba(111, 78, 55, 0.3)" d="M0,60 C140,10 360,110 500,60 C640,10 860,110 1000,60 L1000,120 L0,120 Z">
-            <animate attributeName="d" dur="25s" repeatCount="indefinite" values="
-              M0,60 C140,10 360,110 500,60 C640,10 860,110 1000,60 L1000,120 L0,120 Z;
-              M0,60 C160,20 340,100 500,60 C660,20 840,100 1000,60 L1000,120 L0,120 Z;
-              M0,60 C120,30 380,90 500,60 C620,30 880,90 1000,60 L1000,120 L0,120 Z;
-              M0,60 C180,15 320,105 500,60 C680,15 820,105 1000,60 L1000,120 L0,120 Z;
-              M0,60 C140,10 360,110 500,60 C640,10 860,110 1000,60 L1000,120 L0,120 Z
-            " />
-          </path>
-        </svg>
-
-        <svg class="latte-wave wave2" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <path fill="rgba(136, 89, 33, 0.25)" d="M0,60 C150,18 350,102 500,60 C650,18 850,102 1000,60 L1000,120 L0,120 Z">
-            <animate attributeName="d" dur="30s" repeatCount="indefinite" values="
-              M0,60 C150,18 350,102 500,60 C650,18 850,102 1000,60 L1000,120 L0,120 Z;
-              M0,60 C130,8 370,112 500,60 C630,8 870,112 1000,60 L1000,120 L0,120 Z;
-              M0,60 C170,28 330,92 500,60 C670,28 830,92 1000,60 L1000,120 L0,120 Z;
-              M0,60 C120,22 380,98 500,60 C620,22 880,98 1000,60 L1000,120 L0,120 Z;
-              M0,60 C150,18 350,102 500,60 C650,18 850,102 1000,60 L1000,120 L0,120 Z
-            " />
-          </path>
-        </svg>
-
-        <svg class="latte-wave wave3" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <path fill="rgba(210, 180, 140, 0.22)" d="M0,60 C135,26 365,94 500,60 C635,26 865,94 1000,60 L1000,120 L0,120 Z">
-            <animate attributeName="d" dur="35s" repeatCount="indefinite" values="
-              M0,60 C135,26 365,94 500,60 C635,26 865,94 1000,60 L1000,120 L0,120 Z;
-              M0,60 C165,16 335,104 500,60 C665,16 835,104 1000,60 L1000,120 L0,120 Z;
-              M0,60 C120,34 380,86 500,60 C620,34 880,86 1000,60 L1000,120 L0,120 Z;
-              M0,60 C180,24 320,96 500,60 C680,24 820,96 1000,60 L1000,120 L0,120 Z;
-              M0,60 C135,26 365,94 500,60 C635,26 865,94 1000,60 L1000,120 L0,120 Z
-            " />
-          </path>
-        </svg>
-      </div>
-
       <div class="latte-layer latte-foam"></div>
     `;
 
     document.body.prepend(container);
-
-    // Tune blur for waves per device tier (CSS var used by the wave filter).
-    // Lower blur = significantly less GPU filter cost.
-    document.documentElement.style.setProperty('--latte-wave-blur', isLowTier ? '8px' : '10px');
 
     // Create hero-like circular gradient blobs across the full page.
     const blobLayer = container.querySelector('#latte-blobs');
@@ -98,7 +56,7 @@ window.addEventListener('DOMContentLoaded', () => {
         return palette[0];
       };
 
-      const count = isLowTier ? 12 : 18;
+      const count = isLowTier ? 10 : 16;
       for (let i = 0; i < count; i += 1) {
         const el = document.createElement('div');
         el.className = 'latte-blob';
@@ -151,9 +109,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    const root = document.documentElement;
     let measureRafId = 0;
-    let parallaxRafId = 0;
 
     let bgWidth = 0;
     let bgHeight = 0;
@@ -169,16 +125,8 @@ window.addEventListener('DOMContentLoaded', () => {
         body.offsetHeight,
         window.innerHeight
       );
-      container.style.height = height + 'px';
       bgHeight = height;
       bgWidth = Math.max(doc.clientWidth || 0, window.innerWidth || 0);
-    };
-
-    const updateParallax = () => {
-      parallaxRafId = 0;
-      const y = window.scrollY || 0;
-      root.style.setProperty('--latte-parallax-y', (-y * 0.04).toFixed(2) + 'px');
-      root.style.setProperty('--latte-parallax-x', (Math.sin(y / 700) * 14).toFixed(2) + 'px');
     };
 
     const requestMeasure = () => {
@@ -186,18 +134,9 @@ window.addEventListener('DOMContentLoaded', () => {
       measureRafId = window.requestAnimationFrame(measure);
     };
 
-    const requestParallax = () => {
-      if (parallaxRafId) return;
-      parallaxRafId = window.requestAnimationFrame(updateParallax);
-    };
-
-    // Scroll: only update CSS vars (no expensive layout reads).
-    window.addEventListener('scroll', requestParallax, { passive: true });
-
-    // Resize: measure + update parallax.
+    // Resize: re-measure the scrollable page height used to distribute blobs.
     window.addEventListener('resize', () => {
       requestMeasure();
-      requestParallax();
     });
 
     // Content changes (images loading, dynamic layout): keep height correct.
@@ -210,11 +149,17 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     requestMeasure();
-    requestParallax();
+
+    // Expose controls so other features (e.g. video playback) can temporarily pause the background.
+    container.__latteAnimControls = {
+      stop: () => {},
+      start: () => {},
+      isRunning: () => false
+    };
 
     // Frequent fluid motion: animate blob transforms via rAF (kept lightweight: transform-only updates).
     if (!prefersReducedMotion && blobs.length) {
-      const targetFps = isLowTier ? 30 : 45;
+      const targetFps = isLowTier ? 24 : 40;
       const frameIntervalMs = 1000 / targetFps;
       let lastRenderedAt = 0;
       let rafAnimId = 0;
@@ -266,6 +211,12 @@ window.addEventListener('DOMContentLoaded', () => {
         if (!rafAnimId) rafAnimId = window.requestAnimationFrame(animateBlobs);
       };
 
+      container.__latteAnimControls = {
+        stop,
+        start,
+        isRunning: () => running
+      };
+
       // Pause animation when tab is hidden to avoid background CPU usage.
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) stop(); else start();
@@ -273,6 +224,84 @@ window.addEventListener('DOMContentLoaded', () => {
 
       start();
     }
+  })();
+
+  // Video performance mode: pause the animated background while interacting with videos.
+  // This reduces dropped frames on pages with <video> (notably the Save the Date page).
+  (function initVideoPerfMode() {
+    const latteBg = document.getElementById('latte-bg');
+    const videos = Array.from(document.querySelectorAll('video'));
+    if (!latteBg || !videos.length) return;
+
+    const controls = latteBg.__latteAnimControls || { stop: () => {}, start: () => {}, isRunning: () => false };
+
+    let hoverCount = 0;
+    let focusCount = 0;
+    let playingCount = 0;
+    let fullscreenActive = false;
+
+    const computePaused = () => (hoverCount > 0) || (focusCount > 0) || (playingCount > 0) || fullscreenActive;
+
+    let lastPaused = null;
+    const applyPaused = () => {
+      const paused = computePaused();
+      if (paused === lastPaused) return;
+      lastPaused = paused;
+
+      latteBg.classList.toggle('latte-paused', paused);
+      if (paused) controls.stop(); else if (!document.hidden) controls.start();
+    };
+
+    const onFullscreenChange = () => {
+      const el = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || null;
+      fullscreenActive = !!(el && (el.tagName === 'VIDEO' || (el.querySelector && el.querySelector('video'))));
+      applyPaused();
+    };
+
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+    document.addEventListener('msfullscreenchange', onFullscreenChange);
+
+    // Keep counts balanced even if multiple videos exist.
+    for (const v of videos) {
+      v.addEventListener('pointerenter', () => { hoverCount += 1; applyPaused(); });
+      v.addEventListener('pointerleave', () => { hoverCount = Math.max(0, hoverCount - 1); applyPaused(); });
+
+      v.addEventListener('focus', () => { focusCount += 1; applyPaused(); });
+      v.addEventListener('blur', () => { focusCount = Math.max(0, focusCount - 1); applyPaused(); });
+
+      v.addEventListener('play', () => { playingCount += 1; applyPaused(); });
+      v.addEventListener('pause', () => { playingCount = Math.max(0, playingCount - 1); applyPaused(); });
+      v.addEventListener('ended', () => { playingCount = Math.max(0, playingCount - 1); applyPaused(); });
+
+      // iOS Safari fullscreen events on the media element
+      v.addEventListener('webkitbeginfullscreen', () => { fullscreenActive = true; applyPaused(); });
+      v.addEventListener('webkitendfullscreen', () => { fullscreenActive = false; applyPaused(); });
+    }
+
+    // Also pause when any element within a video gains focus via keyboard.
+    // (Not all browsers focus the <video> element itself.)
+    document.addEventListener('focusin', (e) => {
+      if (e.target && e.target.tagName === 'VIDEO') { focusCount += 1; applyPaused(); }
+    });
+    document.addEventListener('focusout', (e) => {
+      if (e.target && e.target.tagName === 'VIDEO') { focusCount = Math.max(0, focusCount - 1); applyPaused(); }
+    });
+
+    // Respect tab visibility (background should already pause itself; keep state consistent).
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        latteBg.classList.add('latte-paused');
+        controls.stop();
+        lastPaused = true;
+      } else {
+        lastPaused = null;
+        applyPaused();
+      }
+    });
+
+    // Initial state
+    applyPaused();
   })();
 
   // Lightweight accessible custom audio player
@@ -368,12 +397,48 @@ window.addEventListener('DOMContentLoaded', () => {
   // Header scroll behavior: toggle .scrolled to allow CSS-driven translucency
   const header = document.querySelector('.site-header');
   if (header) {
-    const onScroll = () => {
-      const threshold = 24; // px scrolled before applying effect
-      if (window.scrollY > threshold) header.classList.add('scrolled'); else header.classList.remove('scrolled');
+    const threshold = 24; // px scrolled before applying effect
+
+    let scrollRafId = 0;
+    let docScrollable = 0;
+
+    const recomputeScrollable = () => {
+      // Reading scrollHeight can trigger layout; do it on resize instead of on every scroll.
+      const doc = document.documentElement;
+      docScrollable = Math.max(0, (doc.scrollHeight || 0) - window.innerHeight);
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+
+    const applyScrollEffects = () => {
+      scrollRafId = 0;
+
+      const y = window.scrollY || 0;
+      if (y > threshold) header.classList.add('scrolled'); else header.classList.remove('scrolled');
+
+      // Back-to-top visibility (appears near bottom of page)
+      const backToTop = document.getElementById('backToTop');
+      if (backToTop) {
+        const progress = docScrollable <= 0 ? 0 : y / docScrollable;
+        if (progress >= 0.7) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+      }
+    };
+
+    const requestScrollEffects = () => {
+      if (scrollRafId) return;
+      scrollRafId = window.requestAnimationFrame(applyScrollEffects);
+    };
+
+    window.addEventListener('scroll', requestScrollEffects, { passive: true });
+    window.addEventListener('resize', () => {
+      recomputeScrollable();
+      requestScrollEffects();
+    }, { passive: true });
+    window.addEventListener('load', () => {
+      recomputeScrollable();
+      requestScrollEffects();
+    }, { once: true });
+
+    recomputeScrollable();
+    requestScrollEffects();
 
     // Measure header height and publish as a CSS variable so components (hero)
     // can offset themselves to avoid overlap with the sticky header. This also
@@ -525,24 +590,9 @@ window.addEventListener('DOMContentLoaded', () => {
   // Back-to-top visibility & scroll handling (appears near bottom of page)
   const backToTop = document.getElementById('backToTop');
   if (backToTop) {
-    const updateBackToTop = () => {
-      const scrollY = window.scrollY;
-      const docHeight = document.body.scrollHeight - window.innerHeight;
-      const progress = docHeight <= 0 ? 0 : scrollY / docHeight;
-      if (progress >= 0.7) {
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
-      }
-    };
-
-    window.addEventListener('scroll', () => {
-      updateBackToTop();
-    }, { passive: true });
     backToTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-    updateBackToTop();
   }
 
   // Reveal countdown cups with a stagger when they enter the viewport
