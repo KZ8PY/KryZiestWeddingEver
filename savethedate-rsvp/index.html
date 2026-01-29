@@ -32,9 +32,60 @@
   <link rel="stylesheet" href="../src/css/components/hero.css">
   <link rel="stylesheet" href="../src/css/animations.css">
   <link rel="stylesheet" href="../src/css/components/sidebar.css">
+  <link rel="stylesheet" href="../src/css/components/glass.css">
   <style>
     /* Hide the hamburger icon on this page */
     #hamburgerBtn { display: none !important; }
+
+    /* Page-specific header title color: keeps Save the Date title readable on this page */
+    body > header .header-site-title { color: var(--color-bg-alt); }
+
+    /* Glass panel sizing for the Save the Date section only (full-width section) */
+    #save-date {
+      padding: 0;
+    }
+    #save-date .std-glass {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      border-radius: 0;
+      padding: 2.5rem 1.5rem;
+    }
+    #save-date .std-glass .video-wrap {
+      margin: 1rem auto 0;
+    }
+
+    /* Copy tweaks */
+    #save-date .std-subtitle {
+      color: var(--color-warm-cream);
+    }
+    #rsvp h2 {
+      color: var(--color-coffee-dark);
+    }
+
+    /* Fix: occasional white flashing behind video.
+       On some browsers, `position: fixed` + `mix-blend-mode`/blurred overlays can flicker
+       when a <video> is repainting. These overrides keep the vibe but avoid the flaky parts. */
+    #latte-bg {
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+    #latte-bg .latte-layer {
+      transform: translateZ(0);
+    }
+    /* Disable the heaviest blended overlays on this video page */
+    #latte-bg .latte-gradient::before,
+    #latte-bg .latte-gradient::after {
+      content: none !important;
+    }
+    #latte-bg .latte-orbs,
+    #latte-bg .latte-blobs {
+      mix-blend-mode: normal !important;
+      opacity: 0.9;
+    }
+
+    /* Page-specific: ensure the site title in the header matches the milk-cream background tone */
+    body > header > div > h1 { color: var(--color-bg-alt); }
 
     /* Responsive video: preserve aspect ratio and scale fluidly. */
     /* Video container aligned with page content, no rounded corners or shadow */
@@ -90,15 +141,21 @@
 
     .video-wrap:focus-within { outline: 3px solid rgba(0,0,0,0.06); }
     @media (max-width: 767px) {
-      /* Full-bleed on small screens while preserving rounded corners & shadow */
-      .video-wrap {
+      /* Full-bleed on small screens (override the #save-date .std-glass .video-wrap rule) */
+      #save-date {
+        overflow-x: hidden;
+      }
+      #save-date .std-glass .video-wrap {
         width: 100vw;
         max-width: 100vw;
+        margin: 1rem 0 0;
         margin-left: calc(50% - 50vw);
-        /* keep border-radius and box-shadow as-is */
+        margin-right: calc(50% - 50vw);
+        border-radius: 0;
+        box-shadow: none;
         overflow: hidden;
       }
-      .video-wrap video {
+      #save-date .std-glass .video-wrap video {
         /* keep the small side-crop applied earlier */
         width: calc(100% + 8px);
         margin-left: -4px;
@@ -126,16 +183,18 @@
 
   <main>
     <section id="save-date" class="fade-in section" aria-label="Save the Date video">
-      <h2>Save the Date!</h2>
-      <p>We sincerely hope that you'll celebrate with us on this special moment.</p>
-      <div class="video-wrap">
-        <video id="std-video" controls playsinline preload="metadata" poster="../public/images/hero/save-the-date-thumb.jpg" aria-label="Save the Date video" controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;">
-          <source src="../public/videos/save-the-date.mp4" type="video/mp4">
-          <!-- Optional captions track (uncomment and add file if available)
-          <track kind="captions" src="public/videos/save-the-date.vtt" srclang="en" label="English">
-          -->
-          Your browser does not support the video tag. <a href="https://youtu.be/VIDEO_ID">View on YouTube</a>.
-        </video>
+      <div class="frosted-panel std-glass">
+        <h2>Save the Date!</h2>
+        <p class="std-subtitle">We sincerely hope that you'll celebrate with us on this special moment.</p>
+        <div class="video-wrap">
+          <video id="std-video" controls playsinline preload="metadata" poster="../public/images/hero/save-the-date-thumb.jpg" aria-label="Save the Date video" controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;">
+            <source src="../public/videos/save-the-date.mp4" type="video/mp4">
+            <!-- Optional captions track (uncomment and add file if available)
+            <track kind="captions" src="public/videos/save-the-date.vtt" srclang="en" label="English">
+            -->
+            Your browser does not support the video tag. <a href="https://youtu.be/VIDEO_ID">View on YouTube</a>.
+          </video>
+        </div>
       </div>
     </section>
 

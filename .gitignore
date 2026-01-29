@@ -119,6 +119,9 @@ dist
 # Firebase cache directory
 .firebase/
 
+# Local scratch / temp files
+tmp-gradient-stops.txt
+
 # TernJS port file
 .tern-port
 

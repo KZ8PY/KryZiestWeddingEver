@@ -185,6 +185,70 @@
   color: var(--color-coffee-dark);
   box-shadow: none; /* remove panel drop shadow for welcome */
   max-width: none;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.welcome-song-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Actual frosted blur (supported browsers only) */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .welcome-song-panel {
+    -webkit-backdrop-filter: blur(16px) saturate(1.15);
+    backdrop-filter: blur(16px) saturate(1.15);
+  }
+}
+
+/* Condensation highlights / fog streaks */
+.welcome-song-panel::before {
+  content: '';
+  position: absolute;
+  inset: -40% -30% auto -30%;
+  height: 140%;
+  background:
+    linear-gradient(115deg, rgb(255 255 255 / 0%) 10%, rgb(255 255 255 / 12%) 30%, rgb(255 255 255 / 0%) 55%),
+    linear-gradient(140deg, rgb(255 255 255 / 0%) 20%, rgb(255 255 255 / 9%) 42%, rgb(255 255 255 / 0%) 65%),
+    radial-gradient(circle at 28% 48%, rgb(255 255 255 / 10%) 0%, rgb(255 255 255 / 0%) 60%);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+  transform: translate3d(0, 0, 0);
+  animation: welcomeGlassDrift 18s ease-in-out infinite;
+}
+
+.welcome-song-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 22% 30%, rgb(255 255 255 / 8%) 0%, rgb(255 255 255 / 0%) 55%),
+    radial-gradient(circle at 78% 70%, rgb(255 255 255 / 6%) 0%, rgb(255 255 255 / 0%) 60%);
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: 0;
+  animation: welcomeFogPulse 14s ease-in-out infinite;
+}
+
+@keyframes welcomeGlassDrift {
+  0% { transform: translate3d(-2%, -1%, 0) rotate(-0.6deg); }
+  50% { transform: translate3d(2%, 1.5%, 0) rotate(0.6deg); }
+  100% { transform: translate3d(-2%, -1%, 0) rotate(-0.6deg); }
+}
+
+@keyframes welcomeFogPulse {
+  0% { opacity: 0.55; }
+  50% { opacity: 0.78; }
+  100% { opacity: 0.55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-song-panel::before,
+  .welcome-song-panel::after {
+    animation: none !important;
+  }
 }
 
 .welcome-panel-welcome,
@@ -200,12 +264,17 @@
 
 .welcome-panel-welcome h2 {
   margin: 0;
-  font-size: clamp(1.75rem, 3vw, 2rem);
+  font-size: 2rem;
   font-family: var(--font-heading);
   letter-spacing: 0.02em;
   text-transform: capitalize;
 }
 
+.welcome-panel-welcome p,
+.welcome-panel-song p,
+.welcome-panel-song-player .eyebrow {
+  color: var(--color-cream-1);
+}
 .welcome-panel h3 {
   margin: 0.25rem 0 0.35rem;
   font-family: var(--font-body);
