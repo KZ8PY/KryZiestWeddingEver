@@ -47,6 +47,10 @@ html, body {
   overflow-x: hidden;
 }
 
+html {
+  background: var(--color-bg);
+}
+
 .sticky-header.latte-frame.header-hide-title {
   min-height: 2.7rem;
   padding-top: 0.3rem;
@@ -98,7 +102,7 @@ html, body {
 
 
 body {
-  background: linear-gradient(135deg, var(--color-bg) 60%, var(--color-bg-alt) 100%);
+  background: transparent;
   color: var(--color-text);
   font-family: var(--font-body);
   font-weight: 600;
@@ -623,17 +627,7 @@ h3 {
   width: 8rem;
   height: 8rem;
   z-index: 1200;
-  animation: rotate-cup 5s linear infinite;
+  animation: none !important;
   pointer-events: none;
 }
 
-
-@keyframes rotate-cup {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes rotate-cup {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}

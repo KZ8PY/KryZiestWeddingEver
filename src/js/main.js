@@ -595,6 +595,27 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Reveal countdown cups with a stagger when they enter the viewport
+  (function initCountdownReveal() {
+    const grid = document.getElementById('countdown');
+    if (!grid) return;
+
+    const boxes = Array.from(grid.querySelectorAll('.countdown-box'));
+    if (!boxes.length) return;
+
+    boxes.forEach((b, i) => b.style.setProperty('--i', String(i)));
+
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        boxes.forEach(b => b.classList.add('visible'));
+        obs.disconnect();
+      });
+    }, { threshold: 0.5 });
+
+    io.observe(grid);
+  })();
+
   // "Coming soon" tooltip buttons (e.g., Prenup Photos)
   (function initComingSoonButtons() {
     const buttons = document.querySelectorAll('.coming-soon-btn[data-tooltip]');

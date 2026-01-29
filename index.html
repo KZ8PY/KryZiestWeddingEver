@@ -68,7 +68,7 @@
       <p class="date">
         <img src="public/images/hero/Date.gif" alt="May 8, 2026" class="hero-date-gif" />
       </p>
-      <div id="countdown" class="countdown-grid" aria-live="polite">
+        <div id="countdown" class="countdown-grid" aria-live="polite">
         <div class="countdown-segment">
           <div class="countdown-box">
             <span class="countdown-value" id="daysBox">00</span>
@@ -153,6 +153,7 @@
           </div>
           <div class="countdown-label">Seconds</div>
         </div>
+        </div>
       </div>
     </section>
     <section class="welcome-song-panel fade-in" aria-label="Warm welcome and song">
@@ -162,10 +163,17 @@
       </section>
       <section class="welcome-panel-song">
         <div class="welcome-panel-song-player">
-          <audio controls preload="none">
-            <source src="public/music/Sidney%20-%20God%20Really%20Knew.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
+          <div class="custom-audio-player" data-src="public/music/Sidney%20-%20God%20Really%20Knew.mp3">
+            <audio class="site-audio" preload="none">
+              <source src="public/music/Sidney%20-%20God%20Really%20Knew.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+            <button class="cap-play" aria-label="Play">▶</button>
+            <div class="cap-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" tabindex="0">
+              <div class="cap-progress-filled" style="width:0%"></div>
+            </div>
+            <div class="cap-time">0:00</div>
+          </div>
         </div>
         <p class="eyebrow">Listen to our wedding song</p>
       </section>
@@ -224,8 +232,7 @@
             title="Ceremony location map"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps?q=St.%20Paul%20Cathedral%20Puerto%20Princesa&output=embed"></iframe>
-          <p class="venue-link"><a href="https://www.google.com/maps/search/?api=1&query=St.%20Paul%20Cathedral%20Puerto%20Princesa" target="_blank" rel="noopener">Open in Google Maps</a></p>
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3932.3031129556075!2d118.73008393904016!3d9.740371329584292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33b563d7489e1953%3A0x7475fe9ec2b02218!2sImmaculate%20Conception%20Cathedral!5e0!3m2!1sen!2sph!4v1769606070857!5m2!1sen!2sph"></iframe>
         </article>
 
         <article class="venue-card">
@@ -235,8 +242,7 @@
             title="Reception location map"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps?q=Cafe%20Aurora%20Puerto%20Princesa&output=embed"></iframe>
-          <p class="venue-link"><a href="https://www.google.com/maps/search/?api=1&query=Cafe%20Aurora%20Puerto%20Princesa" target="_blank" rel="noopener">Open in Google Maps</a></p>
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3932.0045111770532!2d118.74288547353767!3d9.76568437702581!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33b563982e86ffed%3A0x45d1901a7d4247ca!2sCitystate%20Asturias%20Hotel%20Palawan!5e0!3m2!1sen!2sph!4v1769605900939!5m2!1sen!2sph"></iframe>
         </article>
       </div>
     </section>
@@ -325,7 +331,6 @@
     </section>
 
     <section class="prenup fade-in section" aria-label="Prenup Photos" id="prenup">
-      <h2>Prenup Photos</h2>
       <img class="prenup-placeholder" src="public/images/hero/save-the-date-preview-1200x630.jpg" alt="Prenup photos placeholder">
       <div class="prenup-cta">
         <button type="button" class="coming-soon-btn" aria-disabled="true" data-tooltip="COMING SOON">PRENUP PHOTOS</button>

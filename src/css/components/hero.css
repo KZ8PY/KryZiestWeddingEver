@@ -173,25 +173,14 @@
   margin-top: 0; /* ensure no gap under header */
 }
 
-.welcome-song-panel {
-  width: 100%;
-  background: radial-gradient(circle at center, var(--color-cream-mid) 0%, var(--color-bg-alt) 40%, color-mix(in srgb, var(--color-bg-alt) 60%, var(--color-coffee-light) 40%) 70%, color-mix(in srgb, var(--color-primary-light) 70%, var(--color-primary) 30%) 100%);
-  border-radius: 0; /* remove rounded corners per request */
-  padding: clamp(1rem, 2vw, 1.5rem) clamp(1rem, 4vw, 2rem);
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  align-items: stretch;
-  color: var(--color-coffee-dark);
-  box-shadow: none; /* remove panel drop shadow for welcome */
-  max-width: none;
-  overflow: hidden;
-  isolation: isolate;
-}
-
 .welcome-song-panel > * {
   position: relative;
   z-index: 1;
+}
+
+.welcome-song-panel {
+  overflow: hidden;
+  isolation: isolate;
 }
 
 /* Actual frosted blur (supported browsers only) */
@@ -275,6 +264,7 @@
 .welcome-panel-song-player .eyebrow {
   color: var(--color-cream-1);
 }
+
 .welcome-panel h3 {
   margin: 0.25rem 0 0.35rem;
   font-family: var(--font-body);
@@ -286,10 +276,9 @@
 .welcome-panel-welcome .eyebrow,
 .welcome-panel-song .eyebrow {
   font-size: 0.55rem;
-  letter-spacing: 0.35em;
+  letter-spacing: 0.2rem;
   text-transform: uppercase;
   font-weight: 600;
-  color: var(--color-dark-roast);
 }
 
 .welcome-panel-song-player {
@@ -306,6 +295,63 @@
   display: block;
 }
 
+/* Custom audio player (lightweight) */
+.custom-audio-player {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  padding: 0.4rem 0.6rem;
+  border-radius: calc(var(--border-radius-soft) - 4px);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.custom-audio-player .site-audio { display: none; }
+
+.custom-audio-player .cap-play {
+  appearance: none;
+  border: none;
+  background: none;
+  color: var(--color-bg-alt);
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  display: inline-grid;
+  place-items: center;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.custom-audio-player .cap-progress {
+  flex: 1 1 auto;
+  height: 0.5rem;
+  background: var(--color-bg-alt);
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.custom-audio-player .cap-progress-filled {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, var(--color-warm-cream), var(--color-cream-1));
+  width: 0%;
+  transition: width 120ms linear;
+}
+
+.custom-audio-player .cap-time {
+  font-size: 0.7rem;
+  color: var(--color-warm-cream);
+  min-width: 3.2rem;
+  text-align: right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-audio-player .cap-progress-filled { transition: none; }
+}
+
 /* Apply a richer, latte-like background to the Save The Date panel while
    preserving the panel's rounded corners and shadow defined by .section.
    Uses existing color tokens to produce a graded, slightly textured surface. */
@@ -313,10 +359,7 @@
   /* Make the panel read like the circular countdown cups: a warm, cream-forward latte surface */
 
   /* center the gradient on the panel and use an ellipse so it adapts to rectangular shapes */
-  background: radial-gradient(ellipse at center, var(--color-warm-cream) 0%, var(--color-warm-cream) 20%, var(--color-cream-1) 45%, var(--color-primary-light) 80%, var(--color-bg-alt) 100%);
-  background-position: center center;
-  background-size: 140% 140%;
-  background-repeat: no-repeat;
+  background: transparent;
 
   /* stronger inner depth and slightly brighter outer shadow for contrast */
   box-shadow: none; /* remove drop shadow from save-date panel */
@@ -390,7 +433,7 @@
   height: 10rem; /* keep intrinsic aspect ratio */
   object-fit: contain;
   z-index: 6;
-  animation: rotate-cup 8s linear infinite;
+  animation: none !important;
   pointer-events: none;
   opacity: 1;
 }
@@ -515,7 +558,44 @@
   border: 0.12rem solid transparent;
   margin-bottom: 0.2rem;
   letter-spacing: 0.02em;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  /* include opacity in transitions for non-animated fallbacks */
+  transition: box-shadow 180ms ease, opacity 200ms linear;
+}
+
+/* POP / ZOOM-OUT reveal: start slightly scaled up then settle to 1 with a soft overshoot */
+.countdown-box {
+  opacity: 0;
+  transform: scale(1.12);
+}
+
+.countdown-box.visible {
+  opacity: 1;
+  animation: countdownPop 420ms cubic-bezier(.22,1,.36,1) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+@keyframes countdownPop {
+  0% {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .countdown-box,
+  .countdown-box.visible {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
 }
 
 /* reserved decorative rim layer */
