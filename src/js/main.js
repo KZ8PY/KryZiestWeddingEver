@@ -5,6 +5,8 @@ window.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('latte-bg')) return;
 
     const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const locationPath = (window.location && window.location.pathname) ? window.location.pathname.toLowerCase() : '';
+    const isSaveTheDatePage = locationPath.includes('savethedate-rsvp');
 
     // Very lightweight device tiering to keep visuals while avoiding jank on weaker devices.
     const cores = (typeof navigator !== 'undefined' && typeof navigator.hardwareConcurrency === 'number') ? navigator.hardwareConcurrency : 4;
@@ -56,7 +58,12 @@ window.addEventListener('DOMContentLoaded', () => {
         return palette[0];
       };
 
-      const count = isLowTier ? 10 : 16;
+      const baseCount = isLowTier
+        ? (prefersReducedMotion ? 8 : 10)
+        : (prefersReducedMotion ? 12 : 16);
+      const count = isSaveTheDatePage
+        ? Math.max(5, Math.floor(baseCount * 0.6))
+        : baseCount;
       for (let i = 0; i < count; i += 1) {
         const el = document.createElement('div');
         el.className = 'latte-blob';
@@ -93,18 +100,11 @@ window.addEventListener('DOMContentLoaded', () => {
         // Seeded motion params (kept tiny but frequent; swirly not linear)
         blobs.push({
           el,
-          ax: Math.random(),
-          ay: Math.random(),
+          ax: -0.08 + Math.random() * 1.16,
+          ay: -0.05 + Math.random() * 1.1,
           size,
-          phase: Math.random() * Math.PI * 2,
-          // slightly faster, smaller swirls = more frequent latte consistency
-          fx: 0.0007 + Math.random() * 0.0010,
-          fy: 0.0006 + Math.random() * 0.0009,
-          f2: 0.0003 + Math.random() * 0.0005,
-          amp: 34 + Math.random() * 92,
-          amp2: 22 + Math.random() * 64,
-          rot: (Math.random() * 2 - 1) * 0.00035,
-          scaleF: 0.00055 + Math.random() * 0.00055
+          rotation: (Math.random() * 0.8) - 0.4,
+          scale: 0.9 + Math.random() * 0.2
         });
       }
     }
@@ -113,6 +113,19 @@ window.addEventListener('DOMContentLoaded', () => {
 
     let bgWidth = 0;
     let bgHeight = 0;
+
+    const positionBlobs = () => {
+      if (!blobs.length) return;
+      const w = bgWidth || window.innerWidth || 1000;
+      const h = bgHeight || document.documentElement.scrollHeight || 2000;
+      for (const b of blobs) {
+        const baseX = b.ax * w;
+        const baseY = b.ay * h;
+        const x = (baseX - b.size / 2).toFixed(2);
+        const y = (baseY - b.size / 2).toFixed(2);
+        b.el.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${b.rotation.toFixed(3)}rad) scale(${b.scale.toFixed(3)})`;
+      }
+    };
 
     const measure = () => {
       measureRafId = 0;
@@ -127,6 +140,7 @@ window.addEventListener('DOMContentLoaded', () => {
       );
       bgHeight = height;
       bgWidth = Math.max(doc.clientWidth || 0, window.innerWidth || 0);
+      positionBlobs();
     };
 
     const requestMeasure = () => {
@@ -156,152 +170,6 @@ window.addEventListener('DOMContentLoaded', () => {
       start: () => {},
       isRunning: () => false
     };
-
-    // Frequent fluid motion: animate blob transforms via rAF (kept lightweight: transform-only updates).
-    if (!prefersReducedMotion && blobs.length) {
-      const targetFps = isLowTier ? 24 : 40;
-      const frameIntervalMs = 1000 / targetFps;
-      let lastRenderedAt = 0;
-      let rafAnimId = 0;
-      let running = true;
-
-      const animateBlobs = (t) => {
-        rafAnimId = 0;
-        if (!running) return;
-
-        const tt = (typeof t === 'number') ? t : (performance.now ? performance.now() : Date.now());
-        if (lastRenderedAt && (tt - lastRenderedAt) < frameIntervalMs) {
-          rafAnimId = window.requestAnimationFrame(animateBlobs);
-          return;
-        }
-
-        // Guard against huge jumps (tab switched)
-        if (lastRenderedAt && (tt - lastRenderedAt) > 250) lastRenderedAt = tt;
-        lastRenderedAt = tt;
-
-        const w = bgWidth || window.innerWidth || 1000;
-        const h = bgHeight || document.documentElement.scrollHeight || 2000;
-
-        for (const b of blobs) {
-          // Base placement across full page, with swirling offsets
-          const baseX = b.ax * w;
-          const baseY = b.ay * h;
-
-          const dx = Math.sin(tt * b.fx + b.phase) * b.amp + Math.sin(tt * b.f2 + b.ay * 6.0) * b.amp2;
-          const dy = Math.cos(tt * b.fy + b.phase) * b.amp + Math.cos(tt * (b.f2 * 1.15) + b.ax * 6.0) * b.amp2;
-
-          const scale = 0.92 + 0.16 * (0.5 + 0.5 * Math.sin(tt * b.scaleF + b.phase));
-          const rot = (tt * b.rot) % (Math.PI * 2);
-
-          // Center the blob on its position
-          b.el.style.transform = `translate3d(${(baseX + dx - b.size / 2).toFixed(2)}px, ${(baseY + dy - b.size / 2).toFixed(2)}px, 0) rotate(${rot.toFixed(4)}rad) scale(${scale.toFixed(3)})`;
-        }
-
-        rafAnimId = window.requestAnimationFrame(animateBlobs);
-      };
-
-      const stop = () => {
-        running = false;
-        if (rafAnimId) window.cancelAnimationFrame(rafAnimId);
-        rafAnimId = 0;
-      };
-
-      const start = () => {
-        running = true;
-        if (!rafAnimId) rafAnimId = window.requestAnimationFrame(animateBlobs);
-      };
-
-      container.__latteAnimControls = {
-        stop,
-        start,
-        isRunning: () => running
-      };
-
-      // Pause animation when tab is hidden to avoid background CPU usage.
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) stop(); else start();
-      });
-
-      start();
-    }
-  })();
-
-  // Video performance mode: pause the animated background while interacting with videos.
-  // This reduces dropped frames on pages with <video> (notably the Save the Date page).
-  (function initVideoPerfMode() {
-    const latteBg = document.getElementById('latte-bg');
-    const videos = Array.from(document.querySelectorAll('video'));
-    if (!latteBg || !videos.length) return;
-
-    const controls = latteBg.__latteAnimControls || { stop: () => {}, start: () => {}, isRunning: () => false };
-
-    let hoverCount = 0;
-    let focusCount = 0;
-    let playingCount = 0;
-    let fullscreenActive = false;
-
-    const computePaused = () => (hoverCount > 0) || (focusCount > 0) || (playingCount > 0) || fullscreenActive;
-
-    let lastPaused = null;
-    const applyPaused = () => {
-      const paused = computePaused();
-      if (paused === lastPaused) return;
-      lastPaused = paused;
-
-      latteBg.classList.toggle('latte-paused', paused);
-      if (paused) controls.stop(); else if (!document.hidden) controls.start();
-    };
-
-    const onFullscreenChange = () => {
-      const el = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || null;
-      fullscreenActive = !!(el && (el.tagName === 'VIDEO' || (el.querySelector && el.querySelector('video'))));
-      applyPaused();
-    };
-
-    document.addEventListener('fullscreenchange', onFullscreenChange);
-    document.addEventListener('webkitfullscreenchange', onFullscreenChange);
-    document.addEventListener('msfullscreenchange', onFullscreenChange);
-
-    // Keep counts balanced even if multiple videos exist.
-    for (const v of videos) {
-      v.addEventListener('pointerenter', () => { hoverCount += 1; applyPaused(); });
-      v.addEventListener('pointerleave', () => { hoverCount = Math.max(0, hoverCount - 1); applyPaused(); });
-
-      v.addEventListener('focus', () => { focusCount += 1; applyPaused(); });
-      v.addEventListener('blur', () => { focusCount = Math.max(0, focusCount - 1); applyPaused(); });
-
-      v.addEventListener('play', () => { playingCount += 1; applyPaused(); });
-      v.addEventListener('pause', () => { playingCount = Math.max(0, playingCount - 1); applyPaused(); });
-      v.addEventListener('ended', () => { playingCount = Math.max(0, playingCount - 1); applyPaused(); });
-
-      // iOS Safari fullscreen events on the media element
-      v.addEventListener('webkitbeginfullscreen', () => { fullscreenActive = true; applyPaused(); });
-      v.addEventListener('webkitendfullscreen', () => { fullscreenActive = false; applyPaused(); });
-    }
-
-    // Also pause when any element within a video gains focus via keyboard.
-    // (Not all browsers focus the <video> element itself.)
-    document.addEventListener('focusin', (e) => {
-      if (e.target && e.target.tagName === 'VIDEO') { focusCount += 1; applyPaused(); }
-    });
-    document.addEventListener('focusout', (e) => {
-      if (e.target && e.target.tagName === 'VIDEO') { focusCount = Math.max(0, focusCount - 1); applyPaused(); }
-    });
-
-    // Respect tab visibility (background should already pause itself; keep state consistent).
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        latteBg.classList.add('latte-paused');
-        controls.stop();
-        lastPaused = true;
-      } else {
-        lastPaused = null;
-        applyPaused();
-      }
-    });
-
-    // Initial state
-    applyPaused();
   })();
 
   // Lightweight accessible custom audio player
