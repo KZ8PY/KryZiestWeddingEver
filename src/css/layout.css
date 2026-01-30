@@ -98,7 +98,7 @@
 
 .venue-card img {
   width: 100%;
-  height: 190px;
+  height: clamp(190px, 22vw, 320px);
   object-fit: cover;
   display: block;
   border-radius: 0.75rem;
@@ -106,10 +106,21 @@
 
 .venue-card iframe {
   width: 100%;
-  height: 260px;
+  height: clamp(260px, 28vw, 520px);
   border: 0;
   margin-top: 0;
   border-radius: 0.75rem;
+}
+
+/* Wide viewports: make the Ceremony/Reception cards a bit taller (~+20%). */
+@media (width >= 720px) {
+  .venue-card img {
+    height: clamp(228px, 18vw, 340px);
+  }
+
+  .venue-card iframe {
+    height: clamp(312px, 24vw, 600px);
+  }
 }
 
 .venue-link {
@@ -131,12 +142,13 @@
 
 .stay-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 1rem;
 }
 
 .stay-hotel-btn {
   width: 100%;
+  min-width: 230px;
   display: block;
   position: relative;
   text-align: center;
@@ -262,6 +274,7 @@
   align-items: center;
   gap: 0.6rem;
   padding: 1rem;
+  font-size: 14px;
 }
 
 .faq-item summary::-webkit-details-marker {
@@ -318,6 +331,7 @@
   color: inherit;
   font-family: var(--font-body);
   font-weight: 700;
+  font-size: 14px;
   letter-spacing: 0.06em;
   opacity: 0.65;
   cursor: not-allowed;
@@ -360,6 +374,7 @@
   border: 1.5px solid var(--color-border);
   background: var(--color-card-bg);
   color: inherit;
+  font-size: 14px;
   text-decoration: none;
   box-shadow: none;
 }

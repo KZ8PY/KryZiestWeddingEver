@@ -375,84 +375,48 @@ window.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSidebar(); });
   })();
 
-  // Write-in animation for section headers (starts from Warm Welcome)
-  (function initWriteHeaders() {
+  // Section header reveal: animate the whole heading once (no letter-by-letter)
+  (function initHeaderReveal() {
     const selector = '.welcome-panel-welcome h2, .section h2';
     const headings = Array.from(document.querySelectorAll(selector))
       .filter(h => !h.closest('#hero'));
     if (!headings.length) return;
 
-    // Prepare: wrap heading text immediately so it won't be visible before animation.
+    // If an older build already wrapped letters, restore plain text.
     headings.forEach((h) => {
-      if (h.querySelector('.write-letter')) return;
-
-      const text = h.textContent.trim();
-      if (!text) return;
-
-      const frag = document.createDocumentFragment();
-      let letterIndex = 0;
-
-      for (const ch of text) {
-        if (ch === ' ') {
-          frag.appendChild(document.createTextNode(' '));
-          continue;
-        }
-
-        const span = document.createElement('span');
-        span.className = 'write-letter';
-        span.textContent = ch;
-        span.style.setProperty('--i', String(letterIndex));
-        letterIndex += 1;
-        frag.appendChild(span);
-      }
-
-      h.textContent = '';
-      h.appendChild(frag);
-      h.classList.add('write-ready');
-
-      // Simple pacing: fixed per-letter delay + quick fade.
-      h.style.setProperty('--letter-delay', '100ms');
-      h.style.setProperty('--letter-duration', '400ms');
-      h.dataset.letterCount = String(letterIndex);
+      const letters = h.querySelectorAll('.write-letter');
+      if (!letters.length) return;
+      h.textContent = h.textContent;
     });
 
+    if (!('IntersectionObserver' in window)) {
+      headings.forEach(h => h.classList.add('h2-reveal'));
+      return;
+    }
+
     const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         const h = entry.target;
-        if (h.dataset.writingStarted) { obs.unobserve(h); return; }
-        h.dataset.writingStarted = '1';
 
-        const letters = h.querySelectorAll('.write-letter');
-        if (!letters.length) { obs.unobserve(h); return; }
-
-        // Trigger the letter-by-letter reveal.
-        // Two rAFs ensures the "hidden" styles are committed before animation starts.
+        // Two rAFs ensures initial hidden styles are committed.
         requestAnimationFrame(() => {
-          requestAnimationFrame(() => h.classList.add('writing'));
+          requestAnimationFrame(() => h.classList.add('h2-reveal'));
         });
-
-        // mark done after animation completes (fallback timer included)
-        const finish = () => {
-          h.classList.remove('writing');
-          h.classList.add('done');
-        };
-
-        const styles = getComputedStyle(h);
-        const delayMs = Number.parseFloat(styles.getPropertyValue('--letter-delay'));
-        const durMs = Number.parseFloat(styles.getPropertyValue('--letter-duration'));
-        const count = Number.parseInt(h.dataset.letterCount || '0', 10);
-        const fallbackMs = (Number.isFinite(delayMs) && Number.isFinite(durMs) && Number.isFinite(count))
-          ? Math.round(Math.max(0, count - 1) * delayMs + durMs + 200)
-          : 2200;
-
-        setTimeout(finish, fallbackMs);
 
         obs.unobserve(h);
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.35 });
 
-    headings.forEach(h => observer.observe(h));
+    headings.forEach((h) => {
+      const rect = h.getBoundingClientRect();
+      const inView = rect.bottom > 0 && rect.top < window.innerHeight * 0.85;
+      if (inView) {
+        requestAnimationFrame(() => h.classList.add('h2-reveal'));
+      } else {
+        observer.observe(h);
+      }
+    });
   })();
 
   // Back-to-top visibility & scroll handling (appears near bottom of page)
@@ -462,27 +426,6 @@ window.addEventListener('DOMContentLoaded', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
-
-  // Reveal countdown cups with a stagger when they enter the viewport
-  (function initCountdownReveal() {
-    const grid = document.getElementById('countdown');
-    if (!grid) return;
-
-    const boxes = Array.from(grid.querySelectorAll('.countdown-box'));
-    if (!boxes.length) return;
-
-    boxes.forEach((b, i) => b.style.setProperty('--i', String(i)));
-
-    const io = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        boxes.forEach(b => b.classList.add('visible'));
-        obs.disconnect();
-      });
-    }, { threshold: 0.5 });
-
-    io.observe(grid);
-  })();
 
   // "Coming soon" tooltip buttons (e.g., Prenup Photos)
   (function initComingSoonButtons() {

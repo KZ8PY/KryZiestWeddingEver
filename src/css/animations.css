@@ -32,53 +32,41 @@
   }
 }
 
-/* Section header reveal: simple letter-by-letter fade-in.
-  No overlays, masks, or clip effects. */
+/* Section header reveal: single animation for the whole heading. */
 .js .welcome-panel-welcome h2,
 .js .section h2 {
-  visibility: hidden;
-}
-
-.js .welcome-panel-welcome h2.write-ready,
-.js .section h2.write-ready {
-  visibility: visible;
-}
-
-.write-letter {
-  display: inline-block;
   opacity: 0;
-  will-change: opacity;
-  text-transform: none;
+  transform: translateX(-12px);
 }
 
-.write-ready.writing .write-letter {
-  animation: letter-fade-in var(--letter-duration, 320ms) ease-out forwards;
-  animation-delay: calc(var(--i, 0) * var(--letter-delay, 36ms));
-}
-
-.write-ready.done .write-letter {
+.js .welcome-panel-welcome h2.h2-reveal,
+.js .section h2.h2-reveal {
   opacity: 1;
-  animation: none;
+  transform: none;
+  animation: h2-reveal 3s cubic-bezier(0.1, 0.5, 0.36, 1) both;
 }
 
-@keyframes letter-fade-in {
+@keyframes h2-reveal {
   from {
     opacity: 0;
+    transform: translateY(18px);
   }
 
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .js .welcome-panel-welcome h2,
   .js .section h2 {
-    visibility: visible;
+    opacity: 1;
+    transform: none;
   }
 
-  .write-letter {
-    opacity: 1;
+  .js .welcome-panel-welcome h2.h2-reveal,
+  .js .section h2.h2-reveal {
     animation: none;
   }
 }
@@ -106,7 +94,7 @@
 .steam {
   display: inline-block;
   vertical-align: middle;
-  animation: steam-rise 2.5s infinite linear;
+  animation: steam-rise 1s infinite linear;
 }
 
 @keyframes steam-rise {

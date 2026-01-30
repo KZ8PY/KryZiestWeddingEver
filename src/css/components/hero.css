@@ -259,10 +259,13 @@
   text-transform: capitalize;
 }
 
-.welcome-panel-welcome p,
 .welcome-panel-song p,
 .welcome-panel-song-player .eyebrow {
   color: var(--color-cream-1);
+}
+
+.welcome-panel-welcome p {
+  color: var(--color-coffee-dark);
 }
 
 .welcome-panel h3 {
@@ -563,43 +566,7 @@
   transition: box-shadow 180ms ease, opacity 200ms linear;
 }
 
-/* POP / ZOOM-OUT reveal: start slightly scaled up then settle to 1 with a soft overshoot */
-.countdown-box {
-  opacity: 0;
-  transform: scale(1.12);
-}
-
-.countdown-box.visible {
-  opacity: 1;
-  animation: countdownPop 420ms cubic-bezier(.22,1,.36,1) both;
-  animation-delay: calc(var(--i, 0) * 90ms);
-}
-
-@keyframes countdownPop {
-  0% {
-    opacity: 0;
-    transform: scale(1.12);
-  }
-
-  60% {
-    opacity: 1;
-    transform: scale(0.98);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .countdown-box,
-  .countdown-box.visible {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-    opacity: 1 !important;
-  }
-}
+/* Countdown cups render immediately (no viewport pop/reveal). */
 
 /* reserved decorative rim layer */
 .countdown-box::before {
@@ -815,52 +782,6 @@
   opacity: 1;
   transform-origin: 50% 50%;
   z-index: 4;
-}
-
-/* --------------------------
-   5) Animations: cup pulse + foam ripple
-   -------------------------- */
-.cup-animate {
-  animation-name: cup-pulse;
-  animation-duration: 420ms;
-  animation-timing-function: ease-out;
-}
-
-.cup-animate .latte-art {
-  animation-name: foam-ripple;
-  animation-duration: 620ms;
-  animation-timing-function: ease-out;
-}
-
-@keyframes cup-pulse {
-  0% {
-    transform: scale(1);
-  }
-
-  40% {
-    transform: scale(1.05);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes foam-ripple {
-  0% {
-    transform: scale(1) translateY(0);
-    opacity: 0.95;
-  }
-
-  50% {
-    transform: scale(1.04) translateY(-1%);
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale(1) translateY(0);
-    opacity: 0.95;
-  }
 }
 
 @keyframes hero-title-expand {
