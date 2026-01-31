@@ -39,16 +39,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     container.innerHTML = `
       <div class="latte-layer latte-gradient"></div>
-
-      <div class="latte-layer latte-orbs">
-        <div class="latte-orb lg1"></div>
-        <div class="latte-orb lg2"></div>
-        <div class="latte-orb md1"></div>
-        <div class="latte-orb md2"></div>
-      </div>
-
       <div class="latte-layer latte-blobs" id="latte-blobs" aria-hidden="true"></div>
-
       <div class="latte-layer latte-foam"></div>
     `;
 

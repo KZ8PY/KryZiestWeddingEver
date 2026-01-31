@@ -9,41 +9,28 @@ self.addEventListener('install', event => {
         '/',
         '/index.html',
         '/savethedate-rsvp/',
-        '/src/css/base.css',
+        '/savethedate-rsvp/index.html',
+        '/manifest.json',
         '/src/css/variables.css',
+        '/src/css/base.css',
         '/src/css/layout.css',
+        '/src/css/animations.css',
+        '/src/css/components/hero.css',
+        '/src/css/components/story.css',
+        '/src/css/components/glass.css',
+        '/src/css/components/sidebar.css',
+        '/src/fonts/tan-pearl-converted/TAN-PEARL-Regular.woff2',
         '/src/js/main.js',
         '/src/js/countdown.js',
         '/src/js/rsvp.js',
         '/src/js/pwa.js',
-        '/public/images/hero/save-the-date-thumb.jpg'
-      ]);
-    })
-  );
-});
-// Simple service worker for offline support
-self.addEventListener('install', event => {
-  // Bump cache name when updating assets
-  event.waitUntil(
-    caches.open('kryziest-v3').then(cache => {
-      return cache.addAll([
-        '/',
-        '/index.html',
-        'savethedate-rsvp/',
-        '/src/css/base.css',
-        '/src/css/variables.css',
-        '/src/css/layout.css',
-        '/src/js/main.js',
-        '/src/js/countdown.js',
-        '/src/js/rsvp.js',
-        '/src/js/pwa.js',
+        '/public/images/hero/hero-img.jpg',
         '/public/images/hero/save-the-date-thumb.jpg'
       ]);
     })
   );
 });
 
-self.addEventListener('activate', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
