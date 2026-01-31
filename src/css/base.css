@@ -420,6 +420,10 @@ h3 {
   font-size: 1.6rem;
 }
 
+.attire-item h3 {
+  margin-bottom: 0;
+}
+
 p, li, label, input, select, button {
   font-family: var(--font-body);
   font-size: 0.7rem;

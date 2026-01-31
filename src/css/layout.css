@@ -72,6 +72,45 @@
   opacity: 0.9;
 }
 
+/* Attire guide-specific styles */
+.attire-panel {
+  text-align: center;
+  padding: 1.25rem 1rem;
+}
+
+.attire-palette img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  display: block;
+  margin: 0.5rem auto 0;
+}
+
+.attire-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: start;
+  margin-top: 1rem;
+}
+
+.attire-images img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 720px) {
+  .attire-images {
+    grid-template-columns: 1fr;
+  }
+}
+
+.attire-palette img {
+  border-radius: 12px;
+  background-color: var(--color-bg-alt);
+}
+
 /* Venue: two panels with image + embedded map */
 .venue-grid {
   display: grid;
