@@ -60,29 +60,18 @@
 }
 
 .timeline-video-embed--vertical {
-  /* Vertical video: give it a tall viewport-first frame.
-     80vh target, with width derived from a 9:16 aspect ratio.
+  /* Vertical video: responsive sizing while maintaining 9:16 aspect ratio.
+     We size by WIDTH based on the desire to respect:
+     1. Container width (100%)
+     2. Max height constraint (80svh) -> converted to width
+     3. Max pixel height constraint (680px) -> converted to width (~382.5px)
   */
-  height: min(80vh, 680px);
-  height: min(80svh, 680px);
-  max-height: min(80vh, 680px);
-  max-height: min(80svh, 680px);
-  width: min(100%, calc(min(80vh, 680px) * 9 / 16));
-  width: min(100%, calc(min(80svh, 680px) * 9 / 16));
-  max-width: 520px;
-  margin: 0 auto;
+  width: min(100%, 382.5px, calc(80svh * 9 / 16));
   aspect-ratio: 9 / 16;
+  margin: 0 auto;
 }
 
-@media (width <= 420px) {
-  .timeline-video-embed--vertical {
-    /* Phones: cap width and let height follow aspect-ratio to avoid cropping. */
-    width: min(100%, 300px);
-    height: auto;
-    max-height: 80vh;
-    max-height: 80svh;
-  }
-}
+/* @media (width <= 420px) removed as the rule above handles small screens fluidly */
 
 .timeline-video-embed iframe {
   width: 100%;
