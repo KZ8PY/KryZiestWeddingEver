@@ -1,5 +1,5 @@
 // Simple service worker for offline support
-const CACHE_NAME = 'kryziest-v5';
+const CACHE_NAME = 'kryziest-v6';
 
 self.addEventListener('install', event => {
   // Bump cache name when updating assets
