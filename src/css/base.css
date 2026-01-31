@@ -48,7 +48,7 @@ html, body {
 }
 
 html {
-  background: var(--color-primary-light);
+  background: var(--color-primary);
 }
 
 .sticky-header.latte-frame.header-hide-title {
