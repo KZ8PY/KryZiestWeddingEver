@@ -49,7 +49,7 @@ html, body {
 }
 
 html {
-  background: var(--color-bg-alt);
+  background: var(--color-primary);
 }
 
 .sticky-header.latte-frame.header-hide-title {
@@ -112,7 +112,7 @@ body {
   letter-spacing: 0.01em;
   position: relative;
   isolation: isolate;
-  animation: body-fade-in 1.5s ease-in-out;;
+  animation: body-fade-in 700ms ease-in-out;;
 }
 
 /* Ensure page content sits above the fixed latte background layer. */
