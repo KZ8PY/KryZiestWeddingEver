@@ -45,6 +45,11 @@
 /* Prevent accidental horizontal scroll caused by 100vw or wide elements */
 html, body {
   overflow-x: hidden;
+  overscroll-behavior-y: none;
+}
+
+html {
+  background: var(--color-bg);
 }
 
 .sticky-header.latte-frame.header-hide-title {
