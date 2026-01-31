@@ -289,7 +289,7 @@ window.addEventListener('DOMContentLoaded', () => {
         // Back-to-top visibility (state-based check, robust on all devices)
         const backToTop = document.getElementById('backToTop');
         if (backToTop) {
-          if (y > 3000) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+          if (y > 5000) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
         }
       };
 
