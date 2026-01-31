@@ -48,9 +48,9 @@ html, body {
   overflow-y: auto;
 }
 
-html {
+/* html {
   background: var(--color-primary);
-}
+} */
 
 .sticky-header.latte-frame.header-hide-title {
   min-height: 2.7rem;
@@ -100,7 +100,7 @@ html {
 
 
 body {
-  background: var(--color-bg-alt);
+  background: none;
   color: var(--color-text);
   font-family: var(--font-body);
   font-weight: 600;
