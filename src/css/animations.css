@@ -23,42 +23,36 @@
   }
 }
 
-/* Section header reveal: single animation for the whole heading. */
+/* Section header reveal: use transitions for better compatibility */
 .js .welcome-panel-welcome h2,
 .js .section h2 {
   opacity: 0;
-  transform: translateX(-12px);
+  transform: translateY(15px);
+  transition: opacity 1s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
 }
 
 .js .welcome-panel-welcome h2.h2-reveal,
 .js .section h2.h2-reveal {
   opacity: 1;
-  transform: none;
-  animation: h2-reveal 3s cubic-bezier(0.1, 0.5, 0.36, 1) both;
+  transform: translateY(0);
 }
 
-@keyframes h2-reveal {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* @keyframes h2-reveal removed in favor of transition */
 
 @media (prefers-reduced-motion: reduce) {
   .js .welcome-panel-welcome h2,
   .js .section h2 {
     opacity: 1;
     transform: none;
+    transition: none;
   }
-
+  
   .js .welcome-panel-welcome h2.h2-reveal,
   .js .section h2.h2-reveal {
-    animation: none;
+    transition: none;
+    opacity: 1;
+    transform: none;
   }
 }
 

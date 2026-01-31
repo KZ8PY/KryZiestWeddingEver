@@ -406,11 +406,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
         obs.unobserve(h);
       });
-    }, { threshold: 0.35 });
+    }, { threshold: 0.1 });
 
     headings.forEach((h) => {
       const rect = h.getBoundingClientRect();
-      const inView = rect.bottom > 0 && rect.top < window.innerHeight * 0.85;
+      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
       if (inView) {
         requestAnimationFrame(() => h.classList.add('h2-reveal'));
       } else {
