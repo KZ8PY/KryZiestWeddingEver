@@ -399,11 +399,8 @@ window.addEventListener('DOMContentLoaded', () => {
         if (!entry.isIntersecting) return;
         const h = entry.target;
 
-        // Two rAFs ensures initial hidden styles are committed.
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => h.classList.add('h2-reveal'));
-        });
-
+        // Simply add the class; CSS transitions handle the rest.
+        h.classList.add('h2-reveal');
         obs.unobserve(h);
       });
     }, { threshold: 0.1 });
