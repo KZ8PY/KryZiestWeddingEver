@@ -1,5 +1,8 @@
-/* Great Vibes is loaded via a <link rel="stylesheet"> in HTML for better performance.
-  (Avoid @import which can delay CSS download + font fetch.) */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+/* Self-hosted Great Vibes (optional): place WOFF2/WOFF files at
+  src/fonts/great-vibes/GreatVibes-Regular.woff2 and .woff if you want to
+  self-host later. The Google-hosted import above will load the font now. */
 
 :root {
   /* Korean Cafe Wedding Theme: Matcha & Coffee Spectrum */

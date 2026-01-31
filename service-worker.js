@@ -1,5 +1,5 @@
 // Simple service worker for offline support
-const CACHE_NAME = 'kryziest-v4';
+const CACHE_NAME = 'kryziest-v3';
 
 self.addEventListener('install', event => {
   // Bump cache name when updating assets
@@ -21,13 +21,35 @@ self.addEventListener('install', event => {
     })
   );
 });
+// Simple service worker for offline support
+self.addEventListener('install', event => {
+  // Bump cache name when updating assets
+  event.waitUntil(
+    caches.open('kryziest-v3').then(cache => {
+      return cache.addAll([
+        '/',
+        '/index.html',
+        'savethedate-rsvp/',
+        '/src/css/base.css',
+        '/src/css/variables.css',
+        '/src/css/layout.css',
+        '/src/js/main.js',
+        '/src/js/countdown.js',
+        '/src/js/rsvp.js',
+        '/src/js/pwa.js',
+        '/public/images/hero/save-the-date-thumb.jpg'
+      ]);
+    })
+  );
+});
 
+self.addEventListener('activate', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
       return Promise.all(
         keys
-          .filter(k => k.startsWith('kryziest-') && k !== CACHE_NAME)
+          .filter(k => k.startsWith('kryziest-') && k !== 'kryziest-v3')
           .map(k => caches.delete(k))
       );
     })
