@@ -14,7 +14,6 @@ self.addEventListener('install', event => {
         '/src/js/countdown.js',
         '/src/js/rsvp.js',
         '/src/js/pwa.js',
-        '/public/videos/save-the-date.mp4',
         '/public/images/hero/save-the-date-thumb.jpg'
       ]);
     })

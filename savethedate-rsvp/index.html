@@ -101,7 +101,8 @@
       border-radius: 8px;
       box-shadow: 0 8px 28px rgba(0,0,0,0.18);
     }
-    .video-wrap video {
+    .video-wrap video,
+    .video-wrap iframe {
       width: 100%;
       height: 100%;
       display: block;
@@ -158,7 +159,8 @@
         box-shadow: none;
         overflow: hidden;
       }
-      #save-date .std-glass .video-wrap video {
+      #save-date .std-glass .video-wrap video,
+      #save-date .std-glass .video-wrap iframe {
         /* keep the small side-crop applied earlier */
         width: calc(100% + 8px);
         margin-left: -4px;
@@ -180,13 +182,14 @@
         <h2>Save the Date!</h2>
         <p class="std-subtitle">We sincerely hope that you'll celebrate with us on this special moment.</p>
         <div class="video-wrap">
-          <video id="std-video" controls playsinline preload="metadata" poster="../public/images/hero/save-the-date-thumb.jpg" aria-label="Save the Date video" controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;">
-            <source src="../public/videos/save-the-date.mp4" type="video/mp4">
-            <!-- Optional captions track (uncomment and add file if available)
-            <track kind="captions" src="public/videos/save-the-date.vtt" srclang="en" label="English">
-            -->
-            Your browser does not support the video tag. <a href="https://youtu.be/VIDEO_ID">View on YouTube</a>.
-          </video>
+          <iframe
+            src="https://www.youtube.com/embed/rLJQd-g9nYE?si=3Jeld1WHNHJBdiuN"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"></iframe>
         </div>
       </div>
     </section>
@@ -207,7 +210,7 @@
   <script>
     // Extra protection to discourage downloading: prevent context menu and set controlsList where supported
     (function () {
-      const v = document.getElementById('std-video');
+      const v = document.querySelector('video#std-video');
       if (!v) return;
       try {
         v.controlsList = (v.controlsList && v.controlsList.add) ? undefined : v.getAttribute('controlsList');
@@ -221,7 +224,7 @@
 
     // Ensure mobile fullscreen preserves the entire video frame when entering fullscreen.
     (function () {
-      const v = document.getElementById('std-video');
+      const v = document.querySelector('video#std-video');
       if (!v) return;
 
       function applyContain() {

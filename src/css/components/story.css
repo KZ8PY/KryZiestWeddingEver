@@ -50,6 +50,47 @@
   border-radius: 18px;
 }
 
+.timeline-video-embed {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #000;
+}
+
+.timeline-video-embed--vertical {
+  /* Vertical video: give it a tall viewport-first frame.
+     80vh target, with width derived from a 9:16 aspect ratio.
+  */
+  height: min(80vh, 680px);
+  height: min(80svh, 680px);
+  max-height: min(80vh, 680px);
+  max-height: min(80svh, 680px);
+  width: min(100%, calc(min(80vh, 680px) * 9 / 16));
+  width: min(100%, calc(min(80svh, 680px) * 9 / 16));
+  max-width: 520px;
+  margin: 0 auto;
+  aspect-ratio: 9 / 16;
+}
+
+@media (width <= 420px) {
+  .timeline-video-embed--vertical {
+    /* Phones: cap width and let height follow aspect-ratio to avoid cropping. */
+    width: min(100%, 300px);
+    height: auto;
+    max-height: 80vh;
+    max-height: 80svh;
+  }
+}
+
+.timeline-video-embed iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+}
+
 .timeline-media figcaption {
   margin-top: 0.6rem;
   padding: 0.65rem 0.9rem;
