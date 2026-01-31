@@ -129,7 +129,7 @@
 
 .venue-link a {
   color: inherit;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 /* Places to Stay: linkable grid cards */

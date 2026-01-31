@@ -115,6 +115,17 @@ body {
   isolation: isolate;
 }
 
+/* Ensure page content sits above the fixed latte background layer. */
+main,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+footer {
+  padding: 2rem 1.25rem 2.5rem;
+}
+
 /* Latte swirl background (decorative, behind all content) */
 #latte-bg {
   position: fixed;
@@ -211,10 +222,10 @@ body {
     #faf7f0 100%
   );
   background-size: 100% 140%;
-  background-position: 50% 0%;
+  /* Static position: keeps the latte texture without movement */
+  background-position: 50% 8%;
   filter: saturate(1.04) contrast(1.01);
-  will-change: background-position;
-  animation: latteGradientDrift 55s ease-in-out infinite alternate;
+  animation: none;
 }
 
 /* Wavy blend overlay: keeps the linear gradient direction, but adds soft moving
@@ -229,7 +240,7 @@ body {
   opacity: 0.32;
   filter: blur(18px);
   transform: translate3d(0, 0, 0);
-  will-change: transform;
+  /* No motion: avoid will-change overhead */
 }
 
 #latte-bg .latte-gradient::before {
@@ -239,7 +250,7 @@ body {
     radial-gradient(92% 52% at 28% 78%, rgb(135 169 107 / 24%) 0%, rgb(135 169 107 / 0%) 72%),
     radial-gradient(88% 50% at 82% 84%, rgb(157 184 132 / 20%) 0%, rgb(157 184 132 / 0%) 74%);
   mix-blend-mode: soft-light;
-  animation: latteWavyBlendA 28s ease-in-out infinite alternate;
+  animation: none;
 }
 
 #latte-bg .latte-gradient::after {
@@ -250,7 +261,7 @@ body {
   mix-blend-mode: overlay;
   opacity: 0.24;
   filter: blur(22px);
-  animation: latteWavyBlendB 36s ease-in-out infinite alternate;
+  animation: none;
 }
 
 /* High-tier only: add stronger contour bands (more paint/compositing). */
@@ -439,8 +450,8 @@ svg {
 a {
   color: var(--color-link);
   text-decoration: none;
-  transition: color var(--transition), border-bottom var(--transition);
-  border-bottom: 1.5px dotted var(--color-primary-light);
+  transition: color var(--transition);
+  border-bottom: none;
 }
 
 button,
@@ -452,7 +463,8 @@ textarea {
 
 a:hover, a:focus-visible {
   color: var(--color-primary);
-  border-bottom: 2px solid var(--color-primary);
+  border-bottom: none;
+  text-decoration: none;
 }
 
 :focus-visible,
