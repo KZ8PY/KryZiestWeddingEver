@@ -344,6 +344,13 @@ footer {
   opacity: 1;
 }
 
+/* Save-the-Date: prefer a static, lightweight background for smoother playback. */
+.page-save-the-date #latte-bg .latte-orbs,
+.page-save-the-date #latte-bg .latte-blobs,
+.page-save-the-date #latte-bg .latte-foam {
+  display: none !important;
+}
+
 /* Hero-like circular gradients (blobs) drifting across the entire background */
 #latte-bg .latte-blobs {
   z-index: 2;

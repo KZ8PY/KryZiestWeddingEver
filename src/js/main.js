@@ -1,12 +1,17 @@
 // Main JS: navigation, smooth scroll
 window.addEventListener('DOMContentLoaded', () => {
+  const locationPath = (window.location && window.location.pathname) ? window.location.pathname.toLowerCase() : '';
+  const isSaveTheDatePage = locationPath.includes('savethedate-rsvp');
+
+  if (isSaveTheDatePage) {
+    document.body.classList.add('page-save-the-date');
+  }
+
   // Decorative latte background (injected once per page) + rAF-driven sizing.
   (function initLatteBackground() {
     if (document.getElementById('latte-bg')) return;
 
     const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const locationPath = (window.location && window.location.pathname) ? window.location.pathname.toLowerCase() : '';
-    const isSaveTheDatePage = locationPath.includes('savethedate-rsvp');
 
     // Very lightweight device tiering to keep visuals while avoiding jank on weaker devices.
     const cores = (typeof navigator !== 'undefined' && typeof navigator.hardwareConcurrency === 'number') ? navigator.hardwareConcurrency : 4;
@@ -16,7 +21,21 @@ window.addEventListener('DOMContentLoaded', () => {
     const container = document.createElement('div');
     container.id = 'latte-bg';
     container.setAttribute('aria-hidden', 'true');
-    container.classList.add(isLowTier ? 'latte-tier-low' : 'latte-tier-high');
+    container.classList.add((isLowTier || isSaveTheDatePage) ? 'latte-tier-low' : 'latte-tier-high');
+
+    // Save-the-Date page: keep a minimal, static background for smoother video playback.
+    if (isSaveTheDatePage) {
+      container.classList.add('latte-minimal');
+      container.innerHTML = `<div class="latte-layer latte-gradient"></div>`;
+      document.body.prepend(container);
+
+      container.__latteAnimControls = {
+        stop: () => {},
+        start: () => {},
+        isRunning: () => false
+      };
+      return;
+    }
 
     container.innerHTML = `
       <div class="latte-layer latte-gradient"></div>
@@ -265,48 +284,50 @@ window.addEventListener('DOMContentLoaded', () => {
   // Header scroll behavior: toggle .scrolled to allow CSS-driven translucency
   const header = document.querySelector('.site-header');
   if (header) {
-    const threshold = 24; // px scrolled before applying effect
+    if (!isSaveTheDatePage) {
+      const threshold = 24; // px scrolled before applying effect
 
-    let scrollRafId = 0;
-    let docScrollable = 0;
+      let scrollRafId = 0;
+      let docScrollable = 0;
 
-    const recomputeScrollable = () => {
-      // Reading scrollHeight can trigger layout; do it on resize instead of on every scroll.
-      const doc = document.documentElement;
-      docScrollable = Math.max(0, (doc.scrollHeight || 0) - window.innerHeight);
-    };
+      const recomputeScrollable = () => {
+        // Reading scrollHeight can trigger layout; do it on resize instead of on every scroll.
+        const doc = document.documentElement;
+        docScrollable = Math.max(0, (doc.scrollHeight || 0) - window.innerHeight);
+      };
 
-    const applyScrollEffects = () => {
-      scrollRafId = 0;
+      const applyScrollEffects = () => {
+        scrollRafId = 0;
 
-      const y = window.scrollY || 0;
-      if (y > threshold) header.classList.add('scrolled'); else header.classList.remove('scrolled');
+        const y = window.scrollY || 0;
+        if (y > threshold) header.classList.add('scrolled'); else header.classList.remove('scrolled');
 
-      // Back-to-top visibility (appears near bottom of page)
-      const backToTop = document.getElementById('backToTop');
-      if (backToTop) {
-        const progress = docScrollable <= 0 ? 0 : y / docScrollable;
-        if (progress >= 0.7) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
-      }
-    };
+        // Back-to-top visibility (appears near bottom of page)
+        const backToTop = document.getElementById('backToTop');
+        if (backToTop) {
+          const progress = docScrollable <= 0 ? 0 : y / docScrollable;
+          if (progress >= 0.7) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+        }
+      };
 
-    const requestScrollEffects = () => {
-      if (scrollRafId) return;
-      scrollRafId = window.requestAnimationFrame(applyScrollEffects);
-    };
+      const requestScrollEffects = () => {
+        if (scrollRafId) return;
+        scrollRafId = window.requestAnimationFrame(applyScrollEffects);
+      };
 
-    window.addEventListener('scroll', requestScrollEffects, { passive: true });
-    window.addEventListener('resize', () => {
+      window.addEventListener('scroll', requestScrollEffects, { passive: true });
+      window.addEventListener('resize', () => {
+        recomputeScrollable();
+        requestScrollEffects();
+      }, { passive: true });
+      window.addEventListener('load', () => {
+        recomputeScrollable();
+        requestScrollEffects();
+      }, { once: true });
+
       recomputeScrollable();
       requestScrollEffects();
-    }, { passive: true });
-    window.addEventListener('load', () => {
-      recomputeScrollable();
-      requestScrollEffects();
-    }, { once: true });
-
-    recomputeScrollable();
-    requestScrollEffects();
+    }
 
     // Measure header height and publish as a CSS variable so components (hero)
     // can offset themselves to avoid overlap with the sticky header. This also
