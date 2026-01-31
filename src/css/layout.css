@@ -98,8 +98,8 @@
 
 .venue-card img {
   width: 100%;
-  height: clamp(190px, 22vw, 320px);
-  object-fit: cover;
+  height: auto;
+  object-fit: contain; /* Ensures full image is visible, no cropping */
   display: block;
   border-radius: 0.75rem;
 }
@@ -112,12 +112,8 @@
   border-radius: 0.75rem;
 }
 
-/* Wide viewports: make the Ceremony/Reception cards a bit taller (~+20%). */
+/* Wide viewports: make the iframe taller, but let img scale naturally */
 @media (width >= 720px) {
-  .venue-card img {
-    height: clamp(228px, 18vw, 340px);
-  }
-
   .venue-card iframe {
     height: clamp(312px, 24vw, 600px);
   }
