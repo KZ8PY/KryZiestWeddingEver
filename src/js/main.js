@@ -288,13 +288,6 @@ window.addEventListener('DOMContentLoaded', () => {
       const threshold = 24; // px scrolled before applying effect
 
       let scrollRafId = 0;
-      let docScrollable = 0;
-
-      const recomputeScrollable = () => {
-        // Reading scrollHeight can trigger layout; do it on resize instead of on every scroll.
-        const doc = document.documentElement;
-        docScrollable = Math.max(0, (doc.scrollHeight || 0) - window.innerHeight);
-      };
 
       const applyScrollEffects = () => {
         scrollRafId = 0;
@@ -302,11 +295,10 @@ window.addEventListener('DOMContentLoaded', () => {
         const y = window.scrollY || 0;
         if (y > threshold) header.classList.add('scrolled'); else header.classList.remove('scrolled');
 
-        // Back-to-top visibility (appears near bottom of page)
+        // Back-to-top visibility (state-based check, robust on all devices)
         const backToTop = document.getElementById('backToTop');
         if (backToTop) {
-          const progress = docScrollable <= 0 ? 0 : y / docScrollable;
-          if (progress >= 0.7) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+          if (y > 3000) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
         }
       };
 
@@ -316,17 +308,23 @@ window.addEventListener('DOMContentLoaded', () => {
       };
 
       window.addEventListener('scroll', requestScrollEffects, { passive: true });
-      window.addEventListener('resize', () => {
-        recomputeScrollable();
-        requestScrollEffects();
-      }, { passive: true });
-      window.addEventListener('load', () => {
-        recomputeScrollable();
-        requestScrollEffects();
-      }, { once: true });
+      window.addEventListener('resize', requestScrollEffects, { passive: true });
+      window.addEventListener('load', requestScrollEffects, { once: true });
 
-      recomputeScrollable();
+      // Initial setup
       requestScrollEffects();
+    } else {
+      // On Save-the-Date page, still allow back-to-top to work but without scroll effects
+      const backToTop = document.getElementById('backToTop');
+      if (backToTop) {
+        const simpleScrollCheck = () => {
+          const y = window.scrollY || 0;
+          if (y > 400) backToTop.classList.add('visible');
+          else backToTop.classList.remove('visible');
+        };
+        window.addEventListener('scroll', simpleScrollCheck, { passive: true });
+        simpleScrollCheck(); // Initialize
+      }
     }
 
     // Measure header height and publish as a CSS variable so components (hero)
