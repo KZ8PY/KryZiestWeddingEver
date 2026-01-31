@@ -11,34 +11,10 @@
 
 /* remove per-element overlay; use a single full-viewport overlay instead */
 
-/* Simple page white-fade overlay used for a subtle load transition.
-   It covers the full viewport and fades out from white to transparent. */
-.page-fade-overlay {
-  position: fixed;
-  inset: 0;
-  background: var(--color-latte);
-  z-index: 999999; /* very high so it sits above everything */
-  pointer-events: none;
-  animation: page-fade-out 1500ms ease-out forwards;
-}
-
-@keyframes page-fade-out {
-  from {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
-/* Mobile browsers have dynamic viewports (URL bar). Ensure overlay covers it. */
-@supports (height: 100dvh) {
-  .page-fade-overlay {
-    height: 100dvh;
-  }
+/* Simple page reveal: fade in the content */
+@keyframes body-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Section header reveal: single animation for the whole heading. */

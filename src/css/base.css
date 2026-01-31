@@ -52,11 +52,6 @@ html {
   background: var(--color-latte);
 }
 
-html,
-body {
-  overscroll-behavior-y: none;
-}
-
 .sticky-header.latte-frame.header-hide-title {
   min-height: 2.7rem;
   padding-top: 0.3rem;
@@ -119,6 +114,7 @@ body {
   letter-spacing: 0.01em;
   position: relative;
   isolation: isolate;
+  animation: body-fade-in 1.2s ease-out both;
 }
 
 /* Ensure page content sits above the fixed latte background layer. */
