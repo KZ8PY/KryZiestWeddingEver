@@ -16,7 +16,7 @@
 .page-fade-overlay {
   position: fixed;
   inset: 0;
-  background: white;
+  background: var(--color-latte);
   z-index: 999999; /* very high so it sits above everything */
   pointer-events: none;
   animation: page-fade-out 1500ms ease-out forwards;
@@ -25,10 +25,19 @@
 @keyframes page-fade-out {
   from {
     opacity: 1;
+    visibility: visible;
   }
 
   to {
     opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Mobile browsers have dynamic viewports (URL bar). Ensure overlay covers it. */
+@supports (height: 100dvh) {
+  .page-fade-overlay {
+    height: 100dvh;
   }
 }
 

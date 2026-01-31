@@ -48,7 +48,13 @@ html, body {
 }
 
 html {
-  background: var(--color-bg);
+  /* Root background is what shows during mobile overscroll. Keep it latte-toned. */
+  background: var(--color-latte);
+}
+
+html,
+body {
+  overscroll-behavior-y: none;
 }
 
 .sticky-header.latte-frame.header-hide-title {
