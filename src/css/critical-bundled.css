@@ -437,6 +437,7 @@ textarea:focus:not(:focus-visible) {
 }
 
 ul, ol {
+  list-style: none;
   padding-left: 1.5em;
 }
 

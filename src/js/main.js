@@ -194,6 +194,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const sidebar = document.getElementById('sidebar');
     const sidebarClose = document.getElementById('sidebarClose');
+    // Ensure the sidebar is visible once JS initializes it (prevents FOUC)
+    if (sidebar) sidebar.style.visibility = 'visible';
     if (!hamburgerBtn || !sidebar) return;
 
     // overlay element (single-instance)

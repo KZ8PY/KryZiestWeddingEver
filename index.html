@@ -15,6 +15,15 @@
   <script>
     document.documentElement.classList.add('js');
   </script>
+  <!-- Critical inline rule: keep sidebar hidden until JS/CSS have initialized -->
+  <style>
+    /* Hide the sidebar during initial render to prevent FOUC of list items */
+    #sidebar { visibility: hidden; }
+    /* Defensive: ensure no default markers appear if sidebar becomes visible early */
+    #sidebar ul,
+    #sidebar ol { list-style: none !important; padding-left: 0; margin: 0; }
+    #sidebar li::marker { display: none !important; }
+  </style>
   <link rel="icon" type="image/png" href="public/images/icons/KZ-Monogram.png">
   <link rel="alternate icon" href="public/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
