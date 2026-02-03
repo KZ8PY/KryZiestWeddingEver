@@ -270,6 +270,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
         // Simply add the class; CSS transitions handle the rest.
         h.classList.add('h2-reveal');
+        // If this heading belongs to the story section, trigger the sidebar tour
+        try {
+          if (h.closest && h.closest('#story')) showSidebarTourOnce();
+        } catch (e) { /* ignore */ }
         obs.unobserve(h);
       });
     }, { threshold: 0.1 });
@@ -284,6 +288,75 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   })();
+
+  // Mini tour: show a one-time popover pointing out the sidebar/hamburger
+  function showSidebarTourOnce() {
+    // Only show once per day using a cookie (per-browser, persists across sessions)
+    const _tourStorageKey = 'sidebarTourLastShown';
+    const _todayKey = new Date().toISOString().slice(0,10);
+    const getCookie = (name) => {
+      try {
+        const v = document.cookie.split('; ').find(row => row.startsWith(name + '='));
+        return v ? decodeURIComponent(v.split('=')[1]) : null;
+      } catch (e) { return null; }
+    };
+    const setCookie = (name, value, days) => {
+      try {
+        let expires = '';
+        if (typeof days === 'number') {
+          const d = new Date(); d.setTime(d.getTime() + (days*24*60*60*1000));
+          expires = '; expires=' + d.toUTCString();
+        }
+        document.cookie = `${name}=${encodeURIComponent(value)}${expires}; path=/; samesite=lax`;
+      } catch (e) { /* ignore */ }
+    };
+    try { if (getCookie(_tourStorageKey) === _todayKey) return; } catch (e) { /* ignore */ }
+    const btn = document.getElementById('hamburgerBtn');
+    if (!btn) return;
+    // Prefer highlighting the whole floating menu group if present
+    const highlightTarget = document.querySelector('.floating-menu-group.header-menu') || btn;
+
+    // Create a compact pointer popover
+    const pop = document.createElement('div');
+    pop.className = 'tour-popover';
+    pop.setAttribute('role', 'dialog');
+    pop.setAttribute('aria-describedby', 'tour-desc');
+    pop.innerHTML = `<div id="tour-desc">Use the sidebar for quicker navigation and RSVP</div>`;
+
+    document.body.appendChild(pop);
+    // Highlight the whole floating menu group (or button fallback)
+    highlightTarget.classList.add('tour-highlight');
+
+    // Position popover near the highlighted element (below it)
+    const rect = (highlightTarget.getBoundingClientRect && highlightTarget.getBoundingClientRect()) || btn.getBoundingClientRect();
+    const top = Math.min(window.innerHeight - 64, rect.bottom + 8);
+    const left = Math.max(8, rect.left);
+    pop.style.top = `${top}px`;
+    pop.style.left = `${left}px`;
+
+    // Event handlers: clicking the popover opens the menu; Esc dismisses
+    const cleanup = (openSidebar = false) => {
+      try { setCookie(_tourStorageKey, _todayKey, 30); } catch (e) { /* ignore */ }
+      try { highlightTarget.classList.remove('tour-highlight'); } catch (e) { btn.classList.remove('tour-highlight'); }
+      if (pop && pop.parentNode) pop.parentNode.removeChild(pop);
+      document.removeEventListener('keydown', onKey);
+      if (openSidebar) btn.click();
+    };
+
+    const onKey = (e) => { if (e.key === 'Escape') cleanup(false); };
+    document.addEventListener('keydown', onKey);
+
+    pop.addEventListener('click', (e) => { cleanup(true); });
+
+    // Also auto-dismiss after 8s
+    const timer = setTimeout(() => cleanup(false), 8000);
+    // ensure timer cleared on cleanup
+    const oldCleanup = cleanup;
+    cleanup = (openSidebar = false) => { clearTimeout(timer); oldCleanup(openSidebar); };
+  }
+
+  // Expose for manual invocation from console (useful for testing)
+  try { window.showSidebarTourOnce = showSidebarTourOnce; } catch (e) { /* ignore */ }
 
   // Back-to-top visibility & scroll handling (appears near bottom of page)
   const backToTop = document.getElementById('backToTop');

@@ -63,8 +63,8 @@
 .hero .header-site-title {
   margin: clamp(0.4rem, 2.5vw, 1rem) auto 0.6rem;
 
-  /* ~70% of the previous value (user requested smaller) */
-  font-size: clamp(2.69rem, 8.4vw + 0.98rem, 8.4rem);
+  /* Constrain hero title size between 58px and 100px for visual consistency */
+  font-size: clamp(58px, 8.5vw, 100px);
 
   /* keep hero title centered relative to the section */
   align-self: center;
@@ -101,7 +101,8 @@
   display: block;
   text-align: center;
   font-family: var(--font-tan-pearl);
-  font-size: 0.65rem;
+  /* Constrain invite copy between 12px and 14px */
+  font-size: clamp(12px, 1.1vw + 0.5rem, 14px);
   font-weight: 700;
   color: var(--color-dark-roast);
   letter-spacing: 0.24em;
@@ -112,19 +113,21 @@
 
 .site-header .hero-invite {
   margin-bottom: 0.35rem;
-  font-size: 0.45rem;
+  /* Ensure header invite copy respects 12px minimum on small screens */
+  font-size: clamp(12px, 1.1vw + 0.5rem, 14px);
   letter-spacing: 0.17em;
 }
 
 .hero .hero-invite {
   margin-bottom: 0.55rem;
-  font-size: 0.65rem;
+  font-size: clamp(11px, 1.1vw + 0.5rem, 14px);
   letter-spacing: 0.18em;
 }
 
 @media (width <= 520px) {
   .hero .hero-invite {
-    font-size: 0.5rem;
+    /* Fixed small-screen size per request */
+    font-size: 11px;
     letter-spacing: 0.14em;
   }
 }
@@ -161,8 +164,8 @@
   box-shadow: none; /* remove card shadow */
   position: relative;
 
-  /* reduce the hero height so the page doesn’t start too low */
-  min-height: calc(60vh - var(--site-header-height, 4rem));
+  /* ensure the hero is tall on most devices so it dominates first view */
+  min-height: max(900px, calc(60vh - var(--site-header-height, 4rem)));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -171,6 +174,7 @@
   /* prevent the hero itself from scrolling vertically */
   overflow: hidden;
   margin-top: 0; /* ensure no gap under header */
+  margin-bottom: 1.5rem; /* add space after hero to match other sections */
 }
 
 .welcome-song-panel > * {
@@ -181,6 +185,10 @@
 .welcome-song-panel {
   overflow: hidden;
   isolation: isolate;
+  /* Ensure the frosted glass panel has the same inner spacing as other sections */
+  --glass-padding: 1.25rem 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 /* Actual frosted blur (supported browsers only) */
@@ -519,7 +527,6 @@
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  margin: 0;
 }
 
 /* main countdown spacing */
