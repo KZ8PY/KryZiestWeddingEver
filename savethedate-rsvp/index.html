@@ -78,16 +78,6 @@
     #latte-bg .latte-layer {
       transform: translateZ(0);
     }
-    /* Disable the heaviest blended overlays on this video page */
-    #latte-bg .latte-gradient::before,
-    #latte-bg .latte-gradient::after {
-      content: none !important;
-    }
-    #latte-bg .latte-orbs,
-    #latte-bg .latte-blobs {
-      mix-blend-mode: normal !important;
-      opacity: 0.9;
-    }
 
     /* Page-specific: ensure the site title in the header matches the milk-cream background tone */
     body > header > div > h1 { color: var(--color-bg-alt); }

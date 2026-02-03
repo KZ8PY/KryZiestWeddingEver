@@ -319,23 +319,6 @@ main {
   100% { transform: translate3d(-4.2%, -1.2%, 0) scale(1.09); }
 }
 
-/* Perf: on low-tier devices, tone down the overlay cost. */
-#latte-bg.latte-tier-low .latte-gradient {
-  animation: none;
-}
-
-#latte-bg.latte-tier-low .latte-gradient::after {
-  content: none;
-}
-
-#latte-bg.latte-tier-low .latte-gradient::before {
-  opacity: 0.14;
-  filter: none;
-  mix-blend-mode: normal;
-  animation: none;
-  background: radial-gradient(92% 52% at 42% 62%, rgb(255 246 224 / 10%) 0%, rgb(255 246 224 / 0%) 70%);
-}
-
 @media (prefers-reduced-motion: reduce) {
   #latte-bg .latte-gradient {
     animation: none;
@@ -359,30 +342,11 @@ main {
   opacity: 1;
 }
 
-/* Save-the-Date: prefer a static, lightweight background for smoother playback. */
-.page-save-the-date #latte-bg .latte-orbs,
-.page-save-the-date #latte-bg .latte-blobs,
-.page-save-the-date #latte-bg .latte-foam {
-  display: none !important;
-}
-
 /* Hero-like circular gradients (blobs) drifting across the entire background */
 #latte-bg .latte-blobs {
   z-index: 2;
   mix-blend-mode: overlay;
   opacity: 1;
-}
-
-/* Low-tier devices: reduce costly blending/blur while preserving the vibe */
-#latte-bg.latte-tier-low .latte-orbs,
-#latte-bg.latte-tier-low .latte-blobs {
-  mix-blend-mode: normal;
-  opacity: 0.9;
-}
-
-#latte-bg.latte-tier-low .latte-blob {
-  mix-blend-mode: normal !important;
-  filter: blur(calc(var(--blob-blur, 6px) * 0.85));
 }
 
 #latte-bg .latte-blob {
