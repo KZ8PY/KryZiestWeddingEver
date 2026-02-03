@@ -11,8 +11,6 @@ window.addEventListener('DOMContentLoaded', () => {
   (function initLatteBackground() {
     if (document.getElementById('latte-bg')) return;
 
-    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
     // Device tiering disabled per request: ensure full effects on all devices.
     // Previously checked hardwareConcurrency and deviceMemory.
     const isLowTier = false; 
@@ -25,155 +23,22 @@ window.addEventListener('DOMContentLoaded', () => {
     // Save-the-Date page: keep a minimal, static background for smoother video playback.
     if (isSaveTheDatePage) {
       container.classList.add('latte-minimal');
-      container.innerHTML = `<div class="latte-layer latte-gradient"></div>`;
-      document.body.prepend(container);
-
-      container.__latteAnimControls = {
-        stop: () => {},
-        start: () => {},
-        isRunning: () => false
-      };
-      return;
+      // On User Request: Ripples/Waves everywhere, even on Save the Date.
+      // We will use the same structure for consistency.
     }
 
     container.innerHTML = `
       <div class="latte-layer latte-gradient"></div>
-      <div class="latte-layer latte-blobs" id="latte-blobs" aria-hidden="true"></div>
-      <div class="latte-layer latte-foam"></div>
+      <div class="latte-layer latte-ripples">
+        <div class="latte-ripple latte-ripple-1"></div>
+        <div class="latte-ripple latte-ripple-2"></div>
+        <div class="latte-ripple latte-ripple-3"></div>
+      </div>
     `;
 
     document.body.prepend(container);
 
-    // Create hero-like circular gradient blobs across the full page.
-    const blobLayer = container.querySelector('#latte-blobs');
-    const blobs = [];
-
-    if (blobLayer) {
-      // Weighted palette: cream-dominant for a milkier latte look.
-      const palette = [
-        { color: 'rgba(250, 247, 240, 0.22)', kind: 'cream', weight: 0.46 },
-        { color: 'rgba(210, 180, 140, 0.20)', kind: 'lightCoffee', weight: 0.22 },
-        { color: 'rgba(135, 169, 107, 0.20)', kind: 'matcha', weight: 0.16 },
-        { color: 'rgba(139, 69, 19, 0.18)', kind: 'coffee', weight: 0.10 },
-        { color: 'rgba(74, 44, 42, 0.18)', kind: 'darkCoffee', weight: 0.06 }
-      ];
-
-      const pick = () => {
-        let r = Math.random();
-        for (const p of palette) {
-          r -= p.weight;
-          if (r <= 0) return p;
-        }
-        return palette[0];
-      };
-
-      const baseCount = isLowTier
-        ? (prefersReducedMotion ? 8 : 10)
-        : (prefersReducedMotion ? 12 : 16);
-      const count = isSaveTheDatePage
-        ? Math.max(5, Math.floor(baseCount * 0.6))
-        : baseCount;
-      for (let i = 0; i < count; i += 1) {
-        const el = document.createElement('div');
-        el.className = 'latte-blob';
-        const chosen = pick();
-
-        // Milkier dominance: cream blobs are larger and slightly more present.
-        const size = (chosen.kind === 'cream')
-          ? (520 + Math.random() * 980)
-          : (360 + Math.random() * 820);
-
-        // More defined: higher opacity and less blur overall.
-        const opacity = (chosen.kind === 'cream')
-          ? (0.20 + Math.random() * 0.14)
-          : (0.16 + Math.random() * 0.12);
-
-        // Lower blur cost: rely more on gradient falloff + less on filter blur.
-        const blur = (chosen.kind === 'cream')
-          ? (4 + Math.random() * 6)
-          : (3 + Math.random() * 4);
-
-        const color = chosen.color;
-
-        // Blend: keep milky softness while allowing some overlay depth.
-        el.style.mixBlendMode = (chosen.kind === 'cream')
-          ? ((i % 2 === 0) ? 'soft-light' : 'screen')
-          : ((i % 3 === 0) ? 'overlay' : (i % 3 === 1) ? 'soft-light' : 'screen');
-        el.style.setProperty('--blob-size', size.toFixed(0) + 'px');
-        el.style.setProperty('--blob-opacity', opacity.toFixed(3));
-        el.style.setProperty('--blob-blur', blur.toFixed(1) + 'px');
-        el.style.setProperty('--blob-color', color);
-
-        blobLayer.appendChild(el);
-
-        // Seeded motion params (kept tiny but frequent; swirly not linear)
-        blobs.push({
-          el,
-          ax: -0.08 + Math.random() * 1.16,
-          ay: -0.05 + Math.random() * 1.1,
-          size,
-          rotation: (Math.random() * 0.8) - 0.4,
-          scale: 0.9 + Math.random() * 0.2
-        });
-      }
-    }
-
-    let measureRafId = 0;
-
-    let bgWidth = 0;
-    let bgHeight = 0;
-
-    const positionBlobs = () => {
-      if (!blobs.length) return;
-      const w = bgWidth || window.innerWidth || 1000;
-      const h = bgHeight || document.documentElement.scrollHeight || 2000;
-      for (const b of blobs) {
-        const baseX = b.ax * w;
-        const baseY = b.ay * h;
-        const x = (baseX - b.size / 2).toFixed(2);
-        const y = (baseY - b.size / 2).toFixed(2);
-        b.el.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${b.rotation.toFixed(3)}rad) scale(${b.scale.toFixed(3)})`;
-      }
-    };
-
-    const measure = () => {
-      measureRafId = 0;
-      const doc = document.documentElement;
-      const body = document.body;
-      const height = Math.max(
-        doc.scrollHeight,
-        body.scrollHeight,
-        doc.offsetHeight,
-        body.offsetHeight,
-        window.innerHeight
-      );
-      bgHeight = height;
-      bgWidth = Math.max(doc.clientWidth || 0, window.innerWidth || 0);
-      positionBlobs();
-    };
-
-    const requestMeasure = () => {
-      if (measureRafId) return;
-      measureRafId = window.requestAnimationFrame(measure);
-    };
-
-    // Resize: re-measure the scrollable page height used to distribute blobs.
-    window.addEventListener('resize', () => {
-      requestMeasure();
-    });
-
-    // Content changes (images loading, dynamic layout): keep height correct.
-    if (typeof ResizeObserver !== 'undefined') {
-      const ro = new ResizeObserver(() => requestMeasure());
-      ro.observe(document.body);
-    } else {
-      // fallback: re-measure after load
-      window.addEventListener('load', requestMeasure, { once: true });
-    }
-
-    requestMeasure();
-
-    // Expose controls so other features (e.g. video playback) can temporarily pause the background.
+    // No JS-driven blobs anymore. Pure CSS ripples.
     container.__latteAnimControls = {
       stop: () => {},
       start: () => {},
