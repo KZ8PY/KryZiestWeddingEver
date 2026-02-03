@@ -43,6 +43,10 @@
 }
 
 /* Prevent accidental horizontal scroll caused by 100vw or wide elements */
+html {
+  min-height: 100%;
+}
+
 html, body {
   overflow-x: hidden;
 }
@@ -92,7 +96,16 @@ html, body {
 
 /* Reset & base styles for Korean Cafe Wedding Theme */
 * { box-sizing: border-box; }
+/* Ensure page content sits above the fixed latte background layer. */
+main,
+footer {
+  position: relative;
+  z-index: 1;
+}
 
+footer {
+  padding: 2rem 1.25rem 2.5rem;
+}
 
 body {
   background: transparent;
@@ -106,18 +119,11 @@ body {
   letter-spacing: 0.01em;
   position: relative;
   isolation: isolate;
-  animation: body-fade-in 1.5s ease-in-out;;
 }
 
-/* Ensure page content sits above the fixed latte background layer. */
-main,
-footer {
-  position: relative;
-  z-index: 1;
-}
-
-footer {
-  padding: 2rem 1.25rem 2.5rem;
+/* Apply fade-in to the actual content, keeping the background stable and visible immediately */
+main {
+  animation: body-fade-in 1.5s ease-in-out;
 }
 
 /* Latte swirl background (decorative, behind all content) */
@@ -145,11 +151,20 @@ footer {
 
 /* 65 explicit stops (50+ intermediate) for ultra-smooth blending */
 #latte-bg .latte-gradient {
-  z-index: 1;
-  position: relative;
-  background: linear-gradient(
-    to bottom,
-    #4a2c2a 0%,
+  z-index: 0;
+  position: fixed;
+  background: radial-gradient(
+    /* Alternatives (replace linear-gradient(...) entirely if preferred):
+      radial-gradient(circle at center, #ff9a9e 0%, #fecfef 100%)
+      conic-gradient(from 180deg at 50% 50%, #a18cd1 0deg, #fbc2eb 120deg, #a6c1ee 360deg)
+      repeating-linear-gradient(180deg, #ffd194 0 8px, #ffb199 8px 16px)
+      repeating-radial-gradient(circle at 30% 30%, #ffe29f 0 6px, #ffd7a7 6px 12px)
+    */
+    /* to bottom, */
+    /* circle at 50% 0%, */
+    /* Use 'ellipse' for an oval radial gradient */
+    ellipse 250% 90% at 50% -5%,
+    /* #4a2c2a 0%,
     #4e2e29 1.75%,
     #522f27 3.5%,
     #563126 5.25%,
@@ -158,61 +173,61 @@ footer {
     #623521 10.5%,
     #663720 12.25%,
     #6a381e 14%,
-    #6f3a1d 15.75%,
-    #733c1c 17.5%,
-    #773d1a 19.25%,
-    #7b3f19 21%,
-    #7f4017 22.75%,
-    #834216 24.5%,
-    #874314 26.25%,
-    #8b4513 28%,
-    #8f4c1b 29.5%,
-    #945322 31%,
-    #985a2a 32.5%,
-    #9d6131 34%,
-    #a16839 35.5%,
-    #a66f40 37%,
-    #aa7648 38.5%,
-    #ae7c50 40%,
-    #b38357 41.5%,
-    #b78a5f 43%,
-    #bc9166 44.5%,
-    #c0986e 46%,
-    #c59f75 47.5%,
-    #c9a67d 49%,
-    #cead84 50.5%,
-    #d2b48c 52%,
-    #cdb38a 53%,
-    #c9b388 54%,
-    #c4b286 55%,
-    #bfb184 56%,
-    #bbb182 57%,
-    #b6b080 58%,
-    #b1af7e 59%,
-    #acae7c 60%,
-    #a8ae79 61%,
-    #a3ad77 62%,
-    #9eac75 63%,
-    #9aac73 64%,
-    #95ab71 65%,
-    #90aa6f 66%,
-    #8caa6d 67%,
-    #87a96b 68%,
-    #8eae73 70%,
-    #95b37c 72%,
-    #9db884 74%,
-    #a4bc8c 76%,
-    #abc195 78%,
-    #b2c69d 80%,
-    #b9cba5 82%,
-    #c0d0ae 84%,
-    #c8d5b6 86%,
-    #cfdabe 88%,
-    #d6dfc6 90%,
-    #dde4cf 92%,
-    #e4e8d7 94%,
-    #eceddf 96%,
-    #f3f2e8 98%,
+    #6f3a1d 0%,
+    #733c1c 3.5%,
+    #773d1a 7%, */
+    #7b3f19 0.0%,
+    #7f4017 1.9%,
+    #834216 3.8%,
+    #874314 5.8%,
+    #8b4513 7.7%,
+    #8f4c1b 9.6%,
+    #945322 11.5%,
+    #985a2a 13.5%,
+    #9d6131 15.4%,
+    #a16839 17.3%,
+    #a66f40 19.2%,
+    #aa7648 21.2%,
+    #ae7c50 23.1%,
+    #b38357 25.0%,
+    #b78a5f 26.9%,
+    #bc9166 28.8%,
+    #c0986e 30.8%,
+    #c59f75 32.7%,
+    #c9a67d 34.6%,
+    #cead84 36.5%,
+    #d2b48c 38.5%,
+    #cdb38a 40.4%,
+    #c9b388 42.3%,
+    #c4b286 44.2%,
+    #bfb184 46.2%,
+    #bbb182 48.1%,
+    #b6b080 50.0%,
+    #b1af7e 51.9%,
+    #acae7c 53.8%,
+    #a8ae79 55.8%,
+    #a3ad77 57.7%,
+    #9eac75 59.6%,
+    #9aac73 61.5%,
+    #95ab71 63.5%,
+    #90aa6f 65.4%,
+    #8caa6d 67.3%,
+    #87a96b 69.2%,
+    #8eae73 71.2%,
+    #95b37c 73.1%,
+    #9db884 75.0%,
+    #a4bc8c 76.9%,
+    #abc195 78.8%,
+    #b2c69d 80.8%,
+    #b9cba5 82.7%,
+    #c0d0ae 84.6%,
+    #c8d5b6 86.5%,
+    #cfdabe 88.5%,
+    #d6dfc6 90.4%,
+    #dde4cf 92.3%,
+    #e4e8d7 94.2%,
+    #eceddf 96.2%,
+    #f3f2e8 98.1%,
     #faf7f0 100%
   );
   background-size: 100% 140%;
@@ -227,7 +242,7 @@ footer {
 #latte-bg .latte-gradient::before,
 #latte-bg .latte-gradient::after {
   content: '';
-  position: absolute;
+  position: relative;
   inset: -20%;
   pointer-events: none;
   z-index: 0;
