@@ -321,7 +321,7 @@ window.addEventListener('DOMContentLoaded', () => {
     pop.className = 'tour-popover';
     pop.setAttribute('role', 'dialog');
     pop.setAttribute('aria-describedby', 'tour-desc');
-    pop.innerHTML = `<div id="tour-desc">Access the menu and RSVP here</div>`;
+    pop.innerHTML = `<div id="tour-desc">Navigate quickly through the sidebar and access RSVP</div>`;
 
     document.body.appendChild(pop);
     // Highlight the whole floating menu group (or button fallback)
