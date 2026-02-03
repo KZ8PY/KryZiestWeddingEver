@@ -1,5 +1,4 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap'); */
-
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
 /* Self-hosted Great Vibes (optional): place WOFF2/WOFF files at
   src/fonts/great-vibes/GreatVibes-Regular.woff2 and .woff if you want to
@@ -20,7 +19,8 @@
   --color-link: #8B4513;         /* Coffee Brown for links */
   --color-border: #C8D5B9;       /* Light Matcha for borders */
   --color-card-bg: #FFFC;    /* Semi-transparent white for cards */
-  --color-shadow: rgba(139,69,19,0.08); /* Coffee shadow */   --color-latte-backdrop: radial-gradient(ellipse 250% 90% at 50% -5%, #7b3f19 0.0%, #7f4017 1.9%, #834216 3.8%, #874314 5.8%, #8b4513 7.7%, #8f4c1b 9.6%, #945322 11.5%, #985a2a 13.5%, #9d6131 15.4%, #a16839 17.3%, #a66f40 19.2%, #aa7648 21.2%, #ae7c50 23.1%, #b38357 25.0%, #b78a5f 26.9%, #bc9166 28.8%, #c0986e 30.8%, #c59f75 32.7%, #c9a67d 34.6%, #cead84 36.5%, #d2b48c 38.5%, #cdb38a 40.4%, #c9b388 42.3%, #c4b286 44.2%, #bfb184 46.2%, #bbb182 48.1%, #b6b080 50.0%, #b1af7e 51.9%, #acae7c 53.8%, #a8ae79 55.8%, #a3ad77 57.7%, #9eac75 59.6%, #9aac73 61.5%, #95ab71 63.5%, #90aa6f 65.4%, #8caa6d 67.3%, #87a96b 69.2%, #8eae73 71.2%, #95b37c 73.1%, #9db884 75.0%, #a4bc8c 76.9%, #abc195 78.8%, #b2c69d 80.8%, #b9cba5 82.7%, #c0d0ae 84.6%, #c8d5b6 86.5%, #cfdabe 88.5%, #d6dfc6 90.4%, #dde4cf 92.3%, #e4e8d7 94.2%, #eceddf 96.2%, #f3f2e8 98.1%, #faf7f0 100%);  --focus-ring: rgba(139, 69, 19, 0.76);
+  --color-shadow: rgba(139,69,19,0.08); /* Coffee shadow */   /* --color-latte-backdrop removed */
+  --focus-ring: rgba(139, 69, 19, 0.76);
   --focus-ring-offset: 4px;
   /* Additional derived colors used by components */
   --color-latte: #f7e6c4cc;      /* Latte background used in header */
@@ -246,7 +246,7 @@ main {
     /* to bottom, */
     /* circle at 50% 0%, */
     /* Use 'ellipse' for an oval radial gradient */
-    ellipse 250% 90% at 50% -5%,
+    ellipse 250% 90% at 50% 0%,
     /* #4a2c2a 0%,
     #4e2e29 1.75%,
     #522f27 3.5%,
@@ -317,175 +317,22 @@ main {
   /* Static position: keeps the latte texture without movement */
   background-position: 50% 8%;
   filter: saturate(1.04) contrast(1.01);
-  animation: none;
+  animation: latteVerticalBreathe 1s ease-in-out infinite alternate;
 }
 
 /* Wavy blend overlay: keeps the linear gradient direction, but adds soft moving
    contour bands so transitions feel liquid (like latte/matcha mixing). */
+/* Replaced with simplified Ripple system */
 #latte-bg .latte-gradient::before,
 #latte-bg .latte-gradient::after {
-  content: '';
-  position: relative;
-  inset: -20%;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.32;
-  filter: blur(18px);
-  transform: translate3d(0, 0, 0);
-  /* No motion: avoid will-change overhead */
-}
-
-#latte-bg .latte-gradient::before {
-  background:
-    radial-gradient(70% 36% at 18% 24%, rgb(74 44 42 / 26%) 0%, rgb(74 44 42 / 0%) 72%),
-    radial-gradient(84% 44% at 78% 18%, rgb(111 78 55 / 24%) 0%, rgb(111 78 55 / 0%) 70%),
-    radial-gradient(92% 52% at 28% 78%, rgb(135 169 107 / 24%) 0%, rgb(135 169 107 / 0%) 72%),
-    radial-gradient(88% 50% at 82% 84%, rgb(157 184 132 / 20%) 0%, rgb(157 184 132 / 0%) 74%);
-  mix-blend-mode: soft-light;
-  animation: none;
-}
-
-#latte-bg .latte-gradient::after {
-  background:
-    radial-gradient(68% 34% at 12% 52%, rgb(255 246 224 / 18%) 0%, rgb(255 246 224 / 0%) 70%),
-    radial-gradient(76% 38% at 92% 46%, rgb(243 214 184 / 16%) 0%, rgb(243 214 184 / 0%) 70%),
-    radial-gradient(86% 42% at 52% 92%, rgb(135 169 107 / 16%) 0%, rgb(135 169 107 / 0%) 74%);
-  mix-blend-mode: overlay;
-  opacity: 0.24;
-  filter: blur(22px);
-  animation: none;
-}
-
-/* High-tier only: add stronger contour bands (more paint/compositing). */
-#latte-bg.latte-tier-high .latte-gradient::before {
-  opacity: 0.52;
-  filter: blur(16px);
-  background:
-    repeating-linear-gradient(
-      115deg,
-      rgb(255 255 255 / 0%) 0,
-      rgb(255 255 255 / 0%) 34px,
-      rgb(255 255 255 / 12%) 50px,
-      rgb(255 255 255 / 0%) 74px
-    ),
-    radial-gradient(70% 36% at 18% 24%, rgb(74 44 42 / 26%) 0%, rgb(74 44 42 / 0%) 72%),
-    radial-gradient(84% 44% at 78% 18%, rgb(111 78 55 / 24%) 0%, rgb(111 78 55 / 0%) 70%),
-    radial-gradient(92% 52% at 28% 78%, rgb(135 169 107 / 24%) 0%, rgb(135 169 107 / 0%) 72%),
-    radial-gradient(88% 50% at 82% 84%, rgb(157 184 132 / 20%) 0%, rgb(157 184 132 / 0%) 74%);
-}
-
-#latte-bg.latte-tier-high .latte-gradient::after {
-  opacity: 0.34;
-  filter: blur(18px);
-  background:
-    repeating-linear-gradient(
-      -12deg,
-      rgb(0 0 0 / 0%) 0,
-      rgb(0 0 0 / 0%) 44px,
-      rgb(0 0 0 / 10%) 64px,
-      rgb(0 0 0 / 0%) 96px
-    ),
-    radial-gradient(68% 34% at 12% 52%, rgb(255 246 224 / 18%) 0%, rgb(255 246 224 / 0%) 70%),
-    radial-gradient(76% 38% at 92% 46%, rgb(243 214 184 / 16%) 0%, rgb(243 214 184 / 0%) 70%),
-    radial-gradient(86% 42% at 52% 92%, rgb(135 169 107 / 16%) 0%, rgb(135 169 107 / 0%) 74%);
-}
-
-@keyframes latteWavyBlendA {
-  0%   { transform: translate3d(-3.8%, -1.4%, 0) scale(1.03); }
-  50%  { transform: translate3d(1.6%, 2.2%, 0) scale(1.06); }
-  100% { transform: translate3d(4.2%, -1.0%, 0) scale(1.05); }
-}
-
-@keyframes latteWavyBlendB {
-  0%   { transform: translate3d(3.0%, 1.4%, 0) scale(1.07); }
-  50%  { transform: translate3d(-1.4%, 3.0%, 0) scale(1.10); }
-  100% { transform: translate3d(-4.2%, -1.2%, 0) scale(1.09); }
-}
-
-/* Perf: on low-tier devices, tone down the overlay cost. */
-#latte-bg.latte-tier-low .latte-gradient {
-  animation: none;
-}
-
-#latte-bg.latte-tier-low .latte-gradient::after {
   content: none;
 }
 
-#latte-bg.latte-tier-low .latte-gradient::before {
-  opacity: 0.14;
-  filter: none;
-  mix-blend-mode: normal;
-  animation: none;
-  background: radial-gradient(92% 52% at 42% 62%, rgb(255 246 224 / 10%) 0%, rgb(255 246 224 / 0%) 70%);
-}
+/* Ripples Removed - Just pure gradient breathing */
 
-@media (prefers-reduced-motion: reduce) {
-  #latte-bg .latte-gradient {
-    animation: none;
-  }
-
-  #latte-bg .latte-gradient::before,
-  #latte-bg .latte-gradient::after {
-    animation: none;
-  }
-}
-
-@keyframes latteGradientDrift {
+@keyframes latteVerticalBreathe {
   0% { background-position: 50% 0%; }
-  100% { background-position: 50% 22%; }
-}
-
-/* Rotating radial overlays for depth */
-#latte-bg .latte-orbs {
-  z-index: 1;
-  mix-blend-mode: soft-light;
-  opacity: 1;
-}
-
-/* Save-the-Date: prefer a static, lightweight background for smoother playback. */
-.page-save-the-date #latte-bg .latte-orbs,
-.page-save-the-date #latte-bg .latte-blobs,
-.page-save-the-date #latte-bg .latte-foam {
-  display: none !important;
-}
-
-/* Hero-like circular gradients (blobs) drifting across the entire background */
-#latte-bg .latte-blobs {
-  z-index: 2;
-  mix-blend-mode: overlay;
-  opacity: 1;
-}
-
-/* Low-tier devices: reduce costly blending/blur while preserving the vibe */
-#latte-bg.latte-tier-low .latte-orbs,
-#latte-bg.latte-tier-low .latte-blobs {
-  mix-blend-mode: normal;
-  opacity: 0.9;
-}
-
-#latte-bg.latte-tier-low .latte-blob {
-  mix-blend-mode: normal !important;
-  filter: blur(calc(var(--blob-blur, 6px) * 0.85));
-}
-
-#latte-bg .latte-blob {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: var(--blob-size, 400px);
-  height: var(--blob-size, 400px);
-  border-radius: 50%;
-  filter: blur(var(--blob-blur, 6px));
-  opacity: var(--blob-opacity, 0.22);
-
-  /* Avoid will-change on many nodes; it can increase memory/overheads */
-  pointer-events: none;
-
-  /* Defined circular gradients like hero ::before/::after, but layered for latte depth */
-  background:
-    radial-gradient(circle at 42% 36%, rgb(255 255 255 / 10%) 0%, rgb(255 255 255 / 0%) 48%),
-    radial-gradient(circle at 58% 62%, rgb(255 255 255 / 6%) 0%, rgb(255 255 255 / 0%) 44%),
-    radial-gradient(circle at 40% 40%, var(--blob-color, rgb(135 169 107 / 20%)) 0%, rgb(0 0 0 / 0%) 74%);
+  100% { background-position: 50% 15%; }
 }
 
 /* Global headings (excluding hero-specific title selectors) */

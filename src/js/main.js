@@ -23,22 +23,15 @@ window.addEventListener('DOMContentLoaded', () => {
     // Save-the-Date page: keep a minimal, static background for smoother video playback.
     if (isSaveTheDatePage) {
       container.classList.add('latte-minimal');
-      // On User Request: Ripples/Waves everywhere, even on Save the Date.
-      // We will use the same structure for consistency.
     }
 
+    // Simplified to just the gradient layer which will animate via CSS
     container.innerHTML = `
       <div class="latte-layer latte-gradient"></div>
-      <div class="latte-layer latte-ripples">
-        <div class="latte-ripple latte-ripple-1"></div>
-        <div class="latte-ripple latte-ripple-2"></div>
-        <div class="latte-ripple latte-ripple-3"></div>
-      </div>
     `;
 
     document.body.prepend(container);
 
-    // No JS-driven blobs anymore. Pure CSS ripples.
     container.__latteAnimControls = {
       stop: () => {},
       start: () => {},

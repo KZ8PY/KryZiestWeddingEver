@@ -19,7 +19,8 @@
   --color-link: #8B4513;         /* Coffee Brown for links */
   --color-border: #C8D5B9;       /* Light Matcha for borders */
   --color-card-bg: #FFFC;    /* Semi-transparent white for cards */
-  --color-shadow: rgba(139,69,19,0.08); /* Coffee shadow */   --color-latte-backdrop: radial-gradient(ellipse 250% 90% at 50% -5%, #7b3f19 0.0%, #7f4017 1.9%, #834216 3.8%, #874314 5.8%, #8b4513 7.7%, #8f4c1b 9.6%, #945322 11.5%, #985a2a 13.5%, #9d6131 15.4%, #a16839 17.3%, #a66f40 19.2%, #aa7648 21.2%, #ae7c50 23.1%, #b38357 25.0%, #b78a5f 26.9%, #bc9166 28.8%, #c0986e 30.8%, #c59f75 32.7%, #c9a67d 34.6%, #cead84 36.5%, #d2b48c 38.5%, #cdb38a 40.4%, #c9b388 42.3%, #c4b286 44.2%, #bfb184 46.2%, #bbb182 48.1%, #b6b080 50.0%, #b1af7e 51.9%, #acae7c 53.8%, #a8ae79 55.8%, #a3ad77 57.7%, #9eac75 59.6%, #9aac73 61.5%, #95ab71 63.5%, #90aa6f 65.4%, #8caa6d 67.3%, #87a96b 69.2%, #8eae73 71.2%, #95b37c 73.1%, #9db884 75.0%, #a4bc8c 76.9%, #abc195 78.8%, #b2c69d 80.8%, #b9cba5 82.7%, #c0d0ae 84.6%, #c8d5b6 86.5%, #cfdabe 88.5%, #d6dfc6 90.4%, #dde4cf 92.3%, #e4e8d7 94.2%, #eceddf 96.2%, #f3f2e8 98.1%, #faf7f0 100%);  --focus-ring: rgba(139, 69, 19, 0.76);
+  --color-shadow: rgba(139,69,19,0.08); /* Coffee shadow */   /* --color-latte-backdrop removed */
+  --focus-ring: rgba(139, 69, 19, 0.76);
   --focus-ring-offset: 4px;
   /* Additional derived colors used by components */
   --color-latte: #f7e6c4cc;      /* Latte background used in header */
