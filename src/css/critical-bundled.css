@@ -1,0 +1,2154 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap'); */
+
+
+/* Self-hosted Great Vibes (optional): place WOFF2/WOFF files at
+  src/fonts/great-vibes/GreatVibes-Regular.woff2 and .woff if you want to
+  self-host later. The Google-hosted import above will load the font now. */
+
+:root {
+  /* Korean Cafe Wedding Theme: Matcha & Coffee Spectrum */
+  --color-bg: #FAF7F0;           /* Paper White */
+  --color-bg-alt: #F5F5DC;       /* Milk Cream */
+  --color-primary: #87A96B;      /* Matcha Green */
+  --color-primary-light: #C8D5B9;/* Light Matcha */
+  --color-primary-dark: #5D6B4D; /* Deep Matcha */
+  --color-coffee: #8B4513;       /* Coffee Brown */
+  --color-coffee-light: #D2B48C; /* Light Coffee */
+  --color-coffee-dark: #4A2C2A;  /* Dark Coffee */
+  --color-accent: #87A96B;       /* Matcha as accent */
+  --color-text: #4A2C2A;         /* Dark Coffee for text */
+  --color-link: #8B4513;         /* Coffee Brown for links */
+  --color-border: #C8D5B9;       /* Light Matcha for borders */
+  --color-card-bg: #FFFC;    /* Semi-transparent white for cards */
+  --color-shadow: rgba(139,69,19,0.08); /* Coffee shadow */   --color-latte-backdrop: radial-gradient(ellipse 250% 90% at 50% -5%, #7b3f19 0.0%, #7f4017 1.9%, #834216 3.8%, #874314 5.8%, #8b4513 7.7%, #8f4c1b 9.6%, #945322 11.5%, #985a2a 13.5%, #9d6131 15.4%, #a16839 17.3%, #a66f40 19.2%, #aa7648 21.2%, #ae7c50 23.1%, #b38357 25.0%, #b78a5f 26.9%, #bc9166 28.8%, #c0986e 30.8%, #c59f75 32.7%, #c9a67d 34.6%, #cead84 36.5%, #d2b48c 38.5%, #cdb38a 40.4%, #c9b388 42.3%, #c4b286 44.2%, #bfb184 46.2%, #bbb182 48.1%, #b6b080 50.0%, #b1af7e 51.9%, #acae7c 53.8%, #a8ae79 55.8%, #a3ad77 57.7%, #9eac75 59.6%, #9aac73 61.5%, #95ab71 63.5%, #90aa6f 65.4%, #8caa6d 67.3%, #87a96b 69.2%, #8eae73 71.2%, #95b37c 73.1%, #9db884 75.0%, #a4bc8c 76.9%, #abc195 78.8%, #b2c69d 80.8%, #b9cba5 82.7%, #c0d0ae 84.6%, #c8d5b6 86.5%, #cfdabe 88.5%, #d6dfc6 90.4%, #dde4cf 92.3%, #e4e8d7 94.2%, #eceddf 96.2%, #f3f2e8 98.1%, #faf7f0 100%);  --focus-ring: rgba(139, 69, 19, 0.76);
+  --focus-ring-offset: 4px;
+  /* Additional derived colors used by components */
+  --color-latte: #f7e6c4cc;      /* Latte background used in header */
+  --color-dark-roast: #4b2e19;   /* Dark roast / label color used in components */
+  --color-warm-brown: #7c5a3a;   /* Warm brown accent */
+  --color-warm-cream: #fff9e6;   /* cream tones for cup gradients */
+  --color-cream-1: #f6e6cc;
+  --color-cream-2: #e7cfae;
+  --color-cream-3: #d6a77f;
+  --color-card-bg-alt: #fff8f0cc; /* alternate card bg used for floating groups */
+  --color-subtle-shadow: #0001;  /* very subtle shadow hex in some places */
+
+  /* utility colors added during audit */
+  --color-white: #fff;
+  --overlay-dark: rgba(0,0,0,0.8);
+  --color-cream-light: #fafafa;
+  --color-cream-mid: #efeae5;
+  --color-cream-deep: #e6dccd;
+  /* white / overlay opacity tokens */
+  --white-98: rgba(255,255,255,0.98);
+  --white-55: rgba(255,255,255,0.55);
+  --white-35: rgba(255,255,255,0.35);
+  --white-25: rgba(255,255,255,0.25);
+  --white-22: rgba(255,255,255,0.22);
+  --white-07: rgba(255,255,255,0.07);
+  --white-50: rgba(255,255,255,0.5);
+  /* darker shadow variant for visual depth */
+  --shadow-dark: rgba(60,40,20,0.08);
+  /* additional shadow tokens used by components */
+  --shadow-inset: rgba(30,20,10,0.12);
+  --shadow-soft-dark: rgba(60,40,20,0.10);
+  --shadow-xs: rgba(30,20,10,0.06);
+  --shadow-strong: rgba(0,0,0,0.22);
+
+  /* Typography: Korean Cafe Style */
+  /* self-hosted Tan Pearl display font variable (concrete stack, not circular)
+    --font-tan-pearl must not reference --font-heading to avoid circular refs */
+  --font-tan-pearl: 'Tan Pearl', serif;
+
+  /* use Great Vibes for headings, fall back to the self-hosted Tan Pearl */
+  --font-heading: 'Great Vibes', var(--font-tan-pearl);
+  --font-script: var(--font-tan-pearl);
+  --font-body: var(--font-tan-pearl);
+
+  --spacing-unit: 1rem;
+  --border-radius: 18px;
+  --border-radius-soft: 32px;
+  --transition: 0.3s cubic-bezier(.4,0,.2,1);
+  --box-shadow: 0 4px 24px var(--color-shadow);
+  --box-shadow-soft: 0 2px 12px rgba(200,213,185,0.10);
+}
+
+@font-face {
+  font-family: 'Tan Pearl';
+  src: url('../fonts/tan-pearl-converted/TAN-PEARL-Regular.woff2') format('woff2'),
+       url('../fonts/tan-pearl-converted/TAN-PEARL-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.header-sub { /* reduced by 40% from 1.3rem */
+  font-size: 1.05rem;
+  color: var(--color-warm-brown);
+  font-family: var(--font-body);
+  margin-bottom: 0.1em;
+}
+
+/* Sticky floating header styles */
+.sticky-header.latte-frame .header-title,
+.sticky-header.latte-frame .header-sub {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.35s cubic-bezier(.4,2,.6,1), transform 0.35s cubic-bezier(.4,2,.6,1);
+}
+
+.sticky-header.latte-frame.header-hide-title .header-title,
+.sticky-header.latte-frame.header-hide-title .header-sub {
+  opacity: 0;
+  transform: translateY(-1.2em) scaleY(0.7);
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(.4,2,.6,1), transform 0.35s cubic-bezier(.4,2,.6,1);
+}
+
+/* Sticky floating header styles */
+.sticky-header.latte-frame {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2500;
+  background: var(--color-latte); /* latte, semi-transparent */
+  box-shadow: 0 6px 24px 0 var(--color-shadow), 0 1.5px 6px 0 var(--shadow-soft-dark);
+  border-radius: 0 0 1.5rem 1.5rem;
+  margin: 0;
+  padding: 1.2rem 2.2rem 1.2rem 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 5.5rem;
+  transition: min-height 0.35s cubic-bezier(.4,2,.6,1), padding 0.35s cubic-bezier(.4,2,.6,1);
+}
+
+/* Prevent accidental horizontal scroll caused by 100vw or wide elements */
+html {
+  min-height: 100%;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+.sticky-header.latte-frame.header-hide-title {
+  min-height: 2.7rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+}
+
+.header-content {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
+}
+
+/* Hamburger / menu button inside header */
+.hamburger {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.2rem;
+  height: 2.2rem;
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.hamburger span {
+  display: block;
+  width: 1.8rem;
+  height: 0.22rem;
+  margin: 0.22rem 0;
+  background: var(--color-dark-roast);
+  border-radius: 1.5px;
+  transition: all 0.3s cubic-bezier(.4,2,.6,1);
+}
+
+/* Reset & base styles for Korean Cafe Wedding Theme */
+* { box-sizing: border-box; }
+/* Ensure page content sits above the fixed latte background layer. */
+main,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+footer {
+  padding: 2rem 1.25rem 2.5rem;
+}
+
+body {
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  line-height: 1.7;
+  min-height: 100vh;
+  letter-spacing: 0.01em;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Apply fade-in to the actual content, keeping the background stable and visible immediately */
+main {
+  animation: body-fade-in 0.8s ease-out;
+}
+
+/* Latte swirl background (decorative, behind all content) */
+#latte-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+
+  /* Keep repaints contained to the background stack */
+  contain: paint;
+}
+
+#latte-bg .latte-layer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  contain: paint;
+}
+
+/* 65 explicit stops (50+ intermediate) for ultra-smooth blending */
+#latte-bg .latte-gradient {
+  z-index: 0;
+  position: fixed;
+  background: radial-gradient(
+    /* Alternatives (replace linear-gradient(...) entirely if preferred):
+      radial-gradient(circle at center, #ff9a9e 0%, #fecfef 100%)
+      conic-gradient(from 180deg at 50% 50%, #a18cd1 0deg, #fbc2eb 120deg, #a6c1ee 360deg)
+      repeating-linear-gradient(180deg, #ffd194 0 8px, #ffb199 8px 16px)
+      repeating-radial-gradient(circle at 30% 30%, #ffe29f 0 6px, #ffd7a7 6px 12px)
+    */
+    /* to bottom, */
+    /* circle at 50% 0%, */
+    /* Use 'ellipse' for an oval radial gradient */
+    ellipse 250% 90% at 50% -5%,
+    /* #4a2c2a 0%,
+    #4e2e29 1.75%,
+    #522f27 3.5%,
+    #563126 5.25%,
+    #5a3224 7%,
+    #5e3423 8.75%,
+    #623521 10.5%,
+    #663720 12.25%,
+    #6a381e 14%,
+    #6f3a1d 0%,
+    #733c1c 3.5%,
+    #773d1a 7%, */
+    #7b3f19 0.0%,
+    #7f4017 1.9%,
+    #834216 3.8%,
+    #874314 5.8%,
+    #8b4513 7.7%,
+    #8f4c1b 9.6%,
+    #945322 11.5%,
+    #985a2a 13.5%,
+    #9d6131 15.4%,
+    #a16839 17.3%,
+    #a66f40 19.2%,
+    #aa7648 21.2%,
+    #ae7c50 23.1%,
+    #b38357 25.0%,
+    #b78a5f 26.9%,
+    #bc9166 28.8%,
+    #c0986e 30.8%,
+    #c59f75 32.7%,
+    #c9a67d 34.6%,
+    #cead84 36.5%,
+    #d2b48c 38.5%,
+    #cdb38a 40.4%,
+    #c9b388 42.3%,
+    #c4b286 44.2%,
+    #bfb184 46.2%,
+    #bbb182 48.1%,
+    #b6b080 50.0%,
+    #b1af7e 51.9%,
+    #acae7c 53.8%,
+    #a8ae79 55.8%,
+    #a3ad77 57.7%,
+    #9eac75 59.6%,
+    #9aac73 61.5%,
+    #95ab71 63.5%,
+    #90aa6f 65.4%,
+    #8caa6d 67.3%,
+    #87a96b 69.2%,
+    #8eae73 71.2%,
+    #95b37c 73.1%,
+    #9db884 75.0%,
+    #a4bc8c 76.9%,
+    #abc195 78.8%,
+    #b2c69d 80.8%,
+    #b9cba5 82.7%,
+    #c0d0ae 84.6%,
+    #c8d5b6 86.5%,
+    #cfdabe 88.5%,
+    #d6dfc6 90.4%,
+    #dde4cf 92.3%,
+    #e4e8d7 94.2%,
+    #eceddf 96.2%,
+    #f3f2e8 98.1%,
+    #faf7f0 100%
+  );
+  background-size: 100% 140%;
+  /* Static position: keeps the latte texture without movement */
+  background-position: 50% 8%;
+  filter: saturate(1.04) contrast(1.01);
+  animation: none;
+}
+
+/* Wavy blend overlay: keeps the linear gradient direction, but adds soft moving
+   contour bands so transitions feel liquid (like latte/matcha mixing). */
+#latte-bg .latte-gradient::before,
+#latte-bg .latte-gradient::after {
+  content: '';
+  position: relative;
+  inset: -20%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.32;
+  filter: blur(18px);
+  transform: translate3d(0, 0, 0);
+  /* No motion: avoid will-change overhead */
+}
+
+#latte-bg .latte-gradient::before {
+  background:
+    radial-gradient(70% 36% at 18% 24%, rgb(74 44 42 / 26%) 0%, rgb(74 44 42 / 0%) 72%),
+    radial-gradient(84% 44% at 78% 18%, rgb(111 78 55 / 24%) 0%, rgb(111 78 55 / 0%) 70%),
+    radial-gradient(92% 52% at 28% 78%, rgb(135 169 107 / 24%) 0%, rgb(135 169 107 / 0%) 72%),
+    radial-gradient(88% 50% at 82% 84%, rgb(157 184 132 / 20%) 0%, rgb(157 184 132 / 0%) 74%);
+  mix-blend-mode: soft-light;
+  animation: none;
+}
+
+#latte-bg .latte-gradient::after {
+  background:
+    radial-gradient(68% 34% at 12% 52%, rgb(255 246 224 / 18%) 0%, rgb(255 246 224 / 0%) 70%),
+    radial-gradient(76% 38% at 92% 46%, rgb(243 214 184 / 16%) 0%, rgb(243 214 184 / 0%) 70%),
+    radial-gradient(86% 42% at 52% 92%, rgb(135 169 107 / 16%) 0%, rgb(135 169 107 / 0%) 74%);
+  mix-blend-mode: overlay;
+  opacity: 0.24;
+  filter: blur(22px);
+  animation: none;
+}
+
+/* High-tier only: add stronger contour bands (more paint/compositing). */
+#latte-bg.latte-tier-high .latte-gradient::before {
+  opacity: 0.52;
+  filter: blur(16px);
+  background:
+    repeating-linear-gradient(
+      115deg,
+      rgb(255 255 255 / 0%) 0,
+      rgb(255 255 255 / 0%) 34px,
+      rgb(255 255 255 / 12%) 50px,
+      rgb(255 255 255 / 0%) 74px
+    ),
+    radial-gradient(70% 36% at 18% 24%, rgb(74 44 42 / 26%) 0%, rgb(74 44 42 / 0%) 72%),
+    radial-gradient(84% 44% at 78% 18%, rgb(111 78 55 / 24%) 0%, rgb(111 78 55 / 0%) 70%),
+    radial-gradient(92% 52% at 28% 78%, rgb(135 169 107 / 24%) 0%, rgb(135 169 107 / 0%) 72%),
+    radial-gradient(88% 50% at 82% 84%, rgb(157 184 132 / 20%) 0%, rgb(157 184 132 / 0%) 74%);
+}
+
+#latte-bg.latte-tier-high .latte-gradient::after {
+  opacity: 0.34;
+  filter: blur(18px);
+  background:
+    repeating-linear-gradient(
+      -12deg,
+      rgb(0 0 0 / 0%) 0,
+      rgb(0 0 0 / 0%) 44px,
+      rgb(0 0 0 / 10%) 64px,
+      rgb(0 0 0 / 0%) 96px
+    ),
+    radial-gradient(68% 34% at 12% 52%, rgb(255 246 224 / 18%) 0%, rgb(255 246 224 / 0%) 70%),
+    radial-gradient(76% 38% at 92% 46%, rgb(243 214 184 / 16%) 0%, rgb(243 214 184 / 0%) 70%),
+    radial-gradient(86% 42% at 52% 92%, rgb(135 169 107 / 16%) 0%, rgb(135 169 107 / 0%) 74%);
+}
+
+@keyframes latteWavyBlendA {
+  0%   { transform: translate3d(-3.8%, -1.4%, 0) scale(1.03); }
+  50%  { transform: translate3d(1.6%, 2.2%, 0) scale(1.06); }
+  100% { transform: translate3d(4.2%, -1.0%, 0) scale(1.05); }
+}
+
+@keyframes latteWavyBlendB {
+  0%   { transform: translate3d(3.0%, 1.4%, 0) scale(1.07); }
+  50%  { transform: translate3d(-1.4%, 3.0%, 0) scale(1.10); }
+  100% { transform: translate3d(-4.2%, -1.2%, 0) scale(1.09); }
+}
+
+/* Perf: on low-tier devices, tone down the overlay cost. */
+#latte-bg.latte-tier-low .latte-gradient {
+  animation: none;
+}
+
+#latte-bg.latte-tier-low .latte-gradient::after {
+  content: none;
+}
+
+#latte-bg.latte-tier-low .latte-gradient::before {
+  opacity: 0.14;
+  filter: none;
+  mix-blend-mode: normal;
+  animation: none;
+  background: radial-gradient(92% 52% at 42% 62%, rgb(255 246 224 / 10%) 0%, rgb(255 246 224 / 0%) 70%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #latte-bg .latte-gradient {
+    animation: none;
+  }
+
+  #latte-bg .latte-gradient::before,
+  #latte-bg .latte-gradient::after {
+    animation: none;
+  }
+}
+
+@keyframes latteGradientDrift {
+  0% { background-position: 50% 0%; }
+  100% { background-position: 50% 22%; }
+}
+
+/* Rotating radial overlays for depth */
+#latte-bg .latte-orbs {
+  z-index: 1;
+  mix-blend-mode: soft-light;
+  opacity: 1;
+}
+
+/* Save-the-Date: prefer a static, lightweight background for smoother playback. */
+.page-save-the-date #latte-bg .latte-orbs,
+.page-save-the-date #latte-bg .latte-blobs,
+.page-save-the-date #latte-bg .latte-foam {
+  display: none !important;
+}
+
+/* Hero-like circular gradients (blobs) drifting across the entire background */
+#latte-bg .latte-blobs {
+  z-index: 2;
+  mix-blend-mode: overlay;
+  opacity: 1;
+}
+
+/* Low-tier devices: reduce costly blending/blur while preserving the vibe */
+#latte-bg.latte-tier-low .latte-orbs,
+#latte-bg.latte-tier-low .latte-blobs {
+  mix-blend-mode: normal;
+  opacity: 0.9;
+}
+
+#latte-bg.latte-tier-low .latte-blob {
+  mix-blend-mode: normal !important;
+  filter: blur(calc(var(--blob-blur, 6px) * 0.85));
+}
+
+#latte-bg .latte-blob {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--blob-size, 400px);
+  height: var(--blob-size, 400px);
+  border-radius: 50%;
+  filter: blur(var(--blob-blur, 6px));
+  opacity: var(--blob-opacity, 0.22);
+
+  /* Avoid will-change on many nodes; it can increase memory/overheads */
+  pointer-events: none;
+
+  /* Defined circular gradients like hero ::before/::after, but layered for latte depth */
+  background:
+    radial-gradient(circle at 42% 36%, rgb(255 255 255 / 10%) 0%, rgb(255 255 255 / 0%) 48%),
+    radial-gradient(circle at 58% 62%, rgb(255 255 255 / 6%) 0%, rgb(255 255 255 / 0%) 44%),
+    radial-gradient(circle at 40% 40%, var(--blob-color, rgb(135 169 107 / 20%)) 0%, rgb(0 0 0 / 0%) 74%);
+}
+
+/* Global headings (excluding hero-specific title selectors) */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--color-primary-dark);
+  margin-top: 0;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+/* Section heading defaults (applies to most content sections).
+   Use `.section h2` / `.section h3` to allow section-based layout containers
+   to inherit typographic defaults without overbroad ID selectors. */
+.section h2,
+.welcome-panel-welcome h2,
+.section h3,
+.welcome-panel-welcome h3 {
+  color: var(--color-bg-alt);
+}
+
+/* Exceptions */
+#contact h2,
+#contact h3 {
+  color: var(--color-coffee-dark);
+}
+
+/* Increase global heading sizes by ~2x. Note: this intentionally
+   does not affect `.hero .header-site-title` or `.hero h1`. */
+h1 {
+  /* adjusted to 80% of previous size */
+  font-size: 3.2rem;
+}
+
+h3 {
+  font-size: 1.6rem;
+}
+
+.attire-item h3 {
+  margin-bottom: 0;
+}
+
+p, li, label, input, select, button {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+button,
+input,
+select,
+textarea,
+a {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+img,
+svg {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  transition: color var(--transition);
+  border-bottom: none;
+}
+
+button,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:hover, a:focus-visible {
+  color: var(--color-primary);
+  border-bottom: none;
+  text-decoration: none;
+}
+
+:focus-visible,
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+select:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+ul, ol {
+  padding-left: 1.5em;
+}
+
+/* Only valid h2 and h3 blocks below */
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+}
+
+/* Make h3 headings use warm cream for a softer, latte-friendly tone */
+h3 {
+  color: var(--color-warm-cream);
+}
+
+::selection {
+  background: var(--color-primary-light);
+}
+
+.floating-menu {
+  position: fixed;
+  top: 1.2rem;
+  left: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1200;
+}
+
+.floating-menu.back-to-top-btn {
+  inset: auto 1.2rem 1.2rem auto;
+}
+
+.back-to-top-btn {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-card-bg-alt);
+  color: var(--color-coffee-dark);
+  font-size: 1.35rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 14%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease, transform 200ms ease;
+  display: inline-flex;
+}
+
+.back-to-top-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.floating-menu .hamburger {
+  position: static;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: 0;
+}
+
+.floating-menu-group {
+  position: fixed;
+  top: 1.2rem;
+  left: 1.2rem;
+  display: flex;
+  align-items: center;
+  background: var(--color-card-bg-alt);
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 12px 0 var(--color-subtle-shadow);
+  padding: 0.21rem 0.49rem;
+  z-index: 1200;
+  gap: 0.35rem;
+  transition: left 260ms cubic-bezier(.2,.9,.3,1);
+  pointer-events: auto;
+}
+
+/* Ensure the floating menu stays fixed to the viewport (top-left) so it
+   remains visible regardless of header layout. */
+.site-header .floating-menu-group {
+  position: fixed;
+  left: 0;
+  top: 0.8rem;
+  z-index: 2200; /* place above hero visuals */
+}
+
+.hamburger-icon {
+  background: none;
+  border: 0;
+  padding: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  position: relative;
+  z-index: 2300;
+}
+
+.hamburger-icon:hover {
+  cursor: pointer;
+}
+
+.hamburger-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 800ms cubic-bezier(.2,.9,.3,1);
+  will-change: transform;
+}
+
+/* Flip the hamburger icon horizontally when menu is open */
+.hamburger-icon.is-open img {
+  transform: rotateY(180deg);
+}
+
+
+.sidebar-open .site-header .floating-menu-group { /* stylelint-disable-line rule-empty-line-before */
+  /* overlap slightly so the floating toggle visually hugs the sidebar */
+  left: calc(var(--sidebar-width) - 0.35rem);
+}
+
+/* When the sidebar is open, slightly reduce the floating hamburger size
+   so it tucks in visually. Keep a smooth transition so the change is subtle. */
+.sidebar-open .hamburger-icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  transition: width 220ms cubic-bezier(.2,.9,.3,1), height 220ms cubic-bezier(.2,.9,.3,1), transform 220ms ease;
+}
+
+
+.floating-monogram { /* stylelint-disable-line rule-empty-line-before */
+  position: fixed;
+  top: 0.2rem;
+  right: 0.2rem;
+  width: 8rem;
+  height: 8rem;
+  z-index: 1200;
+  animation: none !important;
+  pointer-events: none;
+}
+
+/* Layout: Grid & Flexbox for Korean Cafe Wedding Theme */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+@media (width >= 700px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.flex {
+  display: flex;
+  gap: var(--spacing-unit);
+  align-items: center;
+}
+
+.section {
+  background: transparent;
+  border-radius: 0; /* removed rounded corners per preview request */
+  box-shadow: none; /* remove panel drop shadow */
+  margin-bottom: 0;
+  padding: 2.5rem 1.5rem;
+
+  /* Perf: skip rendering offscreen sections until needed (supported browsers only). */
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
+}
+
+/* Improve anchor scrolling with sticky header */
+.section[id] {
+  scroll-margin-top: calc(var(--site-header-height, 4rem) + 1rem);
+}
+
+.section-note {
+  opacity: 0.9;
+  margin-top: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Wedding Details: placeholder photo grid */
+.details-media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.details-media {
+  margin: 0;
+  overflow: hidden;
+
+  --glass-padding: 0;
+  --glass-radius: var(--border-radius);
+}
+
+.details-media img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.details-media figcaption {
+  padding: 0.75rem 0.9rem;
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
+
+/* Attire guide-specific styles */
+.attire-panel {
+  text-align: center;
+  padding: 1.25rem 1rem;
+}
+
+.attire-palette img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  display: block;
+  margin: 0.5rem auto 0;
+}
+
+.attire-images {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+.attire-item {
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+}
+
+.attire-images img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* @media (max-width: 720px) removed as the layout is now always stacked */
+
+.attire-palette img {
+  border-radius: 12px;
+  background-color: var(--color-bg-alt);
+}
+
+/* Venue: two panels with image + embedded map */
+.venue-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (width >= 860px) {
+  .venue-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.venue-card {
+  overflow: hidden;
+
+  --glass-padding: 1rem;
+  --glass-radius: var(--border-radius);
+}
+
+.venue-card h3 {
+  margin: 0.25rem 0;
+}
+
+.venue-card img {
+  width: 100%;
+  height: auto;
+  object-fit: contain; /* Ensures full image is visible, no cropping */
+  display: block;
+  border-radius: 0.75rem;
+}
+
+.venue-card iframe {
+  width: 100%;
+  height: clamp(260px, 28vw, 520px);
+  border: 0;
+  margin-top: 0;
+  border-radius: 0.75rem;
+}
+
+/* Wide viewports: make the iframe taller, but let img scale naturally */
+@media (width >= 720px) {
+  .venue-card iframe {
+    height: clamp(312px, 24vw, 600px);
+  }
+}
+
+.venue-link {
+  margin: 0.75rem 0 0;
+}
+
+.venue-link a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Places to Stay: linkable grid cards */
+.stay-panel {
+  --glass-padding: 1.25rem 1rem;
+  --glass-radius: var(--border-radius);
+
+  margin-top: 1rem;
+}
+
+.stay-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.stay-hotel-btn {
+  width: 100%;
+  min-width: 230px;
+  display: block;
+  position: relative;
+  text-align: center;
+
+  /* Keep the label visually centered by reserving equal space on both sides */
+  padding-left: 3.6rem;
+  padding-right: 3.6rem;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.stay-hotel-btn:hover {
+  background: var(--color-bg-alt);
+  transform: translateY(-1px);
+}
+
+.stay-hotel-btn:focus,
+.stay-hotel-btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.stay-hotel-name {
+  display: inline-block;
+}
+
+.stay-hotel-badge {
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: var(--color-warm-cream);
+  box-shadow: 0 6px 14px rgb(0 0 0 / 12%);
+}
+
+.stay-hotel-badge svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  display: block;
+}
+
+.stay-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+
+  --glass-padding: 1.25rem 1rem;
+  --glass-radius: var(--border-radius);
+
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.stay-card:hover {
+  background: var(--color-bg-alt);
+  transform: translateY(-1px);
+}
+
+.maps-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-warm-cream);
+  text-decoration: none;
+  border: none;
+  box-shadow: 0 6px 14px rgb(0 0 0 / 12%);
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+}
+
+.maps-btn svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  display: block;
+}
+
+.maps-btn:focus,
+.maps-btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.stay-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.stay-card p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* FAQ: native <details> accordion */
+.faq-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.faq-item {
+  overflow: hidden;
+
+  --glass-padding: 0;
+  --glass-radius: var(--border-radius);
+}
+
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem;
+  font-size: 14px;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  transition: transform 160ms ease;
+  flex: 0 0 auto;
+}
+
+.faq-item[open] .faq-icon {
+  transform: rotate(45deg);
+}
+
+.faq-a {
+  padding: 0 1rem 1rem;
+}
+
+.faq-a p {
+  margin: 0;
+}
+
+/* Prenup placeholder */
+.prenup-placeholder {
+  width: min(980px, 100%);
+  display: block;
+  margin: 1rem auto 0.75rem;
+  border-radius: var(--border-radius-soft);
+  box-shadow: none;
+}
+
+.prenup-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.coming-soon-btn {
+  padding: 0.75rem 1.1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-card-bg);
+  color: inherit;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.coming-soon-tip {
+  background: var(--color-card-bg);
+  border: 1.5px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.75rem;
+  box-shadow: none;
+}
+
+/* Monogram-only section */
+.monogram-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.monogram-image {
+  width: min(240px, 60vw);
+  height: auto;
+  display: block;
+}
+
+/* Contact actions */
+.contact-actions {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  margin-top: 1rem;
+}
+
+.contact-action {
+  display: inline-block;
+  padding: 0.85rem 1.1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-card-bg);
+  color: inherit;
+  font-size: 14px;
+  text-decoration: none;
+  box-shadow: none;
+}
+
+.contact-action:hover {
+  background: var(--color-bg-alt);
+}
+
+.card {
+  --glass-padding: 2rem 1.2rem;
+  --glass-radius: var(--border-radius);
+
+  margin-bottom: 0;
+}
+
+.spacious {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+/* ==================================================
+   src/css/components/hero.css
+   Reorganized: grouped sections for easier review and editing
+   Sections: 1) Header, 2) Hero (layout + monogram), 3) Countdown (grid, boxes, labels),
+             4) Visuals (saucers, latte-art, handles), 5) Animations, 6) Responsive tweaks
+   NOTE: This rewrite preserves existing selector rules and values; only order and
+         comments changed to improve maintainability.
+   ================================================== */
+
+
+/* --------------------------
+   1) Header: site header, title, monogram, menu
+   -------------------------- */
+.site-header {
+  /* expose a header height token so components (hero) can offset safely
+    If the header size changes, update this variable or set it at runtime. */
+  --site-header-height: 4rem;
+
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0; /* header now minimal; title lives in hero */
+  
+  /* remove reserved height so hero can span to top */
+  height: auto;
+  min-height: 0;
+  background: transparent;
+  z-index: 1300;
+
+  /* remove panel visuals so header is invisible (panel removed) */
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* Stronger override for the sticky/layered header variant to remove its panel entirely */
+.sticky-header.latte-frame, .site-header.sticky-header.latte-frame {
+  /* keep header visually empty when using sticky latte-frame variant */
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  min-height: 0;
+}
+
+/* fade the header title slightly when the page is scrolled */
+.site-header.scrolled .header-site-title {
+  opacity: 0.6;
+  transition: opacity 200ms ease;
+}
+
+.header-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+}
+
+/* center the site title inside the hero now that it lives there */
+.hero .header-site-title {
+  margin: clamp(0.4rem, 2.5vw, 1rem) auto 0.6rem;
+
+  /* ~70% of the previous value (user requested smaller) */
+  font-size: clamp(2.69rem, 8.4vw + 0.98rem, 8.4rem);
+
+  /* keep hero title centered relative to the section */
+  align-self: center;
+  z-index: 20;
+  font-family: var(--font-heading);
+  color: inherit;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+  display: inline-block;
+  line-height: 1.1;
+  max-width: 100%;
+  vertical-align: middle;
+  top: 3rem;
+  transform-origin: center;
+  animation: hero-title-expand 1.9s cubic-bezier(0.23, 1, 0.32, 1) 0.4s both;
+  opacity: 0;
+}
+
+.header-site-title {
+  font-family: var(--font-heading);
+
+  /* reduced to ~70% of previous base fallback */
+  font-size: 2.8rem;
+  color: var(--color-coffee-dark);
+  margin: 0;
+
+  /* remove letter-spacing so cursive headings render without gaps */
+  letter-spacing: 0;
+}
+
+/* Invite copy that sits above the hero title; shared between the hero and header */
+.hero-invite {
+  display: block;
+  text-align: center;
+  font-family: var(--font-tan-pearl);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-dark-roast);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.site-header .hero-invite {
+  margin-bottom: 0.35rem;
+  font-size: 0.45rem;
+  letter-spacing: 0.17em;
+}
+
+.hero .hero-invite {
+  margin-bottom: 0.55rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+}
+
+@media (width <= 520px) {
+  .hero .hero-invite {
+    font-size: 0.5rem;
+    letter-spacing: 0.14em;
+  }
+}
+
+/* fixed header monogram size */
+.header-monogram,
+.header { /* fallback/name variations in project */
+  width: 3.6rem;
+  height: 3.6rem;
+}
+
+/* Hero date GIF sizing will be applied alongside the primary .hero .date rules below */
+
+/* small-screen media block intentionally empty so heading size remains consistent across viewports */
+
+.header-brand { margin-right: 1rem; }
+.header-menu  { margin-left:  1rem; }
+
+/* Menu / floating menu grouping lives in base.css; header-scoped override keeps it on left edge */
+
+/* --------------------------
+   2) Hero: layout, placement, monogram
+   -------------------------- */
+.hero {
+  text-align: center;
+
+  /* default hero typography should use Tan Pearl; main heading kept separate */
+  font-family: var(--font-tan-pearl);
+
+  /* keep hero flush with header but reduce the vertical padding for a tighter layout */
+  padding: calc(var(--site-header-height, 4rem) + clamp(0.2rem, 1vw + 0.2rem, 1rem) + env(safe-area-inset-top, 0px) + 1px) 1.5rem 5rem;
+  background: linear-gradient(120deg, var(--color-bg-alt) 0%, var(--color-primary-light) 100%);
+  border-radius: 0; /* no rounded frame */
+  box-shadow: none; /* remove card shadow */
+  position: relative;
+
+  /* reduce the hero height so the page doesn’t start too low */
+  min-height: calc(60vh - var(--site-header-height, 4rem));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  /* prevent the hero itself from scrolling vertically */
+  overflow: hidden;
+  margin-top: 0; /* ensure no gap under header */
+}
+
+.welcome-song-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-song-panel {
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Actual frosted blur (supported browsers only) */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .welcome-song-panel {
+    backdrop-filter: blur(16px) saturate(1.15);
+    backdrop-filter: blur(16px) saturate(1.15);
+  }
+}
+
+/* Condensation highlights / fog streaks */
+.welcome-song-panel::before {
+  content: '';
+  position: absolute;
+  inset: -40% -30% auto;
+  height: 140%;
+  background:
+    linear-gradient(115deg, rgb(255 255 255 / 0%) 10%, rgb(255 255 255 / 12%) 30%, rgb(255 255 255 / 0%) 55%),
+    linear-gradient(140deg, rgb(255 255 255 / 0%) 20%, rgb(255 255 255 / 9%) 42%, rgb(255 255 255 / 0%) 65%),
+    radial-gradient(circle at 28% 48%, rgb(255 255 255 / 10%) 0%, rgb(255 255 255 / 0%) 60%);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+  transform: translate3d(0, 0, 0);
+  animation: none;
+}
+
+.welcome-song-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 22% 30%, rgb(255 255 255 / 8%) 0%, rgb(255 255 255 / 0%) 55%),
+    radial-gradient(circle at 78% 70%, rgb(255 255 255 / 6%) 0%, rgb(255 255 255 / 0%) 60%);
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: 0;
+  animation: none;
+}
+
+@keyframes welcomeGlassDrift {
+  0% { transform: translate3d(-2%, -1%, 0) rotate(-0.6deg); }
+  50% { transform: translate3d(2%, 1.5%, 0) rotate(0.6deg); }
+  100% { transform: translate3d(-2%, -1%, 0) rotate(-0.6deg); }
+}
+
+@keyframes welcomeFogPulse {
+  0% { opacity: 0.55; }
+  50% { opacity: 0.78; }
+  100% { opacity: 0.55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-song-panel::before,
+  .welcome-song-panel::after {
+    animation: none !important;
+  }
+}
+
+.welcome-panel-welcome,
+.welcome-panel-song {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  text-align: center;
+  color: inherit;
+  border: none;
+}
+
+.welcome-panel-welcome h2 {
+  margin: 0;
+  font-size: 2rem;
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+}
+
+.welcome-panel-song p,
+.welcome-panel-song-player .eyebrow {
+  color: var(--color-cream-1);
+}
+
+.welcome-panel-welcome p {
+  color: var(--color-coffee-dark);
+}
+
+.welcome-panel h3 {
+  margin: 0.25rem 0 0.35rem;
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.welcome-panel-welcome .eyebrow,
+.welcome-panel-song .eyebrow {
+  font-size: 0.55rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.welcome-panel-song-player {
+  margin-top: 0.5rem;
+}
+
+.welcome-panel-song-player audio {
+  width: 100%;
+  border-radius: 0; /* remove rounded corners */
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  display: block;
+}
+
+/* Custom audio player (lightweight) */
+.custom-audio-player {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(180deg, rgb(255 255 255 / 4%), rgb(255 255 255 / 2%));
+  padding: 0.4rem 0.6rem;
+  border-radius: calc(var(--border-radius-soft) - 4px);
+  border: 1px solid rgb(255 255 255 / 6%);
+}
+
+.custom-audio-player .site-audio { display: none; }
+
+.custom-audio-player .cap-play {
+  appearance: none;
+  border: none;
+  background: none;
+  color: var(--color-bg-alt);
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  display: inline-grid;
+  place-items: center;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 8%);
+}
+
+.custom-audio-player .cap-progress {
+  flex: 1 1 auto;
+  height: 0.5rem;
+  background: var(--color-bg-alt);
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.custom-audio-player .cap-progress-filled {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, var(--color-warm-cream), var(--color-cream-1));
+  width: 0%;
+  transition: width 120ms linear;
+}
+
+.custom-audio-player .cap-time {
+  font-size: 0.7rem;
+  color: var(--color-warm-cream);
+  min-width: 3.2rem;
+  text-align: right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-audio-player .cap-progress-filled { transition: none; }
+}
+
+/* Apply a richer, latte-like background to the Save The Date panel while
+   preserving the panel's rounded corners and shadow defined by .section.
+   Uses existing color tokens to produce a graded, slightly textured surface. */
+#save-date {
+  /* Make the panel read like the circular countdown cups: a warm, cream-forward latte surface */
+
+  /* center the gradient on the panel and use an ellipse so it adapts to rectangular shapes */
+  background: transparent;
+
+  /* stronger inner depth and slightly brighter outer shadow for contrast */
+  box-shadow: none; /* remove drop shadow from save-date panel */
+  border-radius: var(--border-radius-soft);
+  border: 1px solid rgb(255 255 255 / 4%); /* lighter rim */
+  color: var(--color-coffee-dark);
+  position: relative;
+  overflow: hidden; /* contain texture overlay */
+}
+
+/* subtle decorative rim like the cup ::before but adapted for rectangular panels */
+
+/* Subtle glossy rim / highlight */
+#save-date::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(circle, transparent 65%, rgb(255 255 255 / 03%) 78%, rgb(255 255 255 / 02%) 92%);
+  mix-blend-mode: screen;
+  z-index: 2;
+}
+
+/* Low-opacity procedural noise texture to read as 'latte texture' without external assets */
+#save-date::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0.12'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+
+/* Apply the same warm, latte-like panel surface to the main site hero
+   so the landing hero reads like the Save The Date panel. Using #hero
+   provides higher specificity than .hero and will override the
+   default linear gradient defined earlier. */
+#hero {
+  /* center the gradient on the hero and use an ellipse so it adapts to
+     a wide, rectangular hero area */
+  background: radial-gradient(ellipse at center, var(--color-warm-cream) 0%, var(--color-warm-cream) 20%, var(--color-cream-1) 45%, var(--color-primary-light) 80%, var(--color-bg-alt) 100%);
+  background-position: center center;
+  background-size: 140% 140%;
+  background-repeat: no-repeat;
+
+  /* match the panel depth and subtle rim used by #save-date */
+  box-shadow: none; /* remove hero panel drop shadow */
+
+  /* border-radius: var(--border-radius-soft); */
+  border-radius: 0; /* no rounded corners in hero */
+  border: 1px solid rgb(255 255 255 / 4%);
+  color: var(--color-coffee-dark);
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* hero H1 is intentionally hidden in this layout (title lives in header)
+  — responsive positioning defined in the responsive section below. */
+
+/* hero monogram (centered visual) */
+.hero .floating-monogram {
+  position: relative;
+  display: block;
+  margin: 0.28rem auto 0; /* remove negative bottom margin that can push content */
+  width: 10rem; /* fixed size to retain mobile look */
+  height: 10rem; /* keep intrinsic aspect ratio */
+  object-fit: contain;
+  z-index: 6;
+  animation: none !important;
+  pointer-events: none;
+  opacity: 1;
+}
+
+/* date line (uses site heading font) */
+.hero .date {
+  font-family: var(--font-tan-pearl);
+  color: var(--color-coffee-dark);
+  
+  /* increased 20% from 1.05rem to improve legibility */
+  font-size: 1.26rem;
+  font-weight: 700;
+  text-shadow: 0 1px 0 var(--white-22);
+  z-index: 7;
+  margin-bottom: 0; /* remove default paragraph margins so the GIF aligns exactly */
+  position: relative;
+
+  /* center the gif inside the date container and make it responsive */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero .hero-date-gif {
+  max-width: 120%;
+  height: auto;
+  display: block;
+}
+
+@media (width >= 720px) {
+  .hero .hero-date-gif {
+    max-width: 700px;
+  }
+}
+
+@media (width <= 420px) {
+  .hero .hero-date-gif {
+    max-width: 120%;
+  }
+}
+
+/* decorative hero ::before / ::after */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle at 40% 40%, var(--color-primary-light) 60%, transparent 100%);
+  opacity: 0.25;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+
+  /* keep decorative circle but clamp so it never pushes past the viewport */
+  right: clamp(-40px, -6vw, 0px);
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle at 60% 60%, var(--color-coffee-light) 60%, transparent 100%);
+  opacity: 0.18;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+/* --------------------------
+   3) Countdown: grid, segment, box, label, separator
+   -------------------------- */
+
+/* general grid behavior (main + header variants are below) */
+.countdown-grid,
+#headerCountdown .countdown-grid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+/* main countdown spacing */
+.countdown-grid {
+  gap: 1.5rem;
+  margin: 2.5rem 0 2rem;
+  align-items: flex-end;
+}
+
+/* each segment acts as a stacked area for box + label */
+.countdown-segment {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+/* the circular cup box */
+.countdown-box {
+  z-index: 3;
+  position: relative;
+  font-size: 1.4rem;
+  min-width: 3.6rem;
+  min-height: 3.6rem;
+  width: auto;
+  height: auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* background: radial-gradient(circle at 40% 35%, var(--color-warm-cream) 0%, var(--color-cream-1) 25%, var(--color-cream-2) 55%, var(--color-cream-3) 100%); */
+  color: var(--color-coffee-dark);
+  box-shadow: inset 0 -6px 18px var(--shadow-inset), 0 6px 18px var(--shadow-dark);
+
+  /* visual rim handled by ::before; keep element border transparent to avoid double rings */
+  border: 0.12rem solid transparent;
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.02em;
+
+  /* include opacity in transitions for non-animated fallbacks */
+  transition: box-shadow 180ms ease, opacity 200ms linear;
+}
+
+/* Countdown cups render immediately (no viewport pop/reveal). */
+
+/* reserved decorative rim layer */
+.countdown-box::before {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+
+
+  /* thin cream-colored ring to match saucer and handle */
+  z-index: 1;
+
+  /* expand slightly outward so the ring sits in the border area; keep thin */
+  inset: -0.06rem;
+  background: radial-gradient(circle, transparent 0 88%, var(--color-cream-light) 88% 100%);
+}
+
+.countdown-box::after {
+  content: '';
+  position: absolute;
+  inset: 0.05%;
+  border-radius: 50%;
+
+  /* paint the inner latte surface above the white base so the center reads latte while rim stays white */
+  background: radial-gradient(circle at 40% 35%, var(--color-warm-cream) 0%, var(--color-cream-1) 25%, var(--color-cream-2) 55%, var(--color-cream-3) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* numeric value placed above latte-art */
+.countdown-value {
+  font-family: var(--font-tan-pearl);
+  font-weight: 700;
+  color: var(--color-coffee-dark);
+  font-size: 1.26rem;
+  letter-spacing: 0.02em;
+
+  /* replaced hard-coded white shadow with token */
+  text-shadow: 0 1px 0 var(--white-25);
+  z-index: 10;
+  position: relative;
+}
+
+/* label sits under the box, absolutely positioned */
+.countdown-label {
+  position: absolute;
+  top: calc(100% + 0.28rem);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.85rem;
+  color: var(--color-dark-roast);
+  text-align: center;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* separator sizing and vertical centering */
+.countdown-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--color-dark-roast);
+  padding: 0 0.12rem;
+  height: 3.6rem;
+  line-height: 3.6rem;
+  transform: translateY(0);
+  margin: 0;
+  align-self: center;
+}
+
+/* header-specific countdown downsized (applies to both #headerCountdown and .header-countdown for compatibility) */
+#headerCountdown .countdown-grid,
+.header-countdown .countdown-grid {
+  display:flex;
+  flex-direction: column;
+  gap:0.2rem;
+  margin:0;
+  align-items:center;
+  justify-content:center;
+}
+
+#headerCountdown .countdown-row,
+.header-countdown .countdown-row {
+  display:flex;
+  flex-direction: row;
+  gap:0.2rem;
+  align-items:center;
+  justify-content:center;
+}
+
+#headerCountdown .countdown-segment,
+.header-countdown .countdown-segment {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:0;
+}
+
+#headerCountdown .countdown-box,
+.header-countdown .countdown-box {
+  position: relative;
+  font-size: 1.2rem;
+  min-width:2.2rem;
+  min-height:2.2rem;
+  border-radius:0.4rem;
+  margin-bottom:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  /* header visuals: keep the cup appearance consistent with hero cups */
+  background: radial-gradient(circle at 40% 35%, var(--color-warm-cream) 0%, var(--color-cream-1) 28%, var(--color-cream-2) 62%, var(--color-cream-3) 100%);
+  
+    /* rim border should be white porcelain; the visual ring is handled by ::before */
+  box-shadow: inset 0 -4px 10px var(--shadow-inset), 0 4px 8px var(--shadow-dark);
+  border: 0.07rem solid var(--white-35);
+}
+
+#headerCountdown .countdown-label,
+.header-countdown .countdown-label {
+  font-size:0.6rem;
+  color:var(--color-dark-roast);
+  text-align:center;
+  margin-top:0.2rem;
+  width:100%;
+  display:block;
+}
+
+#headerCountdown .countdown-separator,
+.header-countdown .countdown-separator {
+  font-size:1.4rem;
+  height:2.2rem;
+  margin:0 0.1rem;
+  color:var(--color-dark-roast);
+  font-weight:bold;
+  line-height:1;
+}
+
+/* header countdown alternative smaller sizing (compatibility) */
+#headerCountdown.small .countdown-box,
+.header-countdown.small .countdown-box {
+  font-size: 1rem;
+  min-width: 1.7rem;
+  min-height: 1.7rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0;
+}
+
+#headerCountdown.small .countdown-label,
+.header-countdown.small .countdown-label {
+  font-size: 0.5rem;
+  margin-top: 0;
+}
+
+#headerCountdown.small .countdown-separator,
+.header-countdown.small .countdown-separator {
+  font-size: 0.8rem;
+  margin: 0 0.15rem;
+}
+
+/* header countdown visuals are defined above; duplicate expanded block removed to avoid duplicate selectors */
+
+/* --------------------------
+   4) Visuals: saucers, latte-art, handles
+   -------------------------- */
+
+/* saucer sits behind each cup */
+.countdown-segment::before {
+  content: '';
+  position: absolute;
+  width: 4.2rem;
+  height: 4.2rem;
+  border-radius: 50%;
+
+  /* replaced semi-transparent whites with opaque tokens so saucer is solid */
+  background: radial-gradient(circle at 40% 35%, var(--color-white) 0%, var(--color-cream-light) 35%, var(--color-cream-mid) 60%, var(--color-cream-deep) 100%);
+  box-shadow: 0 6px 14px var(--shadow-xs);
+  top: -0.35rem;
+  z-index: 0;
+}
+
+/* subtle handle shape (right side) */
+.countdown-segment::after {
+  content: "";
+  position: absolute;
+
+  /* handle should not overflow the segment container; clamp negative offset */
+  right: clamp(-40px, -15%, 0px);
+  bottom: 35%;
+  rotate: 12deg;
+  transform: translateY(0);
+  width: 30%;
+  height: 12%;
+
+  /* make handle opaque using solid white */
+  background: linear-gradient(90deg, var(--color-cream-1) 0%, var(--color-white));
+  border-radius: 3px;
+  box-shadow: 0 3px 6px var(--shadow-strong), inset 0 1px 0 var(--color-white);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* latte-art SVG layer */
+.latte-art {
+  position: absolute;
+  width: 72%;
+  height: 72%;
+  top: 14%;
+  left: 14%;
+  pointer-events: none;
+  opacity: 1;
+  transform-origin: 50% 50%;
+  z-index: 4;
+}
+
+@keyframes hero-title-expand {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+
+  60% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* --------------------------
+   6) Utility & small components used inside hero
+   -------------------------- */
+#countdown {
+  font-size: 1.1rem;
+  color: var(--color-coffee-dark);
+  margin: 1.5rem 0 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+#countdown .coffee-cup {
+  font-size: 1.3em;
+  margin: 0 0.2em;
+  vertical-align: middle;
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 2.5rem;
+  padding: 0.85rem 2.2rem;
+  background: var(--color-primary);
+  color: var(--color-coffee-dark);
+  border-radius: 999px;
+  font-weight: 600;
+  font-family: var(--font-tan-pearl);
+  font-size: 1.1rem;
+  box-shadow: var(--box-shadow-soft);
+  border: none;
+  transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+  position: relative;
+  cursor: pointer;
+}
+
+.cta:hover,
+.cta:focus {
+  background: var(--color-coffee);
+  color: var(--color-white);
+  box-shadow: var(--box-shadow);
+}
+
+/* --------------------------
+   7) Responsive tweaks - kept minimal and grouped here
+   -------------------------- */
+
+/* hero title responsive + natural layout */
+.hero h1 {
+  position: static;
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 4vw, 4.2rem);
+  color: var(--color-coffee-dark);
+  margin: 0;
+  line-height: 1.1;
+  text-align: center;
+  letter-spacing: 0;
+  text-shadow: 0 2px 6px rgb(74 44 42 / 40%);
+}
+
+@media (width <= 720px) {
+  /* removed .hero h1 rule to avoid conflicting font-size rules; header title is targeted
+     via .hero .header-site-title for consistent single-line behavior */
+}
+
+/* hero monogram: keep fixed size, no responsive scaling */
+@media (width <= 520px) {
+  .hero .floating-monogram {
+    width: 13rem;
+    height: 10rem;
+  }
+}
+
+/* small-screen header adjustments: no font-size override so heading remains consistent
+  across viewports. */
+@media (width <= 720px) {
+  /* ...existing responsive tweaks preserved elsewhere; heading size uses the
+    main .hero .header-site-title rule to keep consistent sizing */
+}
+
+/* Desktop cap: reduce maximum heading size on wider viewports while leaving
+   mobile sizing intact. */
+@media (width >= 721px) {
+  .hero .header-site-title {
+    /* keep the same min and mid behavior but cap the max to 5rem for desktop */
+    font-size: clamp(2.69rem, 8.4vw + 0.98rem, 5rem);
+  }
+}
+
+/* end of file */
+/* Animations & transitions for Korean Cafe Wedding Theme */
+
+/* Reveal-from-bright: slide a bright overlay away to reveal content
+   This avoids fading + rising; content is visible immediately while
+   a short bright sweep slides up and out. Applied to elements with
+   the existing `fade-in` class so markup doesn't need changes. */
+.fade-in {
+  position: relative;
+  z-index: 0;
+}
+
+/* Simple page reveal: fade in the content */
+@keyframes body-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    /* Subtle lift */
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Section header reveal: use transitions for better compatibility */
+.js .welcome-panel-welcome h2,
+.js .section h2 {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 1s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.js .welcome-panel-welcome h2.h2-reveal,
+.js .section h2.h2-reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* @keyframes h2-reveal removed in favor of transition */
+
+@media (prefers-reduced-motion: reduce) {
+  .js .welcome-panel-welcome h2,
+  .js .section h2 {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  
+  .js .welcome-panel-welcome h2.h2-reveal,
+  .js .section h2.h2-reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.underline {
+  position: relative;
+}
+
+/* Steam/leaf micro-interaction (for buttons, icons) */
+.steam {
+  display: inline-block;
+  vertical-align: middle;
+  animation: steam-rise 1s infinite linear;
+}
+
+@keyframes steam-rise {
+  0% {
+    opacity: 0.2;
+    transform: translateY(0) scaleX(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: translateY(-10px) scaleX(1.1);
+  }
+
+  100% {
+    opacity: 0.1;
+    transform: translateY(-20px) scaleX(0.95);
+  }
+}

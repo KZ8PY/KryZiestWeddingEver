@@ -20,15 +20,17 @@
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <link rel="preload" href="src/fonts/tan-pearl-converted/TAN-PEARL-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="src/css/variables.css">
-  <link rel="stylesheet" href="src/css/base.css">
-  <link rel="stylesheet" href="src/css/layout.css">
-  <link rel="stylesheet" href="src/css/components/hero.css">
-  <link rel="stylesheet" href="src/css/animations.css">
-  <link rel="stylesheet" href="src/css/components/sidebar.css">
-  <link rel="stylesheet" href="src/css/components/glass.css">
-  <link rel="stylesheet" href="src/css/components/story.css">
+  <link rel="stylesheet" href="src/css/critical-bundled.css">
+  <link rel="stylesheet" href="src/css/components/sidebar.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="src/css/components/glass.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="src/css/components/story.css" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="src/css/components/sidebar.css">
+    <link rel="stylesheet" href="src/css/components/glass.css">
+    <link rel="stylesheet" href="src/css/components/story.css">
+  </noscript>
 </head>
 
 <body>
