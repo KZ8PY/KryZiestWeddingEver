@@ -321,11 +321,11 @@ window.addEventListener('DOMContentLoaded', () => {
     pop.className = 'tour-popover';
     pop.setAttribute('role', 'dialog');
     pop.setAttribute('aria-describedby', 'tour-desc');
-    pop.innerHTML = `<div id="tour-desc">Use the sidebar for quicker navigation and RSVP</div>`;
+    pop.innerHTML = `<div id="tour-desc">Access the menu and RSVP here</div>`;
 
     document.body.appendChild(pop);
     // Highlight the whole floating menu group (or button fallback)
-    highlightTarget.classList.add('tour-highlight');
+    highlightTarget.classList.add('tour-highlight', 'tour-pulse');
 
     // Position popover near the highlighted element (below it)
     const rect = (highlightTarget.getBoundingClientRect && highlightTarget.getBoundingClientRect()) || btn.getBoundingClientRect();
@@ -334,25 +334,27 @@ window.addEventListener('DOMContentLoaded', () => {
     pop.style.top = `${top}px`;
     pop.style.left = `${left}px`;
 
-    // Event handlers: clicking the popover opens the menu; Esc dismisses
+    // Cleanup will run only when user clicks the hamburger (or highlighted group)
     const cleanup = (openSidebar = false) => {
       try { setCookie(_tourStorageKey, _todayKey, 30); } catch (e) { /* ignore */ }
-      try { highlightTarget.classList.remove('tour-highlight'); } catch (e) { btn.classList.remove('tour-highlight'); }
+      try { highlightTarget.classList.remove('tour-highlight', 'tour-pulse'); } catch (e) { btn.classList.remove('tour-highlight'); }
       if (pop && pop.parentNode) pop.parentNode.removeChild(pop);
-      document.removeEventListener('keydown', onKey);
-      if (openSidebar) btn.click();
     };
 
-    const onKey = (e) => { if (e.key === 'Escape') cleanup(false); };
-    document.addEventListener('keydown', onKey);
+    // If the user clicks the popover, open the sidebar then dismiss
+    pop.addEventListener('click', (e) => { try { btn.click(); } catch (er) {} ; cleanup(true); });
 
-    pop.addEventListener('click', (e) => { cleanup(true); });
-
-    // Also auto-dismiss after 8s
-    const timer = setTimeout(() => cleanup(false), 8000);
-    // ensure timer cleared on cleanup
-    const oldCleanup = cleanup;
-    cleanup = (openSidebar = false) => { clearTimeout(timer); oldCleanup(openSidebar); };
+    // If the highlighted group is not the actual button, clicking it should open sidebar
+    if (highlightTarget === btn) {
+      // When the real hamburger is clicked by user, dismiss the tour afterwards.
+      const onBtnClick = () => { // run after existing handlers
+        requestAnimationFrame(() => cleanup(true));
+      };
+      btn.addEventListener('click', onBtnClick, { once: true });
+    } else {
+      const onGroupClick = () => { try { btn.click(); } catch (er) {} ; cleanup(true); };
+      highlightTarget.addEventListener('click', onGroupClick, { once: true });
+    }
   }
 
   // Expose for manual invocation from console (useful for testing)
