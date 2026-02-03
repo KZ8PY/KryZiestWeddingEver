@@ -234,7 +234,7 @@ main {
   /* Static position: keeps the latte texture without movement */
   background-position: 50% 8%;
   filter: saturate(1.04) contrast(1.01);
-  animation: latteVerticalBreathe 1s ease-in-out infinite alternate;
+  animation: latteVerticalBreathe 3s ease-in-out infinite alternate;
 }
 
 /* Wavy blend overlay: keeps the linear gradient direction, but adds soft moving
@@ -249,7 +249,7 @@ main {
 
 @keyframes latteVerticalBreathe {
   0% { background-position: 50% 0%; }
-  100% { background-position: 50% 15%; }
+  100% { background-position: 50% 50%; }
 }
 
 /* Global headings (excluding hero-specific title selectors) */
