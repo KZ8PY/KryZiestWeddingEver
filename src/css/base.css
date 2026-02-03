@@ -163,7 +163,7 @@ main {
     /* to bottom, */
     /* circle at 50% 0%, */
     /* Use 'ellipse' for an oval radial gradient */
-    ellipse 250% 90% at 50% -5%,
+    ellipse 250% 90% at 50% 0%,
     /* #4a2c2a 0%,
     #4e2e29 1.75%,
     #522f27 3.5%,
