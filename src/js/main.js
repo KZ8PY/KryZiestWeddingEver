@@ -13,11 +13,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Very lightweight device tiering to keep visuals while avoiding jank on weaker devices.
-    const cores = (typeof navigator !== 'undefined' && typeof navigator.hardwareConcurrency === 'number') ? navigator.hardwareConcurrency : 4;
-    const mem = (typeof navigator !== 'undefined' && typeof navigator.deviceMemory === 'number') ? navigator.deviceMemory : 4;
-    const isLowTier = (cores <= 4) || (mem <= 4);
-
+    // Device tiering disabled per request: ensure full effects on all devices.
+    // Previously checked hardwareConcurrency and deviceMemory.
+    const isLowTier = false; 
+    
     const container = document.createElement('div');
     container.id = 'latte-bg';
     container.setAttribute('aria-hidden', 'true');
