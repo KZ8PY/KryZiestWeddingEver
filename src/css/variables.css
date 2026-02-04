@@ -35,6 +35,9 @@
 
   /* utility colors added during audit */
   --color-white: #fff;
+  /* RGB tokens for CSS rgba() usage */
+  --color-primary-rgb: 135,169,107; /* rgb for --color-primary (#87A96B) */
+  --color-primary-light-rgb: 200,213,185; /* rgb for --color-primary-light (#C8D5B9) */
   --overlay-dark: rgba(0,0,0,0.8);
   --color-cream-light: #fafafa;
   --color-cream-mid: #efeae5;
