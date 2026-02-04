@@ -230,6 +230,8 @@ window.addEventListener('DOMContentLoaded', () => {
       overlay.classList.remove('visible');
       document.body.classList.remove('no-scroll');
     };
+    // Expose programmatic controls for other modules (used by tour)
+    try { window.openSidebar = openSidebar; window.closeSidebar = closeSidebar; } catch (e) { /* ignore */ }
 
     hamburgerBtn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -342,7 +344,7 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     // If the user clicks the popover, open the sidebar then dismiss
-    pop.addEventListener('click', (e) => { try { btn.click(); } catch (er) {} ; cleanup(true); });
+    pop.addEventListener('click', (e) => { try { if (window.openSidebar) window.openSidebar(); else btn.click(); } catch (er) {} ; cleanup(true); });
 
     // If the highlighted group is not the actual button, clicking it should open sidebar
     if (highlightTarget === btn) {
@@ -351,27 +353,12 @@ window.addEventListener('DOMContentLoaded', () => {
       // (race conditions on some browsers), programmatically open it.
       const onBtnClick = () => { // run after existing handlers
         requestAnimationFrame(() => cleanup(true));
-        // ensure sidebar opened — if not, open programmatically after a short delay
-        setTimeout(() => {
-          try {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.querySelector('.sidebar-overlay');
-            const expanded = btn.getAttribute('aria-expanded') === 'true';
-            if (sidebar && !sidebar.classList.contains('open') && !expanded) {
-              btn.classList.add('active', 'is-open');
-              btn.setAttribute('aria-expanded', 'true');
-              btn.setAttribute('aria-label', 'Close menu');
-              sidebar.classList.add('open');
-              document.body.classList.add('sidebar-open', 'no-scroll');
-              sidebar.setAttribute('aria-hidden', 'false');
-              if (overlay) overlay.classList.add('visible');
-            }
-          } catch (e) { /* ignore */ }
-        }, 50);
+        // ensure sidebar opened — call the canonical opener
+        try { if (window.openSidebar) window.openSidebar(); } catch (e) { /* ignore */ }
       };
       btn.addEventListener('click', onBtnClick, { once: true });
     } else {
-      const onGroupClick = () => { try { btn.click(); } catch (er) {} ; cleanup(true); };
+      const onGroupClick = () => { try { if (window.openSidebar) window.openSidebar(); else btn.click(); } catch (er) {} ; cleanup(true); };
       highlightTarget.addEventListener('click', onGroupClick, { once: true });
     }
   }
