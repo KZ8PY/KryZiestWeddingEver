@@ -1249,7 +1249,7 @@ h3 {
   position: relative;
 
   /* ensure the hero is tall on most devices so it dominates first view */
-  min-height: max(900px, calc(60vh - var(--site-header-height, 4rem)));
+  min-height: max(850px, calc(60vh - var(--site-header-height, 4rem)));
   display: flex;
   flex-direction: column;
   align-items: center;
