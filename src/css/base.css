@@ -320,13 +320,14 @@ h1, h2, h3, h4 {
 .tour-popover::after {
   content: '';
   position: absolute;
-  top: -8px;
-  left: 12px;
+  /* by default the popover will appear above the target, so arrow points down from the popover */
+  bottom: -8px;
+  left: var(--arrow-left, 12px);
   width: 0;
   height: 0;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid var(--white-98);
+  border-top: 8px solid var(--color-bg-alt);
 }
 
 /* Exceptions */

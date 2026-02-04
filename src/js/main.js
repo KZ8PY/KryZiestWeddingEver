@@ -374,35 +374,54 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // "Coming soon" tooltip buttons (e.g., Prenup Photos)
-  (function initComingSoonButtons() {
-    const buttons = document.querySelectorAll('.coming-soon-btn[data-tooltip]');
-    if (!buttons.length) return;
+  // Prenup "coming soon" logic removed — prenup CTA is now a standard button
+  // Add a small popover for Prenup Photos that mirrors the mini-tour popover style
+  (function initPrenupPopover() {
+    const btn = document.querySelector('#prenup .prenup-cta .contact-action[data-tooltip], #prenup .prenup-cta .contact-action');
+    if (!btn) return;
 
-    buttons.forEach((btn) => {
-      const show = () => {
-        const tip = btn.closest('.prenup-cta')?.querySelector('.coming-soon-tip') || null;
-        if (!tip) return;
+    const showTip = () => {
+      let pop = document.querySelector('.coming-soon-pop');
+      const text = btn.getAttribute('data-tooltip') || 'COMING SOON';
+      if (!pop) {
+        pop = document.createElement('div');
+        pop.className = 'tour-popover coming-soon-pop';
+        pop.setAttribute('role', 'status');
+        pop.setAttribute('aria-live', 'polite');
+        pop.innerHTML = `<div>${text}</div>`;
+        document.body.appendChild(pop);
+      } else {
+        pop.innerHTML = `<div>${text}</div>`;
+      }
 
-        tip.textContent = btn.getAttribute('data-tooltip') || 'COMING SOON';
-        tip.hidden = false;
-        window.clearTimeout(tip.__hideTimer);
-        tip.__hideTimer = window.setTimeout(() => {
-          tip.hidden = true;
-        }, 1200);
-      };
+      // Position above the button, centered horizontally, and set arrow position
+      const rect = btn.getBoundingClientRect();
+      // Allow DOM to render the pop so we can measure its size
+      const measured = pop.getBoundingClientRect();
+      const popW = measured.width || 200;
+      const popH = measured.height || 40;
+      // Place pop above the button (with 8px gap for the arrow)
+      let top = rect.top - popH - 12; // 12 accounts for arrow + small gap
+      if (top < 8) top = rect.bottom + 8; // fallback below if not enough room
+      let left = rect.left + (rect.width / 2) - (popW / 2);
+      // clamp to viewport
+      left = Math.max(8, Math.min(left, window.innerWidth - popW - 8));
+      pop.style.top = `${top}px`;
+      pop.style.left = `${left}px`;
+      // compute arrow left offset relative to pop left, center the arrow on the button
+      const arrowLeft = Math.max(12, (rect.left + rect.width / 2) - left - 8);
+      pop.style.setProperty('--arrow-left', `${arrowLeft}px`);
 
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        show();
-      });
+      // Reset any existing hide timer
+      window.clearTimeout(pop.__hideTimer);
+      pop.__hideTimer = window.setTimeout(() => {
+        try { if (pop && pop.parentNode) pop.parentNode.removeChild(pop); } catch (e) {}
+      }, 1200);
+    };
 
-      btn.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          show();
-        }
-      });
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      showTip();
     });
   })();
 });

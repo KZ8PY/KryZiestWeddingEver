@@ -79,13 +79,20 @@
 .site-sidebar nav a:focus,
 .site-sidebar nav a:focus-visible {
   background: var(--color-bg-alt);
-  color: var(--color-primary-dark);
-  border-radius: 0; /* no rounded corners */
-  box-shadow: none; /* remove raised effect */
+  /* keep the text color unchanged on hover to match buttons */
+  color: inherit;
+  border-radius: 0;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  transform: translateY(-1px);
   outline: none;
   display: block;
   width: 100%;
   border-bottom: none; /* enforce no underline on hover */
+}
+
+.site-sidebar nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
 }
 
 body.no-scroll {

@@ -406,13 +406,14 @@ h1, h2, h3, h4 {
 .tour-popover::after {
   content: '';
   position: absolute;
-  top: -8px;
-  left: 12px;
+  /* by default the popover will appear above the target, so arrow points down from the popover */
+  bottom: -8px;
+  left: var(--arrow-left, 12px);
   width: 0;
   height: 0;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid var(--white-98);
+  border-top: 8px solid var(--color-bg-alt);
 }
 
 /* Exceptions */
@@ -995,6 +996,9 @@ h3 {
 }
 
 /* Prenup placeholder */
+.prenup {
+  position: relative; /* container for absolutely-positioned CTA */
+}
 .prenup-placeholder {
   width: min(980px, 100%);
   display: block;
@@ -1004,34 +1008,17 @@ h3 {
 }
 
 .prenup-cta {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  margin-top: 0.75rem;
-}
-
-.coming-soon-btn {
-  padding: 0.75rem 1.1rem;
-  border-radius: 999px;
-  border: 1.5px solid var(--color-border);
-  background: var(--color-card-bg);
-  color: inherit;
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.06em;
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-.coming-soon-tip {
-  background: var(--color-card-bg);
-  border: 1.5px solid var(--color-border);
-  border-radius: 999px;
-  padding: 0.45rem 0.8rem;
-  font-size: 0.75rem;
-  box-shadow: none;
+  margin: 0;
+  z-index: 30;
+  pointer-events: auto;
 }
 
 /* Monogram-only section */
@@ -1065,10 +1052,29 @@ h3 {
   font-size: 14px;
   text-decoration: none;
   box-shadow: none;
+  transition: transform 120ms ease, box-shadow 140ms ease, color 120ms ease, background 120ms ease;
 }
 
 .contact-action:hover {
   background: var(--color-bg-alt);
+  transform: translateY(-1px);
+  color: var(--color-coffee-dark);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.contact-action:focus,
+.contact-action:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* Disabled state for action buttons (e.g., prenup photos) */
+.contact-action[disabled],
+.contact-action[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 .card {
