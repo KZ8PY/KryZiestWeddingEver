@@ -286,13 +286,23 @@ h1, h2, h3, h4 {
 .tour-highlight.tour-pulse {
   animation: tourPulse 1.6s ease-in-out infinite;
 }
-
+  
 @keyframes tourPulse {
-  0% { box-shadow: 0 0 0 6px var(--color-primary), 0 10px 30px var(--color-primary-light); transform: translateY(0); }
-  50% { box-shadow: 0 0 0 12px var(--color-primary-light), 0 18px 40px rgba(0,0,0,0.06); transform: translateY(-1px); }
-  100% { box-shadow: 0 0 0 6px var(--color-primary), 0 10px 30px var(--color-primary-light); transform: translateY(0); }
+  0% {
+    box-shadow: 0 0 0 6px rgba(139, 69, 19, 0.16), 0 10px 30px rgba(139, 69, 19, 0.14);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(139, 69, 19, 0.08), 0 18px 40px rgba(139, 69, 19, 0.12);
+    transform: translateY(-1px);
+  }
+  100% {
+    box-shadow: 0 0 0 6px rgba(139, 69, 19, 0.16), 0 10px 30px rgba(139, 69, 19, 0.14);
+    transform: translateY(0);
+  }
 }
-.tour-popover {
+    
+  .tour-popover {
   position: fixed;
   z-index: 4200;
   max-width: 220px;
