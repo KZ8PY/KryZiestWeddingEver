@@ -416,6 +416,15 @@ h1, h2, h3, h4 {
   border-top: 8px solid var(--color-bg-alt);
 }
 
+/* Arrow variant for popovers rendered below their target (arrow points up) */
+.tour-popover.popover--below::after {
+  top: -8px;
+  bottom: auto;
+  left: var(--arrow-left, 12px);
+  border-top: 0;
+  border-bottom: 8px solid var(--color-bg-alt);
+}
+
 /* Exceptions */
 #contact h2,
 #contact h3 {

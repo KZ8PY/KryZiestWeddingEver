@@ -329,12 +329,36 @@ window.addEventListener('DOMContentLoaded', () => {
     // Highlight the whole floating menu group (or button fallback)
     highlightTarget.classList.add('tour-highlight', 'tour-pulse');
 
-    // Position popover near the highlighted element (below it)
+    // Position popover near the highlighted element — prefer below, fall back above.
     const rect = (highlightTarget.getBoundingClientRect && highlightTarget.getBoundingClientRect()) || btn.getBoundingClientRect();
-    const top = Math.min(window.innerHeight - 64, rect.bottom + 8);
-    const left = Math.max(8, rect.left);
+    // Measure pop after insertion so we can center it and compute arrow offset
+    const measured = pop.getBoundingClientRect();
+    const popW = measured.width || 220;
+    const popH = measured.height || 40;
+
+    // Preferred placement: below the target
+    const preferredBelowTop = rect.bottom + 8;
+    const belowFits = (preferredBelowTop + popH + 8) <= window.innerHeight;
+    let top, left;
+    if (belowFits) {
+      top = preferredBelowTop;
+      // mark popover variant so arrow points up
+      pop.classList.add('popover--below');
+    } else {
+      // place above
+      top = rect.top - popH - 12; // arrow + gap
+      pop.classList.remove('popover--below');
+    }
+
+    left = rect.left + (rect.width / 2) - (popW / 2);
+    // clamp to viewport edges
+    left = Math.max(8, Math.min(left, window.innerWidth - popW - 8));
     pop.style.top = `${top}px`;
     pop.style.left = `${left}px`;
+
+    // compute arrow left offset relative to pop left, center the arrow on the target
+    const arrowLeft = Math.max(12, (rect.left + rect.width / 2) - left - 8);
+    pop.style.setProperty('--arrow-left', `${arrowLeft}px`);
 
     // Cleanup will run only when user clicks the hamburger (or highlighted group)
     const cleanup = (openSidebar = false) => {
