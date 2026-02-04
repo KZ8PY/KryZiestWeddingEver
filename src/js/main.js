@@ -347,8 +347,27 @@ window.addEventListener('DOMContentLoaded', () => {
     // If the highlighted group is not the actual button, clicking it should open sidebar
     if (highlightTarget === btn) {
       // When the real hamburger is clicked by user, dismiss the tour afterwards.
+      // If the native handler for the hamburger doesn't open the sidebar
+      // (race conditions on some browsers), programmatically open it.
       const onBtnClick = () => { // run after existing handlers
         requestAnimationFrame(() => cleanup(true));
+        // ensure sidebar opened — if not, open programmatically after a short delay
+        setTimeout(() => {
+          try {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            if (sidebar && !sidebar.classList.contains('open') && !expanded) {
+              btn.classList.add('active', 'is-open');
+              btn.setAttribute('aria-expanded', 'true');
+              btn.setAttribute('aria-label', 'Close menu');
+              sidebar.classList.add('open');
+              document.body.classList.add('sidebar-open', 'no-scroll');
+              sidebar.setAttribute('aria-hidden', 'false');
+              if (overlay) overlay.classList.add('visible');
+            }
+          } catch (e) { /* ignore */ }
+        }, 50);
       };
       btn.addEventListener('click', onBtnClick, { once: true });
     } else {
