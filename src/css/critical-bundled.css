@@ -362,7 +362,7 @@ h1, h2, h3, h4 {
   border-radius: 10px;
   /* use primary colors for highlight and glow */
   box-shadow: 0 0 0 6px var(--color-primary), 0 10px 30px var(--color-primary-light), inset 0 1px 0 rgba(255,255,255,0.06);
-  outline: 2px solid var(--color-primary-light);
+  outline: 2px solid var(--color-primary);
   transition: box-shadow 220ms ease, transform 220ms ease;
 }
 
@@ -372,15 +372,15 @@ h1, h2, h3, h4 {
   
 @keyframes tourPulse {
   0% {
-    box-shadow: 0 0 0 6px rgba(139, 69, 19, 0.16), 0 10px 30px rgba(139, 69, 19, 0.14);
+    box-shadow: 0 0 0 6px var(--color-primary, 0.16), 0 10px 30px rgba(139, 69, 19, 0.14);
     transform: translateY(0);
   }
   50% {
-    box-shadow: 0 0 0 12px rgba(139, 69, 19, 0.08), 0 18px 40px rgba(139, 69, 19, 0.12);
+    box-shadow: 0 0 0 12px var(--color-primary-light, 0.08), 0 18px 40px rgba(139, 69, 19, 0.12);
     transform: translateY(-1px);
   }
   100% {
-    box-shadow: 0 0 0 6px rgba(139, 69, 19, 0.16), 0 10px 30px rgba(139, 69, 19, 0.14);
+    box-shadow: 0 0 0 6px var(--color-primary-light, 0.16), 0 10px 30px rgba(139, 69, 19, 0.14);
     transform: translateY(0);
   }
 }
