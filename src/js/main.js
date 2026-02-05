@@ -406,7 +406,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const showTip = () => {
       let pop = document.querySelector('.coming-soon-pop');
-      const text = btn.getAttribute('data-tooltip') || 'COMING SOON';
+      const text = btn.getAttribute('data-tooltip') || 'Coming Soon';
       if (!pop) {
         pop = document.createElement('div');
         pop.className = 'tour-popover coming-soon-pop';

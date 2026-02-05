@@ -319,21 +319,50 @@
 }
 
 .faq-icon {
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 2rem;
+  height: 2rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  position: relative; /* container for absolutely-centered glyphs */
   border-radius: 999px;
   background: var(--color-bg-alt);
   border: 1px solid var(--color-border);
   transition: transform 160ms ease;
   flex: 0 0 auto;
+  /* Hide the text (+) to rely on pseudo-elements for a perfect cross */
+  color: transparent;
+  user-select: none;
+}
+
+.faq-icon::before,
+.faq-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: var(--color-text);
+  transform: translate(-50%, -50%);
+  border-radius: 1px;
+}
+
+/* Vertical bar */
+.faq-icon::before {
+  width: 2px;
+  height: 12px;
+}
+
+/* Horizontal bar */
+.faq-icon::after {
+  width: 12px;
+  height: 2px;
 }
 
 .faq-item[open] .faq-icon {
   transform: rotate(45deg);
 }
+
+/* When the item is open, rotate the entire circular icon (glyph rotates with it). */
 
 .faq-a {
   padding: 0 1rem 1rem;
