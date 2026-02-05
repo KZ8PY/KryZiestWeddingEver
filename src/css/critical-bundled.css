@@ -712,59 +712,58 @@ h3 {
   justify-content: center;
   gap: 1.5rem;
   perspective: 1200px;
-  align-items: center;
+  align-items: flex-start;
 }
 
-/* Make each card sized relative to the viewport so the full image is visible
-   without cropping. Subtract header and some padding to keep spacing. */
-.details-media {
+/* Details cards: sized by viewport height, with a constant aspect ratio.
+   This ensures images are always fully visible (no cropping) and that
+   additional columns appear naturally when there is enough horizontal space. */
+.details-media.details-card {
   margin: 0;
-  overflow: hidden;
   padding: 0;
   background: transparent; /* override frosted-group from glass.css */
   border: none;
-  display: flex; /* Shrink-wrap content */
+  border-radius: var(--border-radius);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 6%);
+  overflow: hidden;
+
+  /* Portrait flyers are 1240x1748 */
+  aspect-ratio: 1240 / 1748;
+
+    /* Fit both viewport height and width while keeping a constant ratio.
+      Width is derived from the same viewport-height budget (so height-adaptive),
+      but capped by vw to avoid weird mid-width layouts on mobile/tablet. */
+    --details-card-max-h: calc(100svh - var(--site-header-height, 4rem) - 6rem);
+    max-height: var(--details-card-max-h);
+    width: min(92vw, calc(var(--details-card-max-h) * (1240 / 1748)));
+
+  display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 1 auto; /* Allow shrinking but not forced growing */
-  position: relative;
-  width: auto; /* Let content dictate width to keep constant aspect ratio */
-  height: auto;
-  /* Removed fixed height and aspect-ratio here; let img drive it */
+  flex: 0 1 auto;
 }
 
-/* Image drives the size. Max-height ensures it fits in viewport.
-   Width scales automatically to maintain aspect ratio. */
-.details-media img {
+.details-media.details-card picture,
+.details-media.details-card img {
+  width: 100%;
+  height: 100%;
   display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: calc(100vh - 9rem); /* 9rem buffer for header + padding */
-  object-fit: contain; /* Ensure full image is visible without cropping */
-  border-radius: var(--border-radius); /* rounded on the img */
+  border-radius: inherit;
+}
+
+.details-media.details-card img {
+  object-fit: contain;
 }
 
 @media (max-width: 760px) {
-  /* On mobile, let image width be 100% and height scale naturally */
-  .details-media img {
-    width: 100%;
-    height: auto;
-    max-height: 80vh; /* Don't be too tall on mobile if image is portrait */
+  .details-media-grid {
+    gap: 1rem;
+    justify-content: center;
+  }
+  .details-media.details-card {
+    /* Use the same sizing logic; no special-case height clamps needed. */
   }
 }
-
-
-/* Image-style cards for Wedding Details (use full-image instead of frosted glass)
-   Consolidated rules below to avoid duplicate declarations. */
-.details-media.details-card {
-  border-radius: var(--border-radius);
-  box-shadow: 0 8px 20px rgb(0 0 0 / 6%);
-  /* overflow hidden removed from container so shadow isn't clipped if border-radius is on img */
-}
-
-/* Redundant img rule removed here as it is handled above */
-/* Page-open animation rules follow... */
 
 /* Page-open animation: start slightly rotated like a closed book page, then open */
 .details-card {
@@ -822,21 +821,19 @@ h3 {
   display: block;
 }
 
-/* Pop animation for attire images (ladies / gentlemen) */
+/* Pop animation for attire images (ladies / gentlemen)
+   NOTE: apply reveal transforms to the image only so headings (h3)
+   remain static and do not fade/translate. */
 .attire-item {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: transform 680ms cubic-bezier(.2,.9,.3,1), opacity 480ms ease;
-}
-
-.attire-item.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+  /* container stays visible so headings aren't animated */
 }
 
 .attire-item img {
   display: block;
   will-change: transform, opacity;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: transform 680ms cubic-bezier(.2,.9,.3,1), opacity 480ms ease;
 }
 
 @keyframes pop-scale {
@@ -846,6 +843,8 @@ h3 {
 }
 
 .attire-item.is-visible img {
+  opacity: 1;
+  transform: translateY(0);
   animation: pop-scale 700ms cubic-bezier(.2,.9,.3,1) both;
 }
 
@@ -1038,6 +1037,7 @@ h3 {
 .faq-list {
   display: grid;
   gap: 0.75rem;
+  grid-template-columns: 1fr;
 }
 
 .faq-item {
@@ -1112,6 +1112,19 @@ h3 {
 
 .faq-a p {
   margin: 0;
+  text-align: left;
+}
+
+.faq-q {
+  flex: 1 1 auto;
+  text-align: left;
+}
+
+@media (min-width: 880px) {
+  .faq-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
 }
 
 /* Remove blue tap/highlight on mobile when tapping FAQ items.

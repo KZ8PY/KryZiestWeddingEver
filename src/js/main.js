@@ -49,6 +49,9 @@ window.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    // Trigger when an item reaches roughly the middle of the viewport.
+    // Shrink the observer root to a center band so animations don't fire
+    // while the element is still hugging the bottom edge.
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
@@ -56,12 +59,14 @@ window.addEventListener('DOMContentLoaded', () => {
         el.classList.add('is-visible');
         obs.unobserve(el);
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.01, rootMargin: '-60% 0px -20% 0px' });
 
     items.forEach((it) => {
       const rect = it.getBoundingClientRect();
-      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
-      if (inView) it.classList.add('is-visible'); else observer.observe(it);
+      const triggerY = window.innerHeight * 0.75;
+      const inView = rect.bottom > 0 && rect.top < triggerY;
+      if (inView) it.classList.add('is-visible');
+      else observer.observe(it);
     });
   })();
 
@@ -291,28 +296,57 @@ window.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const observer = new IntersectionObserver((entries, obs) => {
+    const revealHeading = (h, obs) => {
+      // Simply add the class; CSS transitions handle the rest.
+      h.classList.add('h2-reveal');
+      // If this heading belongs to the story section, trigger the sidebar tour
+      try {
+        if (h.closest && h.closest('#story')) showSidebarTourOnce();
+      } catch (e) { /* ignore */ }
+      if (obs) obs.unobserve(h);
+    };
+
+    // Main behavior: trigger closer to mid-viewport so headings don't animate
+    // while still hugging the bottom edge.
+    const midObserver = new IntersectionObserver((entries, obs) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        const h = entry.target;
-
-        // Simply add the class; CSS transitions handle the rest.
-        h.classList.add('h2-reveal');
-        // If this heading belongs to the story section, trigger the sidebar tour
-        try {
-          if (h.closest && h.closest('#story')) showSidebarTourOnce();
-        } catch (e) { /* ignore */ }
-        obs.unobserve(h);
+        revealHeading(entry.target, obs);
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.01, rootMargin: '-60% 0px -20% 0px' });
+
+    // Exception: headings near the end of the page might never reach the
+    // mid-viewport band (because there's not enough scroll left). For those,
+    // reveal as soon as they enter the viewport.
+    const edgeObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        revealHeading(entry.target, obs);
+      });
+    }, { threshold: 0.01, rootMargin: '0px' });
+
+    const chooseObserver = (h) => {
+      const rect = h.getBoundingClientRect();
+      const absTop = (window.scrollY || 0) + rect.top;
+      const docH = document.documentElement.scrollHeight || 0;
+      const maxScrollY = Math.max(0, docH - window.innerHeight);
+      const triggerY = window.innerHeight * 0.75;
+      const minPossibleTopAtMaxScroll = absTop - maxScrollY;
+      const cannotReachMidBand = minPossibleTopAtMaxScroll > triggerY;
+      return cannotReachMidBand ? edgeObserver : midObserver;
+    };
 
     headings.forEach((h) => {
       const rect = h.getBoundingClientRect();
-      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
-      if (inView) {
-        requestAnimationFrame(() => h.classList.add('h2-reveal'));
+      const triggerY = window.innerHeight * 0.6;
+      const midInView = rect.bottom > 0 && rect.top < triggerY;
+      const edgeInView = rect.bottom > 0 && rect.top < window.innerHeight;
+      const obs = chooseObserver(h);
+
+      if (obs === edgeObserver ? edgeInView : midInView) {
+        requestAnimationFrame(() => revealHeading(h));
       } else {
-        observer.observe(h);
+        obs.observe(h);
       }
     });
   })();
@@ -327,6 +361,9 @@ window.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    // Trigger when a card reaches roughly the middle of the viewport.
+    // Using a center-band rootMargin avoids firing while it's still at
+    // the bottom edge of the viewport.
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
@@ -375,15 +412,20 @@ window.addEventListener('DOMContentLoaded', () => {
             }
           } catch (e) { /* ignore image load errors */ }
 
-          el.classList.add('is-visible');
-          obs.unobserve(el);
+          // Add on next frame so the initial state can paint,
+          // ensuring transitions animate reliably per-card.
+          requestAnimationFrame(() => {
+            el.classList.add('is-visible');
+            obs.unobserve(el);
+          });
         })();
       });
-    }, { threshold: 0.18 });
+    }, { threshold: 0.01, rootMargin: '-60% 0px -20% 0px' });
 
     cards.forEach((c) => {
       const rect = c.getBoundingClientRect();
-      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
+      const triggerY = window.innerHeight * 0.6;
+      const inView = rect.bottom > 0 && rect.top < triggerY;
       if (inView) {
         // If immediately in view, load and reveal synchronously
         (async () => {
@@ -399,7 +441,7 @@ window.addEventListener('DOMContentLoaded', () => {
               if (img.decode) try { await img.decode(); } catch (e) {}
             }
           } catch (e) {}
-          c.classList.add('is-visible');
+          requestAnimationFrame(() => c.classList.add('is-visible'));
         })();
       } else observer.observe(c);
     });
