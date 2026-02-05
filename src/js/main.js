@@ -39,6 +39,32 @@ window.addEventListener('DOMContentLoaded', () => {
     };
   })();
 
+  // Attire images pop-in: reveal ladies/gentlemen images with a pop animation
+  (function initAttirePop() {
+    const items = Array.from(document.querySelectorAll('.attire-item'));
+    if (!items.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(i => i.classList.add('is-visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        el.classList.add('is-visible');
+        obs.unobserve(el);
+      });
+    }, { threshold: 0.12 });
+
+    items.forEach((it) => {
+      const rect = it.getBoundingClientRect();
+      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
+      if (inView) it.classList.add('is-visible'); else observer.observe(it);
+    });
+  })();
+
   // Lightweight accessible custom audio player
   (function initCustomAudioPlayers() {
     const players = Array.from(document.querySelectorAll('.custom-audio-player'));
@@ -288,6 +314,94 @@ window.addEventListener('DOMContentLoaded', () => {
       } else {
         observer.observe(h);
       }
+    });
+  })();
+
+  // Details card 'page open' reveal: animate each details-card like a book page
+  (function initDetailsCardReveal() {
+    const cards = Array.from(document.querySelectorAll('.details-card'));
+    if (!cards.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      cards.forEach(c => c.classList.add('is-visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+
+        // Load image (if deferred) and wait for decode before revealing
+        (async () => {
+
+          try {
+            // If picture element with deferred sources, set source srcsets first
+            const picture = el.querySelector('picture.deferred-picture[data-picture]');
+            if (picture) {
+              const sources = Array.from(picture.querySelectorAll('source'));
+              sources.forEach(s => {
+                const webp = s.getAttribute('data-srcset-webp');
+                const avif = s.getAttribute('data-srcset-avif');
+                // prefer existing data attributes on matching types
+                if (s.type === 'image/webp' && webp) s.srcset = webp;
+                if (s.type === 'image/avif' && avif) s.srcset = avif;
+                // fallback: if generic data-srcset present
+                const dataSrcset = s.getAttribute('data-srcset');
+                if (!s.srcset && dataSrcset) s.srcset = dataSrcset;
+              });
+              // then target the img fallback
+              const img = picture.querySelector('img');
+              if (img) {
+                const dataSrc = img.getAttribute('data-src');
+                if (dataSrc && (!img.src || img.src.indexOf('data:image') === 0)) {
+                  img.loading = 'eager';
+                  img.src = dataSrc;
+                }
+                if (!img.complete) await new Promise((res) => img.addEventListener('load', res, { once: true }));
+                if (img.decode) try { await img.decode(); } catch (e) {}
+              }
+            } else {
+              const img = el.querySelector('img');
+              if (img) {
+                const dataSrc = img.getAttribute('data-src');
+                if (dataSrc && (!img.src || img.src.indexOf('data:image') === 0)) {
+                  img.loading = 'eager';
+                  img.src = dataSrc;
+                }
+                if (!img.complete) await new Promise((res) => img.addEventListener('load', res, { once: true }));
+                if (img.decode) try { await img.decode(); } catch (e) {}
+              }
+            }
+          } catch (e) { /* ignore image load errors */ }
+
+          el.classList.add('is-visible');
+          obs.unobserve(el);
+        })();
+      });
+    }, { threshold: 0.18 });
+
+    cards.forEach((c) => {
+      const rect = c.getBoundingClientRect();
+      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
+      if (inView) {
+        // If immediately in view, load and reveal synchronously
+        (async () => {
+          try {
+            const img = c.querySelector('img');
+            if (img) {
+              const dataSrc = img.getAttribute('data-src');
+              if (dataSrc && (!img.src || img.src.indexOf('data:image') === 0)) {
+                img.loading = 'eager';
+                img.src = dataSrc;
+              }
+              if (!img.complete) await new Promise((res) => img.addEventListener('load', res, { once: true }));
+              if (img.decode) try { await img.decode(); } catch (e) {}
+            }
+          } catch (e) {}
+          c.classList.add('is-visible');
+        })();
+      } else observer.observe(c);
     });
   })();
 
