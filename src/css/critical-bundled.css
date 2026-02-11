@@ -1,3 +1,5 @@
+
+/* === src/css/variables.css === */
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
 /* Self-hosted Great Vibes (optional): place WOFF2/WOFF files at
@@ -84,6 +86,8 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* === src/css/base.css === */
 
 .header-sub { /* reduced by 40% from 1.3rem */
   font-size: 1.05rem;
@@ -659,6 +663,95 @@ h3 {
   pointer-events: none;
 }
 
+
+/* === src/css/animations.css === */
+/* Animations & transitions for Korean Cafe Wedding Theme */
+
+/* Reveal-from-bright: slide a bright overlay away to reveal content
+   This avoids fading + rising; content is visible immediately while
+   a short bright sweep slides up and out. Applied to elements with
+   the existing `fade-in` class so markup doesn't need changes. */
+.fade-in {
+  position: relative;
+  z-index: 0;
+}
+
+/* Simple page reveal: fade in the content */
+@keyframes body-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    /* Subtle lift */
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Section header reveal: use transitions for better compatibility */
+.js .welcome-panel-welcome h2,
+.js .section h2 {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 1s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.js .welcome-panel-welcome h2.h2-reveal,
+.js .section h2.h2-reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* @keyframes h2-reveal removed in favor of transition */
+
+@media (prefers-reduced-motion: reduce) {
+  .js .welcome-panel-welcome h2,
+  .js .section h2 {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  
+  .js .welcome-panel-welcome h2.h2-reveal,
+  .js .section h2.h2-reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.underline {
+  position: relative;
+}
+
+/* Steam/leaf micro-interaction (for buttons, icons) */
+.steam {
+  display: inline-block;
+  vertical-align: middle;
+  animation: steam-rise 1s infinite linear;
+}
+
+@keyframes steam-rise {
+  0% {
+    opacity: 0.2;
+    transform: translateY(0) scaleX(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: translateY(-10px) scaleX(1.1);
+  }
+
+  100% {
+    opacity: 0.1;
+    transform: translateY(-20px) scaleX(0.95);
+  }
+}
+
+/* === src/css/layout.css === */
 /* Layout: Grid & Flexbox for Korean Cafe Wedding Theme */
 .container {
   max-width: 1100px;
@@ -760,9 +853,9 @@ h3 {
     gap: 1rem;
     justify-content: center;
   }
-  .details-media.details-card {
+  /* .details-media.details-card {
     /* Use the same sizing logic; no special-case height clamps needed. */
-  }
+  /* }  */
 }
 
 /* Page-open animation: start slightly rotated like a closed book page, then open */
@@ -822,17 +915,18 @@ h3 {
 }
 
 /* Pop animation for attire images (ladies / gentlemen)
-   NOTE: apply reveal transforms to the image only so headings (h3)
-   remain static and do not fade/translate. */
+   NOTE: we animate only the image so headings (h3) remain static/no-fade. */
 .attire-item {
-  /* container stays visible so headings aren't animated */
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
 }
 
 .attire-item img {
   display: block;
   will-change: transform, opacity;
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(12px) scale(0.96);
   transition: transform 680ms cubic-bezier(.2,.9,.3,1), opacity 480ms ease;
 }
 
@@ -844,7 +938,7 @@ h3 {
 
 .attire-item.is-visible img {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
   animation: pop-scale 700ms cubic-bezier(.2,.9,.3,1) both;
 }
 
@@ -1057,6 +1151,11 @@ h3 {
   font-size: 14px;
 }
 
+.faq-q {
+  flex: 1 1 auto;
+  text-align: left;
+}
+
 .faq-item summary::-webkit-details-marker {
   display: none;
 }
@@ -1115,18 +1214,6 @@ h3 {
   text-align: left;
 }
 
-.faq-q {
-  flex: 1 1 auto;
-  text-align: left;
-}
-
-@media (min-width: 880px) {
-  .faq-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-  }
-}
-
 /* Remove blue tap/highlight on mobile when tapping FAQ items.
    Exclude `.faq-icon` so the circular background is preserved. */
 .faq-item summary,
@@ -1140,6 +1227,13 @@ h3 {
 .faq-item summary:active,
 .faq-item summary:focus {
   background-color: transparent;
+}
+
+@media (min-width: 880px) {
+  .faq-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
 }
 
 /* Prenup placeholder */
@@ -1188,6 +1282,85 @@ h3 {
   justify-items: center;
   margin-top: 1rem;
 }
+
+/* Timeline: responsive frosted cards under Wedding Details */
+.timeline-grid {
+  /* Use flex so rows wrap and the collection is centered reliably */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  justify-content: center; /* center the whole group when there's extra space */
+  align-items: flex-start;
+  margin-top: 1rem;
+}
+
+.timeline-grid .timeline-event {
+  /* Fixed-size portrait cards for narrow layouts */
+  width: 150px;
+  max-width: 150px;
+  height: 200px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  padding: 0.35rem; /* slightly reduced padding to fit icon */
+}
+
+.timeline-grid .timeline-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 999px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.timeline-grid .timeline-icon img {
+  width: 100px;
+  height: 100px;
+  max-width: 100px;
+  max-height: 100px;
+  display: block;
+  object-fit: contain;
+  background: transparent !important;
+  margin: 0;
+}
+
+.timeline-grid .timeline-body time {
+  display: block;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+  font-size: 20px;
+}
+
+/* when `h3` is placed before the icon it may be a direct child of .timeline-event */
+.timeline-grid .timeline-event > h3,
+.timeline-grid .timeline-body h3 {
+  margin-top: 0;
+  margin-bottom: 0 !important;
+  font-size: 22px;
+}
+
+.timeline-body p {
+  margin: 0;
+  color: var(--glass-text, var(--color-coffee-dark));
+  opacity: 0.95;
+}
+
+@media (min-width: 720px) {
+  /* No layout change needed for timeline container; flex handles wrapping */
+}
+
+@media (min-width: 1100px) {
+  /* No layout change needed for timeline container; flex handles wrapping */
+}
+
 
 .contact-action {
   display: inline-block;
@@ -1266,6 +1439,8 @@ h3 {
   margin-top: 0;
   margin-bottom: 0;
 }
+
+/* === src/css/components/hero.css === */
 /* ==================================================
    src/css/components/hero.css
    Reorganized: grouped sections for easier review and editing
@@ -2166,88 +2341,139 @@ h3 {
 }
 
 /* end of file */
-/* Animations & transitions for Korean Cafe Wedding Theme */
+/* === src/css/components/glass.css === */
+/* Shared glass / frosted panel styling.
+   Keep this file loaded AFTER component/layout styles so it can unify panels. */
 
-/* Reveal-from-bright: slide a bright overlay away to reveal content
-   This avoids fading + rising; content is visible immediately while
-   a short bright sweep slides up and out. Applied to elements with
-   the existing `fade-in` class so markup doesn't need changes. */
-.fade-in {
+:where(
+  .frosted-panel,
+  .card,
+  .details-media,
+  .menu-board,
+  .venue-card,
+  .stay-card,
+  .contact-card,
+  .travel-card,
+  .timeline-event,
+  .registry-card,
+  .welcome-song-panel,
+  .faq-item
+) {
+  /* Fogged / moisted glass panel (lets the latte background show through) */
+  background: var(
+    --glass-bg,
+    radial-gradient(120% 140% at 18% 18%, rgb(255 255 255 / 12%) 0%, rgb(255 255 255 / 0%) 55%),
+    radial-gradient(120% 160% at 82% 28%, rgb(255 255 255 / 8%) 0%, rgb(255 255 255 / 0%) 60%),
+    linear-gradient(180deg, rgb(255 255 255 / 8%) 0%, rgb(255 255 255 / 4%) 45%, rgb(255 255 255 / 6%) 100%)
+  );
+  border-radius: var(--glass-radius, var(--border-radius-soft));
+  padding: var(--glass-padding, clamp(1rem, 2vw, 1.5rem) clamp(1rem, 4vw, 2rem));
+  color: var(--glass-text, var(--color-coffee-dark));
+  border: var(--glass-border, 1px solid rgb(255 255 255 / 8%));
+  box-shadow: var(
+    --glass-shadow,
+    0 10px 30px rgb(0 0 0 / 6%),
+    inset 0 1px 0 rgb(255 255 255 / 12%),
+    inset 0 -1px 0 rgb(255 255 255 / 4%)
+  );
   position: relative;
-  z-index: 0;
+  max-width: none;
 }
 
-/* Simple page reveal: fade in the content */
-@keyframes body-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-    /* Subtle lift */
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* === src/css/components/story.css === */
+.story {
+  padding: 2.5rem 1.2rem;
+  background: transparent;
+  border-radius: var(--border-radius-soft);
+  box-shadow: none;
 }
 
-/* Section header reveal: use transitions for better compatibility */
-.js .welcome-panel-welcome h2,
-.js .section h2 {
-  opacity: 0;
-  transform: translateY(15px);
-  transition: opacity 1s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-  will-change: opacity, transform;
+.timeline {
+  display: grid;
+  gap: 2.2rem;
+  margin-top: 2rem;
 }
 
-.js .welcome-panel-welcome h2.h2-reveal,
-.js .section h2.h2-reveal {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* @keyframes h2-reveal removed in favor of transition */
-
-@media (prefers-reduced-motion: reduce) {
-  .js .welcome-panel-welcome h2,
-  .js .section h2 {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  
-  .js .welcome-panel-welcome h2.h2-reveal,
-  .js .section h2.h2-reveal {
-    transition: none;
-    opacity: 1;
-    transform: none;
+@media (width >= 860px) {
+  .timeline {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 1.25rem;
   }
 }
 
-.underline {
+.timeline-event {
+  --glass-padding: 1.5rem 1.2rem;
+  --glass-radius: var(--border-radius);
+
+  margin-bottom: 0.5rem;
   position: relative;
 }
 
-/* Steam/leaf micro-interaction (for buttons, icons) */
-.steam {
-  display: inline-block;
-  vertical-align: middle;
-  animation: steam-rise 1s infinite linear;
+.timeline-event img {
+  border-radius: 18px;
+  box-shadow: 0 2px 8px var(--color-shadow);
+  margin-bottom: 1rem;
+  background: var(--color-bg-alt);
 }
 
-@keyframes steam-rise {
-  0% {
-    opacity: 0.2;
-    transform: translateY(0) scaleX(1);
-  }
-
-  50% {
-    opacity: 0.7;
-    transform: translateY(-10px) scaleX(1.1);
-  }
-
-  100% {
-    opacity: 0.1;
-    transform: translateY(-20px) scaleX(0.95);
-  }
+.timeline-event .timeline-icon img {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  margin: 0;
 }
+
+.timeline-media {
+  width: 100%;
+  max-width: 520px;
+  margin: 1rem auto 0;
+}
+
+.timeline-video {
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  display: block;
+  object-fit: contain;
+  background: none;
+  border-radius: 18px;
+}
+
+.timeline-video-embed {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #000;
+}
+
+.timeline-video-embed--vertical {
+  /* Vertical video: responsive sizing while maintaining 9:16 aspect ratio.
+     We size by WIDTH based on the desire to respect:
+     1. Container width (100%)
+     2. Max height constraint (80svh) -> converted to width
+     3. Max pixel height constraint (680px) -> converted to width (~382.5px)
+  */
+  width: min(100%, 382.5px, calc(80svh * 9 / 16));
+  aspect-ratio: 9 / 16;
+  margin: 0 auto;
+}
+
+/* @media (width <= 420px) removed as the rule above handles small screens fluidly */
+
+.timeline-video-embed iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+}
+
+.timeline-media figcaption {
+  margin-top: 0.6rem;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
+

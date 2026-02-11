@@ -140,3 +140,9 @@ tmp-gradient-stops.txt
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Ignore generated critical CSS bundle (built by scripts/build-critical-css.js)
+src/css/critical-bundled.css
+src/css/critical-bundled.*
+scripts/build-critical-css.js
+tools/convert-images.js

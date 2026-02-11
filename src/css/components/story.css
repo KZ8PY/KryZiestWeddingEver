@@ -34,6 +34,13 @@
   background: var(--color-bg-alt);
 }
 
+.timeline-event .timeline-icon img {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  margin: 0;
+}
+
 .timeline-media {
   width: 100%;
   max-width: 520px;
