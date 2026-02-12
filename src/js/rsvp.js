@@ -54,7 +54,7 @@ window.addEventListener('DOMContentLoaded', () => {
             type="number" 
             id="kidAge${kidNumber}" 
             name="kidAge${kidNumber}" 
-            placeholder="Age"
+            placeholder="3"
             min="0"
             max="10"
             required
