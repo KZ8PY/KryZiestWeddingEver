@@ -30,8 +30,9 @@
       justify-content: center;
       text-align: center;
       gap: 0.6rem;
-      padding: 1.05rem 1.1rem; /* increased vertical padding to prevent clipping */
-      border-radius: 999px;
+      height: 50px;
+      padding: 0 1.1rem;
+      border-radius: 25px;
       background: linear-gradient(180deg, var(--color-warm-cream), rgba(250,247,238,0.96));
       border: 1.5px solid rgba(var(--color-primary-light-rgb), 0.42);
       cursor: pointer;
@@ -70,7 +71,7 @@
 
     /* Selected state: matcha-filled pill with warm cream text */
     #rsvp .radio-label:has(input[type="radio"]:checked) {
-      background: var(--color-primary);
+      background: var(--color-primary-dark);
       color: var(--color-warm-cream);
       border-color: var(--color-primary-dark);
       box-shadow: 0 10px 26px rgba(var(--color-primary-rgb),0.12);
@@ -291,7 +292,7 @@
       margin-bottom: 0.5rem;
       color: var(--color-warm-cream);
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.875rem;
     }
     
     /* Cream/pill style for inputs & selects (matches attached example) */
@@ -299,11 +300,11 @@
     .form-group input[type="number"],
     .form-group select {
       width: 100%;
-      height: 56px;
-      line-height: 56px; /* vertically centers single-line text/placeholder */
+      height: 50px;
+      line-height: 50px; /* vertically centers single-line text/placeholder */
       padding: 0 1.25rem;
-      border-radius: 28px;
-      font-size: 1.15rem;
+      border-radius: 25px;
+      font-size: 1rem;
       background: linear-gradient(180deg, var(--color-warm-cream), rgba(250,247,238,0.96));
       border: 1.5px solid rgba(var(--color-primary-light-rgb), 0.42);
       font-family: var(--font-tan-pearl);
@@ -319,7 +320,7 @@
       color: rgba(74,44,42,0.45);
       opacity: 1;
       font-family: var(--font-tan-pearl);
-      font-size: 1.12rem;
+      font-size: 1rem;
       transform: translateY(0.5px);
     }
 
@@ -393,7 +394,7 @@
     }
     
     .toggle-switch input:checked + .toggle-slider {
-      background-color: var(--color-primary);
+      background-color: var(--color-primary-dark);
     }
     
     .toggle-switch input:checked + .toggle-slider::before {
@@ -437,7 +438,7 @@
       font-weight: 600;
       color: var(--color-coffee-dark);
       margin-bottom: 0.8rem;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -507,7 +508,7 @@
     
     .kid-input-group {
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 2fr 0.5fr;
       gap: 0.8rem;
       margin-bottom: 0.5rem;
     }
@@ -557,13 +558,14 @@
     
     .form-actions button {
       width: 100%;
-      padding: 0.9rem 1.5rem;
+      height: 50px;
+      padding: 0 1.5rem;
       background: var(--color-warm-cream);
       color: var(--color-coffee-dark);
       font-weight: 600;
       border: none;
-      border-radius: 999px;
-      font-size: 1.1rem;
+      border-radius: 25px;
+      font-size: 0.95rem;
       cursor: pointer;
       transition: all var(--transition);
       box-shadow: var(--box-shadow-soft);
@@ -573,9 +575,10 @@
       /* Ensure the submit button matches input/button typography and pill styling */
       .form-actions button {
         font-family: var(--font-tan-pearl);
-        font-size: 1.02rem;
-        padding: 0.85rem 1rem;
-        border-radius: 999px;
+        font-size: 0.95rem;
+        height: 50px;
+        padding: 0 1rem;
+        border-radius: 25px;
         background: var(--color-warm-cream);
         color: var(--color-coffee-dark);
         border: 1px solid rgba(0,0,0,0.06);
@@ -618,9 +621,9 @@
     }
     
     .form-message.success {
-      background: rgba(135, 169, 107, 0.4);
-      border: 1px solid var(--color-primary);
-      color: var(--color-coffee-dark);
+      background: rgba(93, 107, 77, 0.4);
+      border: 1px solid var(--color-primary-dark);
+      color: var(--color-warm-cream);
     }
     
     .form-message.error {
