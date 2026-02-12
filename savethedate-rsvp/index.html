@@ -1,48 +1,142 @@
 <!DOCTYPE html>
 <html lang="en" class="js">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <title>Save the Date | Ziber&Krysha</title>
-  <script>
-    document.documentElement.classList.add('js');
-  </script>
-  <meta name="description" content="Save the Date video and RSVP for Ziber & Krysha's wedding">
-  <!-- Open Graph / Twitter Card -->
-  <meta property="og:title" content="Save the Date — Ziber&Krysha">
-  <meta property="og:description" content="Save the Date video for Ziber & Krysha's wedding.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://kz8py.github.io/KryZiestWeddingEver/savethedate-rsvp/">
-  <meta property="og:image" content="https://kz8py.github.io/KryZiestWeddingEver/public/images/hero/save-the-date-preview-1200x630.jpg">
-  <meta property="og:image:secure_url" content="https://kz8py.github.io/KryZiestWeddingEver/public/images/hero/save-the-date-preview-1200x630.jpg">
-  <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="Save the Date — Ziber&Krysha">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Save the Date — Ziber&Krysha">
-  <meta name="twitter:description" content="Save the Date video for Ziber & Krysha's wedding.">
-  <meta name="twitter:image" content="https://kz8py.github.io/KryZiestWeddingEver/public/images/hero/save-the-date-preview-1200x630.jpg">
-  <meta name="twitter:image:alt" content="Save the Date — Ziber&Krysha">
-  <link rel="image_src" href="https://kz8py.github.io/KryZiestWeddingEver/public/images/hero/save-the-date-preview-1200x630.jpg">
-  <link rel="icon" type="image/png" href="../public/images/icons/KZ-Monogram.png">
-  <link rel="alternate icon" href="../public/favicon.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script>document.documentElement.classList.add('js');</script>
   <link rel="preload" href="../src/fonts/tan-pearl-converted/TAN-PEARL-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../src/css/variables.css">
-  <link rel="stylesheet" href="../src/css/base.css">
-  <link rel="stylesheet" href="../src/css/layout.css">
-  <link rel="stylesheet" href="../src/css/components/hero.css">
-  <link rel="stylesheet" href="../src/css/animations.css">
-  <link rel="stylesheet" href="../src/css/components/sidebar.css">
-  <link rel="stylesheet" href="../src/css/components/glass.css">
   <style>
-    /* Hide the hamburger icon on this page */
-    #hamburgerBtn { display: none !important; }
+    /* Inline pill-style attendance buttons (mutually exclusive) */
+    /* Scoped, high-specificity rules to override bundled styles */
+    #rsvp .radio-group {
+      display: flex !important;
+      /* visually place Accept on the right and Decline on the left */
+      flex-direction: row-reverse !important;
+      gap: 0.9rem;
+      justify-content: stretch;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+    }
 
+    #rsvp .radio-label {
+      position: relative;
+      display: inline-flex !important;
+      flex: 1 1 0px; /* equal flexible widths */
+      min-width: 0; /* allow flex children to shrink
+                      and prevent overflow */
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 0.6rem;
+      padding: 1.05rem 1.1rem; /* increased vertical padding to prevent clipping */
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--color-warm-cream), rgba(250,247,238,0.96));
+      border: 1.5px solid rgba(var(--color-primary-light-rgb), 0.42);
+      cursor: pointer;
+      transition: all var(--transition);
+      font-weight: 600;
+      color: var(--color-coffee-dark);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06), inset 0 2px 0 rgba(255,255,255,0.72);
+      box-sizing: border-box;
+    }
+
+    #rsvp .radio-label:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+    }
+
+    /* hide the native radio input but keep it accessible */
+    #rsvp .radio-label input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+      margin: 0;
+      padding: 0;
+      pointer-events: none;
+    }
+
+    #rsvp .radio-label span {
+      display: block;
+      line-height: 1.2; /* give more vertical breathing room for display font */
+      width: 100%;
+      white-space: nowrap;
+      overflow: visible; /* allow vertical visibility to avoid chopping */
+      text-overflow: clip;
+      padding: 0; /* ensure text centered visually */
+    }
+
+    /* Selected state: matcha-filled pill with warm cream text */
+    #rsvp .radio-label:has(input[type="radio"]:checked) {
+      background: var(--color-primary);
+      color: var(--color-warm-cream);
+      border-color: var(--color-primary-dark);
+      box-shadow: 0 10px 26px rgba(var(--color-primary-rgb),0.12);
+    }
+
+    /* Fallback for browsers without :has(): style when input is checked + span */
+    #rsvp .radio-label input[type="radio"]:checked + span {
+      color: var(--color-warm-cream);
+      font-weight: 700;
+    }
+
+    /* Selected states via .selected class (JS fallback & explicit control) */
+    #rsvp .radio-label.selected.accept {
+      background: var(--color-primary);
+      color: var(--color-warm-cream);
+      border-color: var(--color-primary-dark);
+      box-shadow: 0 10px 26px rgba(var(--color-primary-rgb),0.12);
+    }
+
+    #rsvp .radio-label.selected.decline {
+      background: var(--color-coffee-dark);
+      color: var(--color-warm-cream);
+      border-color: var(--color-coffee-dark);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+    }
+
+    /* Ensure decline-specific checked state overrides the generic checked rule */
+    #rsvp .radio-label.decline:has(input[type="radio"]:checked),
+    #rsvp .radio-label.decline.selected {
+      background: var(--color-coffee-dark) !important;
+      color: var(--color-warm-cream) !important;
+      border-color: var(--color-coffee-dark) !important;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.14) !important;
+    }
+
+    /* Fallback for browsers without :has(): when decline input is checked, ensure pill fill is dark */
+    #rsvp .radio-label.decline input[type="radio"]:checked + span {
+      color: var(--color-warm-cream) !important;
+      font-weight: 700 !important;
+    }
+
+    /* Remove blue/tap highlight when pressing RSVP controls */
+    #rsvp .radio-label,
+    #rsvp .radio-label *,
+    #rsvp .form-actions button {
+      -webkit-tap-highlight-color: transparent !important;
+      -moz-tap-highlight-color: transparent !important;
+      touch-action: manipulation;
+    }
+
+    /* Remove default focus outline/blue ring on these controls (scoped) */
+    #rsvp .radio-label:focus,
+    #rsvp .radio-label:active,
+    #rsvp .radio-label input:focus,
+    #rsvp .form-actions button:focus,
+    #rsvp .form-actions button:active {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    /* Provide an accessible visible focus state when navigating by keyboard */
+    #rsvp .radio-label:focus-visible,
+    #rsvp .form-actions button:focus-visible {
+      outline: 2px solid rgba(var(--color-primary-rgb), 0.18);
+      outline-offset: 4px;
+    }
     /* Page-specific header title color: keeps Save the Date title readable on this page */
     body > header .header-site-title { color: var(--color-bg-alt); }
 
@@ -66,7 +160,7 @@
       color: var(--color-warm-cream);
     }
     #rsvp h2 {
-      color: var(--color-coffee-dark);
+      color: var(--color-warm-cream);
     }
 
     /* Fix: occasional white flashing behind video.
@@ -159,10 +253,457 @@
         margin-left: -4px;
       }
     }
+
+    /* = = = = = RSVP Form Styles = = = = = */
+    .rsvp {
+      padding: 2.5rem 1.5rem;
+      background: transparent;
+    }
+    
+    #rsvp h2 {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      color: var(--color-warm-cream);
+      font-family: var(--font-heading);
+    }
+    
+    /* Glass-style RSVP card */
+    #rsvp-form {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 2rem 1.6rem;
+      border-radius: calc(var(--border-radius) + 2px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      backdrop-filter: blur(10px) saturate(1.05);
+      -webkit-backdrop-filter: blur(10px) saturate(1.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 10px 30px rgba(18,25,30,0.16);
+      /* Keep form controls text dark for readability, but use warm-cream for headings/labels */
+      color: var(--color-coffee-dark);
+    }
+    
+    .form-group {
+      margin-bottom: 1.4rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--color-warm-cream);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    
+    /* Cream/pill style for inputs & selects (matches attached example) */
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group select {
+      width: 100%;
+      height: 56px;
+      line-height: 56px; /* vertically centers single-line text/placeholder */
+      padding: 0 1.25rem;
+      border-radius: 28px;
+      font-size: 1.15rem;
+      background: linear-gradient(180deg, var(--color-warm-cream), rgba(250,247,238,0.96));
+      border: 1.5px solid rgba(var(--color-primary-light-rgb), 0.42);
+      font-family: var(--font-tan-pearl);
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+      box-sizing: border-box;
+      color: var(--color-coffee-dark);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.09), inset 0 2px 0 rgba(255,255,255,0.7);
+      vertical-align: middle;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .form-group input::placeholder {
+      color: rgba(74,44,42,0.45);
+      opacity: 1;
+      font-family: var(--font-tan-pearl);
+      font-size: 1.12rem;
+      transform: translateY(0.5px);
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="number"]:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: rgba(var(--color-primary-rgb),0.55);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12), 0 0 0 6px rgba(var(--color-primary-rgb),0.06);
+      background: linear-gradient(180deg, var(--color-warm-cream), rgba(250,248,240,0.98));
+    }
+    
+    /* Radio buttons styling moved to the top-of-head inline style to provide
+       the pill layout and selected state. This duplicate block removed to
+       avoid conflicting layout rules. */
+    
+    /* Toggle Switch - Matcha Green */
+    /* Strongly-scoped rule to override .form-group label (which is display:block) */
+    #rsvp .form-group .toggle-label {
+      display: flex !important;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      margin-bottom: 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    #rsvp .toggle-switch {
+      position: relative;
+      width: 56px;
+      height: 28px;
+      order: -1; /* place the switch to the left of the label text */
+      margin-right: 0.6rem;
+      flex: 0 0 auto;
+      display: inline-block;
+    }
+    
+    .toggle-switch input[type="checkbox"] {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+    
+    .toggle-slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      border-radius: 28px;
+      transition: background-color var(--transition);
+      cursor: pointer;
+    }
+    
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: transform var(--transition);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .toggle-switch input:checked + .toggle-slider {
+      background-color: var(--color-primary);
+    }
+    
+    .toggle-switch input:checked + .toggle-slider::before {
+      transform: translateX(28px);
+    }
+    
+    .toggle-switch input:focus + .toggle-slider {
+      box-shadow: none;
+      outline: none;
+    }
+    
+    .toggle-label,
+    .toggle-label *,
+    .toggle-switch,
+    .toggle-switch * {
+      -webkit-tap-highlight-color: transparent !important;
+      outline: none !important;
+    }
+    
+    .toggle-label:focus,
+    .toggle-label:active {
+      outline: none !important;
+    }
+    
+    /* Kids details inputs */
+    .kids-details-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .kid-entry {
+      padding: 1rem;
+      background: rgba(var(--color-primary-light-rgb), 0.1);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--color-primary-light);
+      position: relative;
+    }
+    
+    .kid-entry-title {
+      font-weight: 600;
+      color: var(--color-coffee-dark);
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .add-kid-btn {
+      width: 2rem;
+      height: 2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-radius: 999px;
+      background: var(--color-bg-alt);
+      border: 1px solid var(--color-border);
+      transition: transform 160ms cubic-bezier(.2,.9,.3,1), box-shadow 140ms ease, background 120ms ease;
+      flex: 0 0 auto;
+      cursor: pointer;
+      color: transparent;
+      user-select: none;
+      font-size: 0;
+    }
+    
+    .add-kid-btn::before,
+    .add-kid-btn::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      background-color: var(--color-text);
+      transform: translate(-50%, -50%);
+      border-radius: 1px;
+      transition: background-color 120ms ease;
+    }
+    
+    /* Vertical bar for + */
+    .add-kid-btn::before {
+      width: 2px;
+      height: 12px;
+    }
+    
+    /* Horizontal bar for + */
+    .add-kid-btn::after {
+      width: 12px;
+      height: 2px;
+    }
+    
+    /* X state (rotate 45deg to make an X) */
+    .add-kid-btn.remove-btn {
+      transform: rotate(45deg);
+    }
+    
+    .add-kid-btn:hover:not(:disabled) {
+      background: var(--color-bg-alt);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    
+    .add-kid-btn.remove-btn:hover:not(:disabled) {
+      transform: rotate(45deg) translateY(-1px);
+    }
+    
+    .add-kid-btn:hover:not(:disabled)::before,
+    .add-kid-btn:hover:not(:disabled)::after {
+      background-color: var(--color-coffee-dark);
+    }
+    
+    .kid-input-group {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .kid-input-group:last-child {
+      margin-bottom: 0;
+    }
+    
+    .kid-input-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .kid-input-wrapper label {
+      font-size: 0.7rem;
+      margin-bottom: 0.3rem;
+      color: var(--color-coffee);
+      font-weight: 500;
+    }
+    
+    .kid-input-wrapper input {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      border: 1.5px solid var(--color-primary-light);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      background: var(--color-white);
+      box-sizing: border-box;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    
+    .kid-input-wrapper input[type="number"] {
+      min-width: 50px;
+    }
+    
+    .kid-input-wrapper input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.15);
+    }
+    
+    /* Form actions */
+    .form-actions {
+      margin-top: 1.8rem;
+    }
+    
+    .form-actions button {
+      width: 100%;
+      padding: 0.9rem 1.5rem;
+      background: var(--color-warm-cream);
+      color: var(--color-coffee-dark);
+      font-weight: 600;
+      border: none;
+      border-radius: 999px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: var(--box-shadow-soft);
+      font-family: var(--font-heading);
+    }
+    
+      /* Ensure the submit button matches input/button typography and pill styling */
+      .form-actions button {
+        font-family: var(--font-tan-pearl);
+        font-size: 1.02rem;
+        padding: 0.85rem 1rem;
+        border-radius: 999px;
+        background: var(--color-warm-cream);
+        color: var(--color-coffee-dark);
+        border: 1px solid rgba(0,0,0,0.06);
+        box-shadow: 0 8px 20px rgba(18, 25, 30, 0.12);
+        cursor: pointer;
+        transition: transform 120ms ease, box-shadow var(--transition);
+      }
+    
+    .form-actions button:hover:not(:disabled) {
+      background: var(--color-coffee);
+      color: var(--color-white);
+      box-shadow: var(--box-shadow);
+      transform: translateY(-2px);
+    }
+    
+    .form-actions button:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    
+    .form-actions button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      background: var(--color-primary-light);
+    }
+    
+    /* Form messages */
+    .form-message {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      text-align: center;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--color-warm-cream);
+      display: none;
+    }
+    
+    .form-message.show {
+      display: block;
+    }
+    
+    .form-message.success {
+      background: rgba(135, 169, 107, 0.4);
+      border: 1px solid var(--color-primary);
+      color: var(--color-coffee-dark);
+    }
+    
+    .form-message.error {
+      background: rgba(139, 0, 0, 0.35);
+      border: 1px solid rgba(139, 0, 0, 0.5);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      #rsvp-form {
+        padding: 1.5rem 1.2rem;
+      }
+    }
+
+    /* Home floating button */
+    .floating-home-group {
+      position: fixed;
+      top: 1.2rem;
+      left: 1.2rem;
+      display: flex;
+      align-items: center;
+      background: var(--color-card-bg-alt);
+      border-radius: 1.5rem;
+      box-shadow: 0 2px 12px 0 var(--color-subtle-shadow);
+      padding: 0.21rem 0.49rem;
+      z-index: 3000;
+      gap: 0.35rem;
+      transition: all 260ms cubic-bezier(.2,.9,.3,1);
+      pointer-events: auto;
+    }
+
+    .home-icon-btn {
+      background: none;
+      border: 0;
+      padding: 0;
+      width: 2.2rem;
+      height: 2.2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      pointer-events: auto;
+      position: relative;
+      z-index: 3100;
+    }
+
+    .home-icon-btn:hover {
+      cursor: pointer;
+    }
+
+    .home-icon-btn img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: transform 300ms cubic-bezier(.2,.9,.3,1);
+    }
+
+    .home-icon-btn:hover img {
+      transform: scale(1.1);
+    }
   </style>
+
+  <!-- Page stylesheet links (restored) -->
+  <link rel="stylesheet" href="../src/css/variables.css">
+  <link rel="stylesheet" href="../src/css/base.css">
+  <link rel="stylesheet" href="../src/css/layout.css">
+  <link rel="stylesheet" href="../src/css/components/hero.css">
+  <link rel="stylesheet" href="../src/css/animations.css">
+  <link rel="stylesheet" href="../src/css/components/sidebar.css">
+  <link rel="stylesheet" href="../src/css/components/glass.css">
+
 </head>
 
 <body>
+  <!-- Floating home button -->
+  <div class="floating-home-group">
+    <a href="../index.html" class="home-icon-btn" aria-label="Return to home page">
+      <img src="../public/images/icons/home.svg" alt="Home" aria-hidden="true">
+    </a>
+  </div>
+
   <header class="sticky-header latte-frame site-header" role="banner">
     <div class="header-brand">
       <h1 class="header-site-title">Ziber &amp;Krysha</h1>
@@ -187,9 +728,76 @@
       </div>
     </section>
 
-    <section id="rsvp" class="fade-in section" aria-label="RSVP">
-      <h2>More details coming soon...</h2>
-      <p>Formal and official invitation to follow! 😊</p>
+    <section id="rsvp" class="rsvp fade-in section" aria-label="RSVP">
+      <h2>RSVP</h2>
+      <!-- <p style="text-align: center; margin-bottom: 1.5rem; color: var(--color-warm-cream);">
+        Let us know if you can join us for the celebration!
+      </p> -->
+      
+      <form id="rsvp-form" novalidate>
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input 
+            type="text" 
+            id="fullName" 
+            name="fullName" 
+            placeholder="Enter your full name" 
+            required 
+            aria-required="true"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Will you be attending?</label>
+          <div class="radio-group">
+            <label class="radio-label accept">
+              <input 
+                type="radio" 
+                name="attendance" 
+                value="accept" 
+                id="attendYes" 
+                required 
+                aria-required="true"
+              />
+              <span>Accept</span>
+            </label>
+            <label class="radio-label decline">
+              <input 
+                type="radio" 
+                name="attendance" 
+                value="decline" 
+                id="attendNo"
+              />
+              <span>Decline</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="littleOneToggle" class="toggle-label">
+            <span>Bringing a little one?</span>
+            <div class="toggle-switch">
+              <input 
+                type="checkbox" 
+                id="littleOneToggle" 
+                name="littleOneToggle"
+                aria-label="Toggle for bringing children"
+              />
+              <span class="toggle-slider"></span>
+            </div>
+          </label>
+        </div>
+
+        <div id="kidsDetails" class="kids-details-container"></div>
+
+        <div class="form-actions">
+          <button type="submit" id="submitBtn">
+            Confirm Your Presence
+          </button>
+        </div>
+
+        <div id="formMessage" class="form-message" role="alert" aria-live="polite"></div>
+      </form>
     </section>
   </main>
 
@@ -301,6 +909,31 @@
             // ignore
           }
         };
+      })();
+    </script>
+
+    <script>
+      // JS fallback to toggle .selected on pill labels so selected styles work
+      // in browsers without CSS :has(). Keeps the native radio inputs for a11y.
+      (function () {
+        function syncAttendanceSelection() {
+          const labels = document.querySelectorAll('#rsvp .radio-label');
+          labels.forEach(l => l.classList.remove('selected'));
+          const checked = document.querySelector('#rsvp input[name="attendance"]:checked');
+          if (checked) {
+            const parent = checked.closest('.radio-label');
+            if (parent) parent.classList.add('selected');
+          }
+        }
+
+        document.addEventListener('change', function (e) {
+          if (e.target && e.target.name === 'attendance') syncAttendanceSelection();
+        }, true);
+
+        // initial sync on DOM ready
+        document.addEventListener('DOMContentLoaded', syncAttendanceSelection);
+        // Also call after a short delay for deferred scripts
+        setTimeout(syncAttendanceSelection, 300);
       })();
     </script>
 </body>

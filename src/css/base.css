@@ -532,6 +532,10 @@ h3 {
   cursor: pointer;
 }
 
+.hamburger-icon:hover img {
+  transform: scale(1.1);
+}
+
 .hamburger-icon img {
   width: 100%;
   height: 100%;
@@ -545,6 +549,10 @@ h3 {
 /* Flip the hamburger icon horizontally when menu is open */
 .hamburger-icon.is-open img {
   transform: rotateY(180deg);
+}
+
+.hamburger-icon.is-open:hover img {
+  transform: rotateY(180deg) scale(1.1);
 }
 
 

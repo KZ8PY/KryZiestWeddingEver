@@ -382,6 +382,7 @@
 
 .faq-item {
   overflow: hidden;
+  align-self: start;
 
   --glass-padding: 0;
   --glass-radius: var(--border-radius);

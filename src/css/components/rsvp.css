@@ -1,53 +1,86 @@
 .rsvp {
   padding: 2.5rem 1.2rem;
-  background: transparent;
-  border-radius: var(--border-radius-soft);
-  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-form {
+/* Target the RSVP form specifically so other forms aren't affected */
+#rsvp-form {
   display: grid;
-  gap: 1.2rem;
-  max-width: 420px;
+  gap: 1rem;
+  width: 100%;
+  max-width: 480px;
   margin: 0 auto;
-  background: var(--color-card-bg);
+  padding: 2rem 1.25rem;
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow-soft);
-  padding: 2rem 1.2rem;
-  border: 1.5px solid var(--color-primary-light);
+  /* Glass look */
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  backdrop-filter: blur(10px) saturate(1.06);
+  -webkit-backdrop-filter: blur(10px) saturate(1.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 30px rgba(18, 25, 30, 0.18);
+  color: var(--color-coffee-dark);
+  font-family: var(--font-tan-pearl);
 }
 
-input, select, button {
-  padding: 0.7rem 1rem;
-  border-radius: 999px;
-  border: 1.5px solid var(--color-primary-light);
-  font-size: 1rem;
-  background: var(--color-white);
-  font-family: var(--font-body);
-  transition: border-color var(--transition), box-shadow var(--transition);
+/* Inputs and controls */
+/* Scope inputs to the RSVP form */
+#rsvp-form input,
+#rsvp-form select,
+#rsvp-form textarea {
+  padding: 0.7rem 0.95rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+  color: var(--color-coffee-dark);
+  font-size: 0.98rem;
+  font-family: var(--font-tan-pearl);
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
 }
 
-input:focus, select:focus {
+#rsvp-form input:focus,
+#rsvp-form select:focus,
+#rsvp-form textarea:focus {
   outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px var(--color-primary-light);
+  border-color: rgba(135,169,107,0.95); /* theme primary */
+  box-shadow: 0 6px 18px rgba(135,169,107,0.08);
+  background: rgba(255,255,255,0.04);
 }
 
-button {
+/* Buttons */
+/* Scope buttons to RSVP form */
+#rsvp-form button {
+  padding: 0.85rem 1rem;
+  border-radius: 999px;
   background: var(--color-primary);
   color: var(--color-coffee-dark);
   font-weight: 600;
-  border: none;
+  border: 1px solid rgba(0,0,0,0.06);
   cursor: pointer;
-  transition: background var(--transition), color var(--transition), box-shadow var(--transition);
-  box-shadow: var(--box-shadow-soft);
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  margin-top: 0.5rem;
+  transition: transform 120ms ease, box-shadow var(--transition);
+  box-shadow: 0 8px 20px rgba(18, 25, 30, 0.12);
+  font-family: var(--font-tan-pearl);
+  font-size: 1.02rem;
 }
 
-button:hover, button:focus {
+/* Ensure placeholders use the Tan Pearl display for visual parity */
+#rsvp-form input::placeholder,
+#rsvp-form textarea::placeholder {
+  font-family: var(--font-tan-pearl);
+}
+
+#rsvp-form button:hover,
+#rsvp-form button:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 36px rgba(18, 25, 30, 0.16);
   background: var(--color-coffee);
   color: var(--color-white);
-  box-shadow: var(--box-shadow);
+}
+
+/* Small screens tweaks */
+@media (max-width: 420px) {
+  #rsvp-form { padding: 1.25rem; }
+  #rsvp-form input, #rsvp-form select, #rsvp-form textarea { font-size: 0.95rem; }
+  #rsvp-form button { font-size: 1rem; }
 }

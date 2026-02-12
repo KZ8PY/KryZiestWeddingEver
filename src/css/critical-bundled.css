@@ -451,7 +451,7 @@ h3 {
 }
 
 p, li, label, input, select, button {
-  font-family: var(--font-body);
+  font-family: var(--font-tan-pearl);
   font-size: 0.7rem;
   font-weight: 600;
 }
@@ -618,8 +618,8 @@ h3 {
   z-index: 2300;
 }
 
-.hamburger-icon:hover {
-  cursor: pointer;
+.hamburger-icon:hover img {
+  transform: scale(1.1);
 }
 
 .hamburger-icon img {
@@ -635,6 +635,10 @@ h3 {
 /* Flip the hamburger icon horizontally when menu is open */
 .hamburger-icon.is-open img {
   transform: rotateY(180deg);
+}
+
+.hamburger-icon.is-open:hover img {
+  transform: rotateY(180deg) scale(1.1);
 }
 
 
@@ -1136,6 +1140,7 @@ h3 {
 
 .faq-item {
   overflow: hidden;
+  align-self: start;
 
   --glass-padding: 0;
   --glass-radius: var(--border-radius);
