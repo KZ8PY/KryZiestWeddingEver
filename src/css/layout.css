@@ -112,7 +112,7 @@
   will-change: transform, opacity;
   transform: rotateY(-18deg) translateX(-8px) scale(0.99);
   opacity: 0;
-  transition: transform 2200ms cubic-bezier(.2,.9,.3,1), opacity 1400ms ease;
+  transition: transform 1000ms cubic-bezier(.2,.9,.3,1), opacity 700ms ease;
 }
 
 .details-card.is-visible {
