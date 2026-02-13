@@ -128,6 +128,41 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  /**
+   * Enable/disable "Bringing a little one" based on attendance selection
+   */
+  function updateLittleOneToggleState() {
+    const attendance = document.querySelector('input[name="attendance"]:checked');
+    
+    if (attendance && attendance.value === 'accept') {
+      // Enable the toggle when Accept is selected
+      littleOneToggle.disabled = false;
+      littleOneToggle.parentElement.style.opacity = '1';
+      littleOneToggle.parentElement.style.pointerEvents = 'auto';
+    } else {
+      // Disable the toggle when Decline is selected or nothing is selected
+      littleOneToggle.disabled = true;
+      littleOneToggle.parentElement.style.opacity = '0.5';
+      littleOneToggle.parentElement.style.pointerEvents = 'none';
+      
+      // Clear kids if toggle was checked
+      if (littleOneToggle.checked) {
+        littleOneToggle.checked = false;
+        currentKidCount = 0;
+        kidsDetailsContainer.innerHTML = '';
+      }
+    }
+  }
+
+  // Listen to attendance radio button changes
+  const attendanceRadios = document.querySelectorAll('input[name="attendance"]');
+  attendanceRadios.forEach(radio => {
+    radio.addEventListener('change', updateLittleOneToggleState);
+  });
+
+  // Set initial state on page load
+  updateLittleOneToggleState();
+
 
 
   /**
