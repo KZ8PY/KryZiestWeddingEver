@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const MAX_KIDS = 2;
 
   // Google Apps Script Web App URL
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxFvXwkuC1aEHViucojBFhzrDq_Z8JNDPtnENUrt4828M6szEErZ_0JtawILKAcvG-Alw/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxHD9BxMgfIrdYBNIC_iE2JBLPdb1jsztalgIaNb8kNBaoHQrBLSQfpnSvd81UgG-Rdlg/exec';
 
   // Previously we used a top-of-viewport toast for notifications. The UI
   // now prefers a single inline message area under the form submit button
@@ -199,6 +199,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const attendance = document.querySelector('input[name="attendance"]:checked');
     const bringingKids = littleOneToggle.checked;
     const numKids = bringingKids ? currentKidCount : 0;
+    const message = document.getElementById('message').value.trim();
 
     // Validation
     if (!fullName) {
@@ -244,6 +245,7 @@ window.addEventListener('DOMContentLoaded', () => {
       bringingKids: bringingKids,
       numKids: numKids,
       kids: kids, // Array with {name, age} for each kid - backend can verify individually
+      message: message, // Optional message from guest
       timestamp: new Date().toISOString()
     };
 

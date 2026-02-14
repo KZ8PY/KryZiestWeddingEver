@@ -10,6 +10,7 @@
   /* Korean Cafe Wedding Theme: Matcha & Coffee Spectrum */
   --color-bg: #FAF7F0;           /* Paper White */
   --color-bg-alt: #F5F5DC;       /* Milk Cream */
+  --color-bg-alt-rgb: 245,245,220; /* rgb for --color-bg-alt (#F5F5DC) */
   --color-primary: #87A96B;      /* Matcha Green */
   --color-primary-light: #C8D5B9;/* Light Matcha */
   --color-primary-dark: #5D6B4D; /* Deep Matcha */
@@ -1868,8 +1869,8 @@ h3 {
 #hero {
   --hero-text-glow:
     0 1px 0 var(--white-25),
-    0 0 16px rgba(var(--color-primary-rgb), 0.55),
-    0 0 34px rgba(var(--color-primary-rgb), 0.35);
+    0 0 22px rgba(var(--color-bg-alt-rgb), 0.95),
+    0 0 48px rgba(var(--color-bg-alt-rgb), 0.75);
 
   background-image:
     linear-gradient(
@@ -1895,6 +1896,22 @@ h3 {
   color: var(--color-coffee-dark);
   position: relative;
   overflow: hidden;
+}
+
+/* Reduce hero height on smaller viewports so background image reads less zoomed-in */
+@media (max-width: 720px) {
+  .hero {
+    min-height: calc(48vh - var(--site-header-height, 4rem));
+    /* prefer showing more vertical area on narrow screens */
+    background-position: center top, center center, center center;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero {
+    min-height: calc(42vh - var(--site-header-height, 4rem));
+    background-position: center top, center center, center center;
+  }
 }
 
 /* Apply glow to hero text explicitly (text-shadow is not inherited) */
@@ -1933,7 +1950,7 @@ h3 {
     0 0 16px rgba(var(--color-primary-rgb), 0.55),
     0 0 34px rgba(var(--color-primary-rgb), 0.35);
   z-index: 7;
-  margin-top: 300px;
+  margin-top: 200px;
   margin-bottom: 0; /* remove default paragraph margins so the GIF aligns exactly */
   position: relative;
 
@@ -1948,8 +1965,8 @@ h3 {
   height: auto;
   display: block;
   filter:
-    drop-shadow(0 0 14px rgba(var(--color-primary-rgb), 0.45))
-    drop-shadow(0 0 28px rgba(var(--color-primary-rgb), 0.25));
+    drop-shadow(0 0 20px rgba(var(--color-bg-alt-rgb), 0.85))
+    drop-shadow(0 0 40px rgba(var(--color-bg-alt-rgb), 0.6));
 }
 
 @media (width >= 720px) {

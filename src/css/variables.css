@@ -8,6 +8,7 @@
   /* Korean Cafe Wedding Theme: Matcha & Coffee Spectrum */
   --color-bg: #FAF7F0;           /* Paper White */
   --color-bg-alt: #F5F5DC;       /* Milk Cream */
+  --color-bg-alt-rgb: 245,245,220; /* rgb for --color-bg-alt (#F5F5DC) */
   --color-primary: #87A96B;      /* Matcha Green */
   --color-primary-light: #C8D5B9;/* Light Matcha */
   --color-primary-dark: #5D6B4D; /* Deep Matcha */
