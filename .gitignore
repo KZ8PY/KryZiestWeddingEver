@@ -147,6 +147,7 @@ vite.config.ts.timestamp-*
 src/css/critical-bundled.css
 src/css/critical-bundled.*
 scripts/build-critical-css.js
+tools/convert-images.js
 scripts/google-apps-script-backend.js
 scripts/BACKEND_UPDATE_INSTRUCTIONS.md
 scripts/generate-preview.ps1
