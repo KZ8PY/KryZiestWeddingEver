@@ -94,3 +94,323 @@
   opacity: 0.9;
 }
 
+
+/* --- Story Slider (Stacked Card Style) --- */
+
+.story-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  /* Margin: larger spacing for desktop */
+  margin: 5rem auto;
+  /* Default height enough for square cards + a bit of room. On mobile it's width-dependent. */
+  height: clamp(350px, 50vh, 600px);
+  perspective: 1200px; /* Enhanced depth */
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+@media (max-width: 600px) {
+  .story-carousel-wrapper {
+    /* Use aspect-ratio based height so it fights tight to the square content + just enough padding */
+    height: auto;
+    /* Slides are only 75% width and square, so 75vw height is target. Add tiny buffer.*/
+    aspect-ratio: 1 / 0.8; 
+    min-height: 250px;
+    margin: 0 auto;
+  }
+}
+
+.story-carousel {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-slide {
+  position: absolute;
+  /* Square aspect ratio */
+  width: min(80%, 420px);
+  aspect-ratio: 1/1;
+  /* Glass style: Frosted background with blur */
+  background: rgba(255, 255, 255, 0.15); 
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  
+  /* Reduced rounded corners */
+  border-radius: 12px;
+  
+  /* Padding to reveal the glass border around the image */
+  padding: 12px;
+  
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.5s ease, z-index 0s, box-shadow 0.4s ease;
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+.story-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+  /* Inner radius for the image */
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Slide States */
+.story-slide.active {
+  opacity: 1;
+  z-index: 10;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+
+.story-slide.prev {
+  opacity: 0.8;
+  z-index: 5;
+  transform: translateX(-65%) scale(0.85);
+  pointer-events: auto;
+  cursor: pointer;
+  filter: brightness(0.9);
+}
+
+.story-slide.next {
+  opacity: 0.8;
+  z-index: 5;
+  transform: translateX(65%) scale(0.85);
+  pointer-events: auto;
+  cursor: pointer;
+  filter: brightness(0.9);
+}
+
+/* Nav Buttons (slider arrows) */
+.story-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: background 0.2s, transform 0.2s, opacity 0.2s;
+  color: var(--color-text);
+  opacity: 0.8;
+}
+
+.story-nav:hover {
+  background: #fff;
+  transform: translateY(-50%) scale(1.1);
+  opacity: 1;
+}
+
+.story-nav.prev { left: 1rem; }
+.story-nav.next { right: 1rem; }
+
+@media (max-width: 1024px) {
+  .story-nav {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.9);
+  }
+  
+  /* Below 1024px, use 75% width. */
+  .story-slide { 
+    width: 75%; 
+    max-width: 420px; /* Keep consistent max-width */
+  }
+
+  /* 
+   * Transforms are now handled dynamically via JS to ensure visibility of edges
+   * regardless of specific screen width.
+   * See src/js/story-slider.js for calculation.
+   */
+   .story-slide.prev, .story-slide.next {
+      opacity: 0.5;
+   }
+}
+
+/* Fullscreen Trigger Button */
+.fullscreen-trigger {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s, transform 0.3s, background 0.2s;
+  backdrop-filter: blur(4px);
+  z-index: 15;
+}
+
+.story-slide:hover .fullscreen-trigger,
+.story-slide.active:focus-within .fullscreen-trigger {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (hover: none) {
+  .story-slide.active .fullscreen-trigger {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fullscreen-trigger:hover {
+  background: rgba(0, 0, 0, 0.85);
+  transform: scale(1.1);
+}
+
+/* Fullscreen Modal */
+.story-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  max-width: 100vw;
+  max-height: 100vh;
+  background: #000;
+  z-index: 10000;
+  border: none;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.story-modal[open] {
+  opacity: 1;
+  pointer-events: auto;
+  display: grid; /* override browser default block */
+}
+
+.story-modal::backdrop {
+  background: #000;
+}
+
+.modal-content {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+#modalImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease-out; /* Slide effect */
+}
+
+/* Close & Nav for Modal */
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  left: 1rem; /* Google Photos style often puts controls top/bottom */
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  /* Use system font for clean X */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 2.5rem; /* Slightly larger for easier tap */
+  line-height: 1;
+  padding-bottom: 4px; /* Center the X visually */
+  cursor: pointer;
+  z-index: 10010;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(4px);
+  /* Add opacity transition for toggle */
+  transition: background 0.2s, opacity 0.3s ease;
+}
+
+.modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.3);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 10005;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s, opacity 0.3s ease;
+}
+
+.modal-nav:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* Hidden state for controls */
+.story-modal.controls-hidden .modal-close,
+.story-modal.controls-hidden .modal-nav {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-nav#modalPrev { left: 1rem; }
+.modal-nav#modalNext { right: 1rem; }
+
+/* Force single-column timeline (for proposal) */
+.timeline.single-column {
+  grid-template-columns: 1fr;
+  max-width: 500px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block; /* Override grid on large screens if desired, but block is simpler for single item */
+}
+
+/* Ensure the card inside spans full available width */
+.timeline.single-column .timeline-event {
+  width: 100%;
+  margin: 0;
+}
+
