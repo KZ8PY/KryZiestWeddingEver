@@ -153,3 +153,4 @@ scripts/BACKEND_UPDATE_INSTRUCTIONS.md
 scripts/generate-preview.ps1
 scripts/DEPLOYMENT_FIX_CORS.md
 scripts/test-rsvp-integration.js
+

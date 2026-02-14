@@ -516,10 +516,40 @@
   justify-content: center;
 }
 
-.monogram-image {
-  width: min(240px, 60vw);
-  height: auto;
+.monogram-card {
+  --glass-padding: 0; /* remove inner padding so image can span the card */
+  width: min(560px, 68vw);
+  height: min(560px, 68vw);
+  padding: 0;
+  overflow: hidden;
   display: block;
+  /* Button-like background */
+  background: var(--color-card-bg);
+  border-radius: 999px;
+  border: 1.5px solid var(--color-border);
+  box-shadow: none;
+  transition: transform 120ms ease, box-shadow 140ms ease, background 120ms ease;
+  /* show a background ring by insetting the image */
+  --monogram-ring: clamp(8px, 2vw, 22px);
+  --monogram-radius: clamp(12px, 2.2vw, 20px);
+  /* use rounded-rectangle (card-like) corners instead of circular */
+  border-radius: var(--monogram-radius);
+  padding: var(--monogram-ring);
+}
+
+.monogram-image {
+  width: calc(100% - 2 * var(--monogram-ring));
+  height: calc(100% - 2 * var(--monogram-ring));
+  margin: var(--monogram-ring);
+  object-fit: cover;
+  display: block;
+  border-radius: calc(var(--monogram-radius) - 4px);
+}
+
+.monogram-card:hover {
+  background: var(--color-bg-alt);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
 /* Contact actions */
