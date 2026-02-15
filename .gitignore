@@ -161,4 +161,5 @@ scripts/optimize-attire-images.js
 scripts/optimize-date-gif.js
 scripts/optimize-gif-imagemin.js
 scripts/optimize-hero-image.js
+QA_CHECKLIST.md
 scripts/optimize-prev-main.js
