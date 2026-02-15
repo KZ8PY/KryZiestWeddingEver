@@ -162,4 +162,3 @@ scripts/optimize-date-gif.js
 scripts/optimize-gif-imagemin.js
 scripts/optimize-hero-image.js
 scripts/optimize-prev-main.js
-public/images/prev-main_optimized.*
