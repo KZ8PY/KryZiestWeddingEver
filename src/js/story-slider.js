@@ -332,14 +332,9 @@ document.addEventListener('DOMContentLoaded', () => {
             else zoomTo(2, e.changedTouches[0].clientX, e.changedTouches[0].clientY);
             lastTap = 0; // consumed
          } else {
-            // Single Tap: Toggle Controls (Wait specifically to ensure not a double tap)
+            // Single Tap: Just update timestamp for double-tap detection
+            // Controls are now always visible, so no toggle logic here.
             lastTap = now;
-            setTimeout(() => {
-                // If no new tap happened (lastTap hasn't changed to 0), it's a single tap
-                if (lastTap === now) {
-                    modal.classList.toggle('controls-hidden');
-                }
-            }, 320);
          }
          return; 
       }

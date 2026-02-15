@@ -369,13 +369,23 @@
 
 .modal-close-faq:hover .faq-icon {
   background: rgba(255, 255, 255, 0.4);
-  transform: rotate(135deg) scale(1.1) !important; /* Enhanced rotation on hover */
+  /* Removed rotation/scale as requested */
 }
 
-/* Ensure the lines are visible on white background */
-.modal-close-faq .faq-icon::before,
+/* Ensure the lines are visible on white background and increase size */
+.modal-close-faq .faq-icon::before {
+  /* Vertical bar */
+  width: 2px !important;
+  height: 24px !important; /* Increased from 12px */
+  background-color: var(--color-coffee-dark);
+  border-radius: 2px;
+}
+
 .modal-close-faq .faq-icon::after {
-  background-color: var(--color-coffee-dark); /* Contrast color */
+  /* Horizontal bar */
+  width: 24px !important; /* Increased from 12px */
+  height: 2px !important;
+  background-color: var(--color-coffee-dark);
   border-radius: 2px;
 }
 
