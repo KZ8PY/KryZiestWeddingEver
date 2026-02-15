@@ -224,34 +224,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Toggle controls on single tap (if not zoomed)
-  let lastTap = 0;
-  modalWrapper?.addEventListener('touchend', (e) => {
-    const now = Date.now();
-    if (now - lastTap < 300) {
-       // Double tap - toggle zoom
-       if (scale > 1) resetZoom();
-       else zoomTo(2, e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-    } else {
-       // Single tap logic (delayed to check for double)
-       // Simplified: toggle controls if scale is 1 and no drag occurred
-       if (scale === 1 && !isDragging) {
-         modal.classList.toggle('controls-hidden');
-       }
-    }
-    lastTap = now;
-  });
-
-  // --- Zoom & Swipe Logic ---
+  // --- Zoom, Swipe & Tap Logic ---
   let scale = 1;
   let pointX = 0, pointY = 0;
   let startX = 0, startY = 0;
+  // State tracking
   let isDragging = false;
   let isPinching = false;
   let startDist = 0;
-  
-  // For swipe navigation
   let swipeStartX = 0;
+  let swipeStartY = 0;
+  let lastTap = 0;
+  let hasMoved = false;
 
   function resetZoom() {
     scale = 1;
@@ -262,54 +246,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function zoomTo(newScale, cx, cy) {
     if(!modalImg) return;
-    const rect = modalImg.getBoundingClientRect();
-    // Logic for zoom-to-point could be complex; defaulting to simple 2x for now
+    // Simple zoom logic centered on tap (imperfect but functional)
     scale = newScale;
+    pointX = 0; // Reset pan on zoom toggle for simplicity
+    pointY = 0;
     modalImg.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
   }
 
   if (modalWrapper) {
     modalWrapper.addEventListener('touchstart', (e) => {
+      // If multi-touch, it's a pinch
       if (e.touches.length === 2) {
         isPinching = true;
+        isDragging = false;
         startDist = Math.hypot(
           e.touches[0].clientX - e.touches[1].clientX,
           e.touches[0].clientY - e.touches[1].clientY
         );
       } else if (e.touches.length === 1) {
         isDragging = true;
+        isPinching = false;
+        hasMoved = false; // Reset movement flag
+        
+        // Record start positions for both Swipe (screen-relative) and Pan (transform-relative)
         startX = e.touches[0].clientX - pointX;
         startY = e.touches[0].clientY - pointY;
+        
         swipeStartX = e.touches[0].clientX;
+        swipeStartY = e.touches[0].clientY;
       }
     }, { passive: false });
 
     modalWrapper.addEventListener('touchmove', (e) => {
-      e.preventDefault(); // Prevent browser behavior
+      // Prevent default to stop scrolling/refreshing details page behind modal
+      if (e.cancelable) e.preventDefault(); 
 
       if (isPinching && e.touches.length === 2) {
+        hasMoved = true;
         const dist = Math.hypot(
           e.touches[0].clientX - e.touches[1].clientX,
           e.touches[0].clientY - e.touches[1].clientY
         );
         const delta = dist / startDist;
         const newScale = Math.max(1, Math.min(scale * delta, 4)); // clamp scale
-        // Ideally should adjust pointX/Y to pivot around center
         
         scale = newScale;
-        startDist = dist; // Update for continuous relative scaling
+        startDist = dist; 
         modalImg.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
 
-      } else if (isDragging && e.touches.length === 1 && scale > 1) {
-        // Pan logic when zoomed
-        pointX = e.touches[0].clientX - startX;
-        pointY = e.touches[0].clientY - startY;
-        modalImg.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
-      } else if (isDragging && e.touches.length === 1 && scale === 1) {
-          // Swipe logic preview (drag image slightly)
-          const currentX = e.touches[0].clientX;
+      } else if (isDragging && e.touches.length === 1) {
+        const currentX = e.touches[0].clientX;
+        const currentY = e.touches[0].clientY;
+        
+        // Check if actually moved significantly (avoid jitter being counted as move)
+        if (Math.abs(currentX - swipeStartX) > 5 || Math.abs(currentY - swipeStartY) > 5) {
+            hasMoved = true;
+        }
+
+        if (scale > 1) {
+          // PAN logic when zoomed
+          pointX = currentX - startX;
+          pointY = currentY - startY;
+          modalImg.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+        } else {
+          // SWIPE visual feedback (drag image slightly horizontally)
+          // Only if strictly horizontal drag
           const diff = currentX - swipeStartX;
           modalImg.style.transform = `translate(${diff}px, 0px)`;
+        }
       }
     }, { passive: false });
 
@@ -317,24 +321,56 @@ document.addEventListener('DOMContentLoaded', () => {
       isPinching = false;
       isDragging = false;
       
+      const now = Date.now();
+      const isDoubleTap = (now - lastTap < 300);
+
+      // --- Tap Handling (No movement) ---
+      if (!hasMoved && e.changedTouches.length === 1) {
+         if (isDoubleTap) {
+            // Double Tap: Toggle Zoom
+            if (scale > 1) resetZoom();
+            else zoomTo(2, e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+            lastTap = 0; // consumed
+         } else {
+            // Single Tap: Toggle Controls (Wait specifically to ensure not a double tap)
+            lastTap = now;
+            setTimeout(() => {
+                // If no new tap happened (lastTap hasn't changed to 0), it's a single tap
+                if (lastTap === now) {
+                    modal.classList.toggle('controls-hidden');
+                }
+            }, 320);
+         }
+         return; 
+      }
+      
+      lastTap = now; // update for next potential double tap sequence even if moved? (Usually valid)
+
+      // --- Swipe/Drag End Handling ---
       if (e.touches.length === 0) {
-        // Check swipe if not zoomed
         if (scale === 1) {
+          // Resolve Swipe
           const endX = e.changedTouches[0].clientX;
           const diff = endX - swipeStartX;
+          
           if (Math.abs(diff) > 50) {
+             // Successful Swipe
              if (diff > 0) prevSlide();
              else nextSlide();
+             
+             // Reset transform immediately to avoid visual glitch before new image loads
+             // But updateSlider / updateModalImage usually handles the content swap
+             // We just ensure position is reset
+             setTimeout(() => {
+                modalImg.style.transform = `translate(0px, 0px) scale(1)`;
+                updatePagination();
+             }, 100);
           } else {
-             // Snap back
-             modalImg.style.transform = `translate(0px, 0px)`;
+             // Snap back (incomplete swipe)
+             modalImg.style.transform = `translate(0px, 0px) scale(1)`;
           }
-          // Ensure we reset properly after slide change
-          setTimeout(() => {
-             updatePagination();
-          }, 200);
         } else {
-          // If zoomed out below 1, reset
+          // If zoomed out below 1 during pinch, reset
           if (scale < 1) resetZoom();
         }
       }
