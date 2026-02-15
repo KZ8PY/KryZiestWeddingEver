@@ -3,11 +3,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const carousel = document.querySelector('.story-carousel');
   const navPrev = document.querySelector('.story-nav.prev');
   const navNext = document.querySelector('.story-nav.next');
+  const storyPagination = document.getElementById('storyPagination'); // Main page dots
   
   if (!slides.length) return;
 
   let currentIndex = 0;
   const totalSlides = slides.length;
+
+  // --- Initialize Pagination Dots ---
+  if (storyPagination) {
+    storyPagination.innerHTML = '';
+    slides.forEach((_, idx) => {
+      const dot = document.createElement('div');
+      dot.className = `story-dot ${idx === currentIndex ? 'active' : ''}`;
+      // Add aria label for accessibility
+      dot.setAttribute('role', 'button');
+      dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+      dot.addEventListener('click', () => {
+        currentIndex = idx;
+        updateSlider();
+      });
+      storyPagination.appendChild(dot);
+    });
+  }
 
   // --- Main Slider Logic ---
   function updateSlider() {
@@ -26,6 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
         slide.classList.add('next');
       }
     });
+
+    // Update Dots
+    if (storyPagination) {
+      const dots = storyPagination.querySelectorAll('.story-dot');
+      dots.forEach((d, i) => {
+        if (i === currentIndex) d.classList.add('active');
+        else d.classList.remove('active');
+      });
+    }
 
     // Dynamic adjustment for mobile/tablet to ensure edges are visible
     if (window.innerWidth < 1024) {
