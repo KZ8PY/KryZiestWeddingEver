@@ -415,10 +415,14 @@
   color: transparent;
 }
 
-.modal-close-faq:hover .faq-icon {
-  background: #fff !important; /* Match nav arrow hover bg */
-  transform: rotate(45deg) scale(1.1) !important; /* Scale up while keeping rotation */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Add subtle shadow like arrows */
+/* Mobile-friendly: No hover scale/bg change by default. 
+   Only apply hover effects on devices that support hovering pointers (Desktop). */
+@media (hover: hover) {
+  .modal-close-faq:hover .faq-icon {
+    background: #fff !important; /* Match nav arrow hover bg */
+    transform: rotate(45deg) scale(1.1) !important; /* Scale up while keeping rotation */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Add subtle shadow like arrows */
+  }
 }
 
 /* Ensure the lines are visible on white background and increase size */
