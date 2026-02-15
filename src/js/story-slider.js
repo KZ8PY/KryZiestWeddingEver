@@ -154,6 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalImg = document.getElementById('modalImage');
   const modalWrapper = document.getElementById('modalImageWrapper');
   const modalClose = document.getElementById('modalClose');
+  const modalPrev = document.getElementById('modalPrev');
+  const modalNext = document.getElementById('modalNext');
   const pagination = document.getElementById('modalPagination');
   const triggers = document.querySelectorAll('.fullscreen-trigger');
 
@@ -206,6 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   modalClose?.addEventListener('click', closeModal);
+  modalPrev?.addEventListener('click', (e) => { e.stopPropagation(); prevSlide(); });
+  modalNext?.addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); });
   
   // Close on backdrop click
   modal?.addEventListener('click', (e) => {
