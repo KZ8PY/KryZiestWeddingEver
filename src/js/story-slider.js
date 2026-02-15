@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let currentIndex = 0;
   const totalSlides = slides.length;
+  const MAIN_SLIDE_SETTLE_MS = 360;
+  let isMainAnimating = false;
 
   // --- Initialize Pagination Dots ---
   if (storyPagination) {
@@ -128,14 +130,22 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeTimer = setTimeout(updateSlider, 100);
   });
 
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % totalSlides;
+  function goToSlide(nextIndex) {
+    if (isMainAnimating) return;
+    isMainAnimating = true;
+    currentIndex = (nextIndex + totalSlides) % totalSlides;
     updateSlider();
+    window.setTimeout(() => {
+      isMainAnimating = false;
+    }, MAIN_SLIDE_SETTLE_MS);
+  }
+
+  function nextSlide() {
+    goToSlide(currentIndex + 1);
   }
 
   function prevSlide() {
-    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-    updateSlider();
+    goToSlide(currentIndex - 1);
   }
 
   navNext?.addEventListener('click', nextSlide);
@@ -157,9 +167,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Swipe support for Carousel
   let touchStartX = 0;
   let touchEndX = 0;
+  let touchStartTime = 0;
 
   carousel?.addEventListener('touchstart', e => {
     touchStartX = e.changedTouches[0].screenX;
+    touchStartTime = Date.now();
   }, { passive: true });
 
   carousel?.addEventListener('touchend', e => {
@@ -168,11 +180,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   function handleSwipe() {
-    const threshold = 50;
-    if (touchStartX - touchEndX > threshold) {
+    const diff = touchEndX - touchStartX;
+    const elapsedMs = Math.max(1, Date.now() - touchStartTime);
+    const velocity = Math.abs(diff) / elapsedMs; // px/ms
+    const containerWidth = carousel?.clientWidth || window.innerWidth;
+    const threshold = Math.min(90, Math.max(36, containerWidth * 0.1));
+    const isFling = velocity > 0.45;
+
+    if (-diff > threshold || (diff < 0 && isFling)) {
       nextSlide();
     }
-    if (touchEndX - touchStartX > threshold) {
+    if (diff > threshold || (diff > 0 && isFling)) {
       prevSlide();
     }
   }
@@ -307,6 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let startDist = 0;
   let swipeStartX = 0;
   let swipeStartY = 0;
+  let swipeStartTime = 0;
   let lastTap = 0;
   let hasMoved = false;
 
@@ -359,10 +378,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const ghostOffscreen = filmSwipeDirection === 1 ? wrapperWidth : -wrapperWidth;
       ghost.style.transform = `translateX(${ghostOffscreen}px)`;
       ghost.style.opacity = '0';
-      window.setTimeout(() => {
+      const handleCancelSettleEnd = (event) => {
+        if (event.target !== modalImg || event.propertyName !== 'transform') return;
+        modalImg.removeEventListener('transitionend', handleCancelSettleEnd);
         filmSwipeDirection = 0;
         resetZoom();
-      }, settleMs + 20);
+      };
+      modalImg.addEventListener('transitionend', handleCancelSettleEnd);
       return;
     }
 
@@ -373,12 +395,15 @@ document.addEventListener('DOMContentLoaded', () => {
     ghost.style.opacity = '1';
     modalImg.style.transform = `translateX(${currentOut}px)`;
 
-    window.setTimeout(() => {
+    const handleAdvanceSettleEnd = (event) => {
+      if (event.target !== modalImg || event.propertyName !== 'transform') return;
+      modalImg.removeEventListener('transitionend', handleAdvanceSettleEnd);
       if (filmSwipeDirection === 1) currentIndex = (currentIndex + 1) % totalSlides;
       else currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
       filmSwipeDirection = 0;
       updateSlider();
-    }, settleMs + 20);
+    };
+    modalImg.addEventListener('transitionend', handleAdvanceSettleEnd);
   }
 
   function resetZoom(animate = true) {
@@ -416,6 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
         isDragging = true;
         isPinching = false;
         hasMoved = false; // Reset movement flag
+        swipeStartTime = Date.now();
         
         // Record start positions for both Swipe (screen-relative) and Pan (transform-relative)
         startX = e.touches[0].clientX - pointX;
@@ -498,8 +524,13 @@ document.addEventListener('DOMContentLoaded', () => {
           // Resolve Swipe
           const endX = e.changedTouches[0].clientX;
           const diff = endX - swipeStartX;
+          const elapsedMs = Math.max(1, Date.now() - swipeStartTime);
+          const velocity = Math.abs(diff) / elapsedMs; // px per ms
+          const wrapperWidth = modalWrapper?.clientWidth || window.innerWidth;
+          const distanceThreshold = Math.min(120, Math.max(40, wrapperWidth * 0.12));
+          const isFling = velocity > 0.45;
           
-           if (Math.abs(diff) > 50) {
+           if (Math.abs(diff) > distanceThreshold || isFling) {
              // Successful Swipe
              settleFilmRollSwipe(true);
            } else {
