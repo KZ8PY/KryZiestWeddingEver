@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Sync fullscreen if open
     if (typeof modal !== 'undefined' && modal && modal.hasAttribute('open')) {
-      updateModalImage(true);
+      updateModalImage(true, false);
       updatePagination();
     }
   }
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function openModal() {
-    updateModalImage();
+    updateModalImage(true, false);
     updatePagination();
     modal.showModal(); // Native dialog method
     // Also set opacity/class for transition
@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resetZoom();
   }
 
-  function updateModalImage(immediate = false) {
+  function updateModalImage(immediate = false, animateReset = true) {
     const currentImg = slides[currentIndex].querySelector('img');
     if (!currentImg || !modalImg) return;
 
@@ -273,19 +273,16 @@ document.addEventListener('DOMContentLoaded', () => {
       modalImg.alt = currentImg.alt;
       modalImg.style.opacity = '1';
       hideModalGhost();
-      resetZoom();
+      resetZoom(animateReset);
       return;
     }
 
-    // Fade out slightly
-    modalImg.style.opacity = '0.5';
-    setTimeout(() => {
-      modalImg.src = currentImg.src;
-      modalImg.alt = currentImg.alt;
-      modalImg.style.opacity = '1';
-      hideModalGhost();
-      resetZoom();
-    }, 150);
+    // Fallback path (kept for compatibility): still perform immediate swap
+    modalImg.src = currentImg.src;
+    modalImg.alt = currentImg.alt;
+    modalImg.style.opacity = '1';
+    hideModalGhost();
+    resetZoom(animateReset);
   }
 
   function updatePagination() {
