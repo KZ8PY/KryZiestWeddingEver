@@ -439,8 +439,12 @@
   display: none;
 }
 
-/* Desktop: Show nav arrows */
+/* Desktop: Show nav arrows, hide pagination dots */
 @media (min-width: 1024px) {
+  .modal-pagination {
+    display: none;
+  }
+
   .modal-nav {
     display: flex; /* Override display:none */
     position: absolute;
