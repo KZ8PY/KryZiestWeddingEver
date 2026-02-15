@@ -433,14 +433,48 @@
   -webkit-user-drag: none;
 }
 
-/* Hide default nav arrows as requested */
+/* Mobile: Hide nav arrows */
 .modal-nav {
-  display: none !important;
+  display: none;
+}
+
+/* Desktop: Show nav arrows */
+@media (min-width: 1024px) {
+  .modal-nav {
+    display: flex; /* Override display:none */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10005;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    opacity: 0.8;
+  }
+
+  .modal-nav:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: translateY(-50%) scale(1.1);
+    opacity: 1;
+  }
+  
+  .modal-nav#modalPrev { left: 2rem; padding-right: 4px; }
+  .modal-nav#modalNext { right: 2rem; padding-left: 4px; }
 }
 
 /* Hidden state for controls */
 .story-modal.controls-hidden .modal-close-faq,
-.story-modal.controls-hidden .modal-pagination {
+.story-modal.controls-hidden .modal-pagination,
+.story-modal.controls-hidden .modal-nav {
   opacity: 0;
   pointer-events: none;
 }

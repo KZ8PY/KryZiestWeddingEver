@@ -308,12 +308,9 @@
         <!-- Pagination Dots -->
         <div class="modal-pagination" id="modalPagination"></div>
 
-        <!-- Hidden arrows for accessibility/keyboard but removed visually as requested -->
-        <button class="modal-nav" id="modalPrev" aria-label="Previous" style="display: none;">‹</button>
-        <button class="modal-nav" id="modalNext" aria-label="Next" style="display: none;">›</button>
-      </dialog>
-        <button class="modal-nav prev" id="modalPrev" aria-label="Previous Image">&#10094;</button>
-        <button class="modal-nav next" id="modalNext" aria-label="Next Image">&#10095;</button>
+        <!-- Arrows: Hidden on mobile (via CSS), visible on Desktop -->
+        <button class="modal-nav desktop-only" id="modalPrev" aria-label="Previous">‹</button>
+        <button class="modal-nav desktop-only" id="modalNext" aria-label="Next">›</button>
       </dialog>
       
       <div class="timeline single-column">
