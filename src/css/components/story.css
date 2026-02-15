@@ -368,8 +368,9 @@
 }
 
 .modal-close-faq:hover .faq-icon {
-  background: rgba(255, 255, 255, 0.4);
-  /* Removed rotation/scale as requested */
+  background: #fff !important; /* Match nav arrow hover bg */
+  transform: rotate(45deg) scale(1.1) !important; /* Scale up while keeping rotation */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Add subtle shadow like arrows */
 }
 
 /* Ensure the lines are visible on white background and increase size */
