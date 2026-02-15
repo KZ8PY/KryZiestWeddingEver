@@ -61,7 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Sync fullscreen if open
     if (typeof modal !== 'undefined' && modal && modal.hasAttribute('open')) {
-      updateModalImage();
+      updateModalImage(true);
+      updatePagination();
     }
   }
 
@@ -186,6 +187,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const pagination = document.getElementById('modalPagination');
   const triggers = document.querySelectorAll('.fullscreen-trigger');
 
+  let modalGhostImg = null;
+  let filmSwipeDirection = 0;
+
+  function ensureModalGhost() {
+    if (!modalWrapper) return null;
+    if (modalGhostImg) return modalGhostImg;
+
+    modalGhostImg = document.createElement('img');
+    modalGhostImg.className = 'modal-image-ghost';
+    modalGhostImg.alt = '';
+    modalGhostImg.setAttribute('aria-hidden', 'true');
+    modalGhostImg.draggable = false;
+    modalWrapper.appendChild(modalGhostImg);
+    return modalGhostImg;
+  }
+
+  function hideModalGhost() {
+    if (!modalGhostImg) return;
+    modalGhostImg.style.opacity = '0';
+    modalGhostImg.style.transition = 'none';
+    modalGhostImg.style.transform = 'translateX(0px)';
+  }
+
+  function getAdjacentSlideIndex(direction) {
+    return direction === 1
+      ? (currentIndex + 1) % totalSlides
+      : (currentIndex - 1 + totalSlides) % totalSlides;
+  }
+
   function openModal() {
     updateModalImage();
     updatePagination();
@@ -193,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Also set opacity/class for transition
     modal.setAttribute('open', '');
     document.body.style.overflow = 'hidden'; // Prevent background scroll
+    hideModalGhost();
     resetZoom();
   }
 
@@ -200,21 +231,32 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.close();
     modal.removeAttribute('open');
     document.body.style.overflow = '';
+    hideModalGhost();
     resetZoom();
   }
 
-  function updateModalImage() {
+  function updateModalImage(immediate = false) {
     const currentImg = slides[currentIndex].querySelector('img');
-    if (currentImg && modalImg) {
-      // Fade out slightly?
-      modalImg.style.opacity = '0.5';
-      setTimeout(() => {
-        modalImg.src = currentImg.src;
-        modalImg.alt = currentImg.alt;
-        modalImg.style.opacity = '1';
-        resetZoom();
-      }, 150);
+    if (!currentImg || !modalImg) return;
+
+    if (immediate) {
+      modalImg.src = currentImg.src;
+      modalImg.alt = currentImg.alt;
+      modalImg.style.opacity = '1';
+      hideModalGhost();
+      resetZoom();
+      return;
     }
+
+    // Fade out slightly
+    modalImg.style.opacity = '0.5';
+    setTimeout(() => {
+      modalImg.src = currentImg.src;
+      modalImg.alt = currentImg.alt;
+      modalImg.style.opacity = '1';
+      hideModalGhost();
+      resetZoom();
+    }, 150);
   }
 
   function updatePagination() {
@@ -268,11 +310,87 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastTap = 0;
   let hasMoved = false;
 
-  function resetZoom() {
+  function beginFilmRollSwipe(diff) {
+    if (!modalImg || !modalWrapper) return;
+    if (Math.abs(diff) < 8) {
+      hideModalGhost();
+      filmSwipeDirection = 0;
+      return;
+    }
+
+    const direction = diff < 0 ? 1 : -1;
+    const adjacentIndex = getAdjacentSlideIndex(direction);
+    const adjacentImg = slides[adjacentIndex]?.querySelector('img');
+    const ghost = ensureModalGhost();
+    if (!adjacentImg || !ghost) return;
+
+    const wrapperWidth = modalWrapper.clientWidth || window.innerWidth;
+
+    if (filmSwipeDirection !== direction || ghost.src !== adjacentImg.src) {
+      ghost.src = adjacentImg.src;
+      ghost.alt = adjacentImg.alt || '';
+    }
+
+    filmSwipeDirection = direction;
+    modalImg.style.transition = 'none';
+    ghost.style.transition = 'none';
+
+    modalImg.style.transform = `translateX(${diff}px)`;
+    ghost.style.opacity = '1';
+    const ghostStart = direction === 1 ? wrapperWidth : -wrapperWidth;
+    ghost.style.transform = `translateX(${ghostStart + diff}px)`;
+  }
+
+  function settleFilmRollSwipe(shouldAdvance) {
+    if (!modalImg || !modalWrapper) return;
+    const ghost = ensureModalGhost();
+    if (!ghost || filmSwipeDirection === 0) {
+      resetZoom();
+      return;
+    }
+
+    const wrapperWidth = modalWrapper.clientWidth || window.innerWidth;
+    const settleMs = 180;
+    modalImg.style.transition = `transform ${settleMs}ms linear`;
+    ghost.style.transition = `transform ${settleMs}ms linear, opacity ${settleMs}ms linear`;
+
+    if (!shouldAdvance) {
+      modalImg.style.transform = 'translateX(0px)';
+      const ghostOffscreen = filmSwipeDirection === 1 ? wrapperWidth : -wrapperWidth;
+      ghost.style.transform = `translateX(${ghostOffscreen}px)`;
+      ghost.style.opacity = '0';
+      window.setTimeout(() => {
+        filmSwipeDirection = 0;
+        resetZoom();
+      }, settleMs + 20);
+      return;
+    }
+
+    const currentOut = filmSwipeDirection === 1 ? -wrapperWidth : wrapperWidth;
+    // Camera-roll style: next/prev image lands instantly, only current image animates out
+    ghost.style.transition = 'none';
+    ghost.style.transform = 'translateX(0px)';
+    ghost.style.opacity = '1';
+    modalImg.style.transform = `translateX(${currentOut}px)`;
+
+    window.setTimeout(() => {
+      if (filmSwipeDirection === 1) currentIndex = (currentIndex + 1) % totalSlides;
+      else currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      filmSwipeDirection = 0;
+      updateSlider();
+    }, settleMs + 20);
+  }
+
+  function resetZoom(animate = true) {
     scale = 1;
     pointX = 0;
     pointY = 0;
-    if (modalImg) modalImg.style.transform = `translate(0px, 0px) scale(1)`;
+    hideModalGhost();
+    filmSwipeDirection = 0;
+    if (modalImg) {
+      modalImg.style.transition = animate ? '' : 'none';
+      modalImg.style.transform = `translate(0px, 0px) scale(1)`;
+    }
   }
 
   function zoomTo(newScale, cx, cy) {
@@ -314,6 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (isPinching && e.touches.length === 2) {
         hasMoved = true;
+        hideModalGhost();
         const dist = Math.hypot(
           e.touches[0].clientX - e.touches[1].clientX,
           e.touches[0].clientY - e.touches[1].clientY
@@ -336,14 +455,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (scale > 1) {
           // PAN logic when zoomed
+          hideModalGhost();
           pointX = currentX - startX;
           pointY = currentY - startY;
+          modalImg.style.transition = 'none';
           modalImg.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
         } else {
-          // SWIPE visual feedback (drag image slightly horizontally)
-          // Only if strictly horizontal drag
+          // Film-roll swipe visual feedback
           const diff = currentX - swipeStartX;
-          modalImg.style.transform = `translate(${diff}px, 0px)`;
+          beginFilmRollSwipe(diff);
         }
       }
     }, { passive: false });
@@ -379,21 +499,12 @@ document.addEventListener('DOMContentLoaded', () => {
           const endX = e.changedTouches[0].clientX;
           const diff = endX - swipeStartX;
           
-          if (Math.abs(diff) > 50) {
+           if (Math.abs(diff) > 50) {
              // Successful Swipe
-             if (diff > 0) prevSlide();
-             else nextSlide();
-             
-             // Reset transform immediately to avoid visual glitch before new image loads
-             // But updateSlider / updateModalImage usually handles the content swap
-             // We just ensure position is reset
-             setTimeout(() => {
-                modalImg.style.transform = `translate(0px, 0px) scale(1)`;
-                updatePagination();
-             }, 100);
-          } else {
+             settleFilmRollSwipe(true);
+           } else {
              // Snap back (incomplete swipe)
-             modalImg.style.transform = `translate(0px, 0px) scale(1)`;
+             settleFilmRollSwipe(false);
           }
         } else {
           // If zoomed out below 1 during pinch, reset

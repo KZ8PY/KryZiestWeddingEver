@@ -382,13 +382,6 @@
   position: relative;
 }
 
-#modalImage {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  transition: transform 0.3s ease-out; /* Slide effect */
-}
-
 /* Close & Nav for Modal */
 .modal-close-faq {
   position: absolute;
@@ -474,14 +467,36 @@
   justify-content: center;
   overflow: hidden; /* For zooming */
   touch-action: none; /* Important for custom touch handling */
+  position: relative;
 }
 
 #modalImage {
+  width: 100%;
+  height: 100%;
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  transition: transform 0.1s ease-out; /* Fast response for gestures */
+  transition: transform 0.1s ease-out, opacity 0.15s ease-out; /* Fast gesture response + light fade */
   transform-origin: center;
+  user-select: none;
+  -webkit-user-drag: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.modal-image-ghost {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateX(0px);
+  pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
 }
