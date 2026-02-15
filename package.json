@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/KZ8PY/KryZiestWeddingEver#readme",
   "devDependencies": {
+    "imagemin": "^9.0.1",
+    "imagemin-gifsicle": "^7.0.0",
     "stylelint": "^16.23.1",
     "stylelint-config-standard": "^39.0.0"
   },

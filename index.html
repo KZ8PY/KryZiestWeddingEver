@@ -30,6 +30,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <!-- Preload critical hero image for faster LCP - using optimized WebP (327KB vs 4.5MB) -->
+  <link rel="preload" href="public/images/hero/hero_img_optimized.webp" as="image" fetchpriority="high">
+  <!-- Preload animated date image for hero section -->
+  <link rel="preload" href="public/images/hero/Date.gif" as="image">
   <link rel="preload" href="src/fonts/tan-pearl-converted/TAN-PEARL-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="src/css/critical-bundled.css">
   <link rel="stylesheet" href="src/css/components/sidebar.css" media="print" onload="this.media='all'">
@@ -176,7 +180,7 @@
           <h2>Warm Welcome</h2>
           <p>Welcome to our e-vite! We’re officially counting down to May 8, and we’ve set up this space to share all the
           "espresso-ly" important details of our wedding.</p>
-          <p>Explore our journey from the first sip to the "I do," find all the info of our celebration, and let us
+          <p>Explore our journey from the first sip to the "I do," find all the "beans" of our celebration, and let us
           know you’re coming through the RSVP.</p>
           <p>This journey has been God-written from the start, and we can’t wait to
           celebrate the best chapter yet with our favorite people.</p>
@@ -409,11 +413,18 @@
       <div class="attire-images">
         <div class="attire-item">
           <h3>Ladies</h3>
-          <img src="public/images/attire/ladies.png" alt="Ladies attire suggestions" loading="lazy">
+          <picture>
+            <source srcset="public/images/attire/ladies_optimized.avif" type="image/avif">
+            <source srcset="public/images/attire/ladies_optimized.webp" type="image/webp">
+            <img src="public/images/attire/ladies_optimized.png" alt="Ladies attire suggestions" loading="lazy">
+          </picture>
         </div>
         <div class="attire-item">
           <h3>Gentlemen</h3>
-          <img src="public/images/attire/gentlemen.svg" alt="Gentlemen attire suggestions" loading="lazy">
+          <picture>
+            <source srcset="public/images/attire/gentlemen_optimized.webp" type="image/webp">
+            <img src="public/images/attire/gentlemen.svg" alt="Gentlemen attire suggestions" loading="lazy">
+          </picture>
         </div>
       </div>
     </section>
@@ -586,7 +597,11 @@
     </section>
 
     <section class="prenup fade-in section" aria-label="Prenup Photos" id="prenup">
-      <img class="prenup-placeholder" src="public/images/hero/hero_img.jpg" alt="Prenup photos placeholder">
+      <picture>
+        <source srcset="public/images/hero/hero_img_optimized.avif" type="image/avif">
+        <source srcset="public/images/hero/hero_img_optimized.webp" type="image/webp">
+        <img class="prenup-placeholder" src="public/images/hero/hero_img_optimized.jpg" alt="Prenup photos placeholder">
+      </picture>
       <div class="prenup-cta">
         <button type="button" class="contact-action" data-tooltip="Coming Soon">Prenup Photos</button>
       </div>

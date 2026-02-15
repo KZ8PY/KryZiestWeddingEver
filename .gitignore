@@ -153,3 +153,11 @@ scripts/BACKEND_UPDATE_INSTRUCTIONS.md
 scripts/generate-preview.ps1
 scripts/DEPLOYMENT_FIX_CORS.md
 scripts/test-rsvp-integration.js
+
+# Image optimization tools (development utilities)
+scripts/convert-date-to-animated-webp.js
+scripts/optimize-animated-gif.js
+scripts/optimize-attire-images.js
+scripts/optimize-date-gif.js
+scripts/optimize-gif-imagemin.js
+scripts/optimize-hero-image.js

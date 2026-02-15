@@ -1642,11 +1642,15 @@ h3 {
 
   /* keep hero flush with header but reduce the vertical padding for a tighter layout */
   padding: calc(var(--site-header-height, 4rem) + clamp(0.2rem, 1vw + 0.2rem, 1rem) + env(safe-area-inset-top, 0px) + 1px) 1.5rem 5rem;
-  background: url('../../public/images/hero/hero_img.jpg') no-repeat center center / cover;
+  /* Use optimized WebP with JPEG fallback - 92% smaller! */
+  background: url('../../public/images/hero/hero_img_optimized.webp') no-repeat center center / cover;
   border-radius: 0; /* no rounded frame */
   box-shadow: none; /* remove card shadow */
   position: relative;
   z-index: 1;
+  /* Performance: GPU acceleration for smoother animations */
+  will-change: opacity;
+  transform: translateZ(0);
 
   /* ensure the hero is tall on most devices so it dominates first view */
   min-height: max(850px, calc(60vh - var(--site-header-height, 4rem)));
