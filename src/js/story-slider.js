@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const MAIN_SLIDE_SETTLE_MS = 360;
   let isMainAnimating = false;
 
+  function isModalOpen() {
+    return typeof modal !== 'undefined' && modal && modal.hasAttribute('open');
+  }
+
   // --- Initialize Pagination Dots ---
   if (storyPagination) {
     storyPagination.innerHTML = '';
@@ -131,13 +135,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function goToSlide(nextIndex) {
-    if (isMainAnimating) return;
-    isMainAnimating = true;
+    const shouldLock = !isModalOpen();
+
+    if (shouldLock && isMainAnimating) return;
+    if (shouldLock) isMainAnimating = true;
     currentIndex = (nextIndex + totalSlides) % totalSlides;
     updateSlider();
-    window.setTimeout(() => {
-      isMainAnimating = false;
-    }, MAIN_SLIDE_SETTLE_MS);
+    if (shouldLock) {
+      window.setTimeout(() => {
+        isMainAnimating = false;
+      }, MAIN_SLIDE_SETTLE_MS);
+    }
   }
 
   function nextSlide() {
@@ -154,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Click on prev/next visible cards to navigate
   slides.forEach((slide, index) => {
     slide.addEventListener('click', (e) => {
+      if (isModalOpen()) return;
       // If clicking the active slide (and not a button inside), ignore or toggle something?
       // If clicking prev/next, navigate
       if (slide.classList.contains('prev')) {
@@ -180,6 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   function handleSwipe() {
+    if (isModalOpen()) return;
+
     const diff = touchEndX - touchStartX;
     const elapsedMs = Math.max(1, Date.now() - touchStartTime);
     const velocity = Math.abs(diff) / elapsedMs; // px/ms
