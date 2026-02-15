@@ -152,23 +152,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Fullscreen Modal Logic ---
   const modal = document.getElementById('storyModal');
   const modalImg = document.getElementById('modalImage');
+  const modalWrapper = document.getElementById('modalImageWrapper');
   const modalClose = document.getElementById('modalClose');
-  const modalPrev = document.getElementById('modalPrev');
-  const modalNext = document.getElementById('modalNext');
+  const pagination = document.getElementById('modalPagination');
   const triggers = document.querySelectorAll('.fullscreen-trigger');
 
   function openModal() {
     updateModalImage();
+    updatePagination();
     modal.showModal(); // Native dialog method
     // Also set opacity/class for transition
     modal.setAttribute('open', '');
     document.body.style.overflow = 'hidden'; // Prevent background scroll
+    resetZoom();
   }
 
   function closeModal() {
     modal.close();
     modal.removeAttribute('open');
     document.body.style.overflow = '';
+    resetZoom();
   }
 
   function updateModalImage() {
@@ -180,8 +183,19 @@ document.addEventListener('DOMContentLoaded', () => {
         modalImg.src = currentImg.src;
         modalImg.alt = currentImg.alt;
         modalImg.style.opacity = '1';
+        resetZoom();
       }, 150);
     }
+  }
+
+  function updatePagination() {
+    if (!pagination) return;
+    pagination.innerHTML = '';
+    slides.forEach((_, idx) => {
+      const dot = document.createElement('div');
+      dot.className = `modal-dot ${idx === currentIndex ? 'active' : ''}`;
+      pagination.appendChild(dot);
+    });
   }
 
   triggers.forEach(btn => {
@@ -192,40 +206,140 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   modalClose?.addEventListener('click', closeModal);
-  modalPrev?.addEventListener('click', (e) => { e.stopPropagation(); prevSlide(); });
-  modalNext?.addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); });
-
+  
   // Close on backdrop click
   modal?.addEventListener('click', (e) => {
-    const rect = modalImg.getBoundingClientRect();
-    const isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
-      rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
-    
-    // Check if click is on button
-    if (e.target.closest('button')) return;
+    // If click is on close button
+    if (e.target.closest('#modalClose')) {
+      closeModal();
+      return;
+    }
+
+    // Identify if click is inside the image wrapper or controls
+    if (e.target.closest('.modal-content') || e.target.closest('.modal-close-faq')) return;
 
     // If click is outside image (on backdrop), close
-    // Note: <dialog> backdrop handling varies, but clicking the element itself when it covers screen works
     if (e.target === modal) {
       closeModal();
     }
   });
-  
-  // Toggle controls on image click (especially for mobile)
-  modalImg?.addEventListener('click', (e) => {
-    e.stopPropagation(); 
-    modal.classList.toggle('controls-hidden');
+
+  // Toggle controls on single tap (if not zoomed)
+  let lastTap = 0;
+  modalWrapper?.addEventListener('touchend', (e) => {
+    const now = Date.now();
+    if (now - lastTap < 300) {
+       // Double tap - toggle zoom
+       if (scale > 1) resetZoom();
+       else zoomTo(2, e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+    } else {
+       // Single tap logic (delayed to check for double)
+       // Simplified: toggle controls if scale is 1 and no drag occurred
+       if (scale === 1 && !isDragging) {
+         modal.classList.toggle('controls-hidden');
+       }
+    }
+    lastTap = now;
   });
 
-  // Swipe for Modal
-  modal?.addEventListener('touchstart', e => {
-    touchStartX = e.changedTouches[0].screenX;
-  }, { passive: true });
+  // --- Zoom & Swipe Logic ---
+  let scale = 1;
+  let pointX = 0, pointY = 0;
+  let startX = 0, startY = 0;
+  let isDragging = false;
+  let isPinching = false;
+  let startDist = 0;
+  
+  // For swipe navigation
+  let swipeStartX = 0;
 
-  modal?.addEventListener('touchend', e => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-  }, { passive: true });
+  function resetZoom() {
+    scale = 1;
+    pointX = 0;
+    pointY = 0;
+    if (modalImg) modalImg.style.transform = `translate(0px, 0px) scale(1)`;
+  }
+
+  function zoomTo(newScale, cx, cy) {
+    if(!modalImg) return;
+    const rect = modalImg.getBoundingClientRect();
+    // Logic for zoom-to-point could be complex; defaulting to simple 2x for now
+    scale = newScale;
+    modalImg.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+  }
+
+  if (modalWrapper) {
+    modalWrapper.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 2) {
+        isPinching = true;
+        startDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+      } else if (e.touches.length === 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX - pointX;
+        startY = e.touches[0].clientY - pointY;
+        swipeStartX = e.touches[0].clientX;
+      }
+    }, { passive: false });
+
+    modalWrapper.addEventListener('touchmove', (e) => {
+      e.preventDefault(); // Prevent browser behavior
+
+      if (isPinching && e.touches.length === 2) {
+        const dist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        const delta = dist / startDist;
+        const newScale = Math.max(1, Math.min(scale * delta, 4)); // clamp scale
+        // Ideally should adjust pointX/Y to pivot around center
+        
+        scale = newScale;
+        startDist = dist; // Update for continuous relative scaling
+        modalImg.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+
+      } else if (isDragging && e.touches.length === 1 && scale > 1) {
+        // Pan logic when zoomed
+        pointX = e.touches[0].clientX - startX;
+        pointY = e.touches[0].clientY - startY;
+        modalImg.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+      } else if (isDragging && e.touches.length === 1 && scale === 1) {
+          // Swipe logic preview (drag image slightly)
+          const currentX = e.touches[0].clientX;
+          const diff = currentX - swipeStartX;
+          modalImg.style.transform = `translate(${diff}px, 0px)`;
+      }
+    }, { passive: false });
+
+    modalWrapper.addEventListener('touchend', (e) => {
+      isPinching = false;
+      isDragging = false;
+      
+      if (e.touches.length === 0) {
+        // Check swipe if not zoomed
+        if (scale === 1) {
+          const endX = e.changedTouches[0].clientX;
+          const diff = endX - swipeStartX;
+          if (Math.abs(diff) > 50) {
+             if (diff > 0) prevSlide();
+             else nextSlide();
+          } else {
+             // Snap back
+             modalImg.style.transform = `translate(0px, 0px)`;
+          }
+          // Ensure we reset properly after slide change
+          setTimeout(() => {
+             updatePagination();
+          }, 200);
+        } else {
+          // If zoomed out below 1, reset
+          if (scale < 1) resetZoom();
+        }
+      }
+    });
+  }
 
   // Initial setup
   updateSlider();

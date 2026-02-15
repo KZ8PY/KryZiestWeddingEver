@@ -294,10 +294,24 @@
 
       <!-- Fullscreen Viewer Modal -->
       <dialog id="storyModal" class="story-modal">
-        <button class="modal-close" id="modalClose" aria-label="Close Fullscreen">&times;</button>
+        <!-- Replaced close button with FAQ style X (rotated +) -->
+        <button class="modal-close-faq" id="modalClose" aria-label="Close Fullscreen">
+          <span class="faq-icon" aria-hidden="true" style="transform: rotate(45deg); background: rgba(255,255,255,0.9); border: none;">+</span>
+        </button>
+        
         <div class="modal-content">
-          <img id="modalImage" src="" alt="Fullscreen Story">
+          <div class="modal-image-wrapper" id="modalImageWrapper">
+            <img id="modalImage" src="" alt="Fullscreen Story" draggable="false">
+          </div>
         </div>
+        
+        <!-- Pagination Dots -->
+        <div class="modal-pagination" id="modalPagination"></div>
+
+        <!-- Hidden arrows for accessibility/keyboard but removed visually as requested -->
+        <button class="modal-nav" id="modalPrev" aria-label="Previous" style="display: none;">‹</button>
+        <button class="modal-nav" id="modalNext" aria-label="Next" style="display: none;">›</button>
+      </dialog>
         <button class="modal-nav prev" id="modalPrev" aria-label="Previous Image">&#10094;</button>
         <button class="modal-nav next" id="modalNext" aria-label="Next Image">&#10095;</button>
       </dialog>

@@ -342,61 +342,98 @@
 }
 
 /* Close & Nav for Modal */
-.modal-close {
+.modal-close-faq {
   position: absolute;
-  top: 1rem;
-  left: 1rem; /* Google Photos style often puts controls top/bottom */
-  background: rgba(0,0,0,0.4);
-  color: #fff;
+  top: 1.5rem;
+  right: 1.5rem; /* Upper-right */
+  left: auto;
   border: none;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  /* Use system font for clean X */
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 2.5rem; /* Slightly larger for easier tap */
-  line-height: 1;
-  padding-bottom: 4px; /* Center the X visually */
+  background: transparent;
+  padding: 0;
   cursor: pointer;
   z-index: 10010;
   display: grid;
   place-items: center;
-  backdrop-filter: blur(4px);
-  /* Add opacity transition for toggle */
-  transition: background 0.2s, opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
-.modal-nav {
+.modal-close-faq .faq-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  /* The plus inside */
+  color: transparent;
+}
+
+.modal-close-faq:hover .faq-icon {
+  background: rgba(255, 255, 255, 0.4);
+  transform: rotate(135deg) scale(1.1) !important; /* Enhanced rotation on hover */
+}
+
+/* Ensure the lines are visible on white background */
+.modal-close-faq .faq-icon::before,
+.modal-close-faq .faq-icon::after {
+  background-color: var(--color-coffee-dark); /* Contrast color */
+  border-radius: 2px;
+}
+
+.modal-pagination {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.3);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 56px;
-  height: 56px;
-  font-size: 1.5rem;
-  cursor: pointer;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
   z-index: 10005;
-  display: grid;
-  place-items: center;
-  transition: background 0.2s, opacity 0.3s ease;
-}
-
-.modal-nav:hover {
-  background: rgba(255,255,255,0.2);
-}
-
-/* Hidden state for controls */
-.story-modal.controls-hidden .modal-close,
-.story-modal.controls-hidden .modal-nav {
-  opacity: 0;
   pointer-events: none;
 }
 
-.modal-nav#modalPrev { left: 1rem; }
-.modal-nav#modalNext { right: 1rem; }
+.modal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.modal-dot.active {
+  background: #fff;
+  transform: scale(1.3);
+}
+
+.modal-image-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* For zooming */
+  touch-action: none; /* Important for custom touch handling */
+}
+
+#modalImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.1s ease-out; /* Fast response for gestures */
+  transform-origin: center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Hide default nav arrows as requested */
+.modal-nav {
+  display: none !important;
+}
+
+/* Hidden state for controls */
+.story-modal.controls-hidden .modal-close-faq,
+.story-modal.controls-hidden .modal-pagination {
+  opacity: 0;
+  pointer-events: none;
+}
 
 /* Force single-column timeline (for proposal) */
 .timeline.single-column {
