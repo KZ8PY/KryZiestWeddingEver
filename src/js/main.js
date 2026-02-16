@@ -39,6 +39,37 @@ window.addEventListener('DOMContentLoaded', () => {
     };
   })();
 
+  (function initHeroDateAnimation() {
+    const dateImg = document.querySelector('.hero-date-gif[data-animated-src]');
+    if (!dateImg) return;
+
+    const animatedSrc = dateImg.getAttribute('data-animated-src');
+    if (!animatedSrc) return;
+
+    const swapToAnimated = () => {
+      if (dateImg.dataset.animatedLoaded === 'true') return;
+
+      const preloader = new Image();
+      preloader.decoding = 'async';
+      preloader.onload = () => {
+        dateImg.src = animatedSrc;
+        dateImg.dataset.animatedLoaded = 'true';
+      };
+      preloader.src = animatedSrc;
+    };
+
+    const scheduleSwap = () => {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(() => swapToAnimated(), { timeout: 2000 });
+      } else {
+        window.setTimeout(swapToAnimated, 400);
+      }
+    };
+
+    if (document.readyState === 'complete') scheduleSwap();
+    else window.addEventListener('load', scheduleSwap, { once: true });
+  })();
+
   // Attire images pop-in: reveal ladies/gentlemen images with a pop animation
   (function initAttirePop() {
     const items = Array.from(document.querySelectorAll('.attire-item'));

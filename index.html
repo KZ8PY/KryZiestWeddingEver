@@ -34,20 +34,14 @@
   <link rel="alternate icon" href="public/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-  <!-- Preload critical hero image for faster LCP - using optimized WebP (327KB vs 4.5MB) -->
+  <!-- Great Vibes is loaded via CSS @import in the bundled stylesheet -->
+  <!-- Preload critical hero image used by active #hero background -->
   <link rel="preload" href="public/images/hero/hero_img_optimized.webp" as="image" fetchpriority="high">
-  <!-- Preload animated date image for hero section -->
-  <link rel="preload" href="public/images/hero/Date.gif" as="image">
   <link rel="preload" href="src/fonts/tan-pearl-converted/TAN-PEARL-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="src/css/critical-bundled.css">
   <link rel="stylesheet" href="src/css/components/sidebar.css" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="src/css/components/glass.css" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="src/css/components/story.css" media="print" onload="this.media='all'">
   <noscript>
     <link rel="stylesheet" href="src/css/components/sidebar.css">
-    <link rel="stylesheet" href="src/css/components/glass.css">
-    <link rel="stylesheet" href="src/css/components/story.css">
   </noscript>
 </head>
 
@@ -88,7 +82,14 @@
   <p class="hero-invite">GRACEFULLY JOIN THE WEDDING OF</p>
   <h1 class="header-site-title">Ziber &amp;Krysha</h1>
       <p class="date">
-        <img src="public/images/hero/Date.gif" alt="May 8, 2026" class="hero-date-gif" />
+        <img
+          src="public/images/hero/Date_optimized.png"
+          data-animated-src="public/images/hero/Date.gif"
+          alt="May 8, 2026"
+          class="hero-date-gif"
+          decoding="async"
+          fetchpriority="low"
+        />
       </p>
         <div id="countdown" class="countdown-grid" aria-live="polite">
         <div class="countdown-segment">
@@ -647,7 +648,6 @@
   </main>
   <button class="back-to-top-btn floating-menu" id="backToTop" aria-label="Back to top">&#8679;</button>
   <script src="src/js/countdown.js" defer></script>
-  <script src="src/js/rsvp.js" defer></script>
   <script src="src/js/story-slider.js" defer></script>
   <!-- animations.js removed: overlay handled via HTML/CSS -->
   <script src="src/js/main.js" defer></script>

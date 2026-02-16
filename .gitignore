@@ -163,3 +163,9 @@ scripts/optimize-gif-imagemin.js
 scripts/optimize-hero-image.js
 QA_CHECKLIST.md
 scripts/optimize-prev-main.js
+
+# Lighthouse reports
+lighthouse*.report.json
+lighthouse*.report.html
+lighthouse-*.json
+lighthouse-*.html
