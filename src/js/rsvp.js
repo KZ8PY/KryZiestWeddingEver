@@ -168,8 +168,12 @@ window.addEventListener('DOMContentLoaded', () => {
   /**
    * Show message to user
    */
-  function showMessage(message, type = 'error') {
-    formMessage.textContent = message;
+  function showMessage(message, type = 'error', html = false) {
+    if (html) {
+      formMessage.innerHTML = message;
+    } else {
+      formMessage.textContent = message;
+    }
     formMessage.className = 'form-message show ' + type;
     formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     
@@ -283,15 +287,17 @@ window.addEventListener('DOMContentLoaded', () => {
         // Check if error is due to incomplete name (less than 2 words)
         if (result.reason === 'incomplete') {
           showMessage(
-            `Please enter your full name (first and last name). "${notFoundName}" is too short to verify against our guest list.`,
-            'error'
+            `Please enter your full name (first and last name). "${notFoundName}" is too short to verify against our guest list. If you still encounter an issue, please <a href="../index.html#contact">contact us</a>.`,
+            'error',
+            true
           );
           return;
         }
         
         showMessage(
-          `Oops! We couldn't find "${notFoundName}" (${nameType}) on our guest list. Please check the spelling on your invitation.`,
-          'error'
+          `Oops! We couldn't find "${notFoundName}" (${nameType}) on our guest list. Please check the spelling on your invitation. If you still encounter an issue, please <a href="../index.html#contact">contact us</a>.`,
+          'error',
+          true
         );
         return;
       }
