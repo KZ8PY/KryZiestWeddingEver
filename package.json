@@ -17,9 +17,13 @@
     "url": "https://github.com/KZ8PY/KryZiestWeddingEver/issues"
   },
   "homepage": "https://github.com/KZ8PY/KryZiestWeddingEver#readme",
+  "overrides": {
+    "ajv": "^8.18.0",
+    "file-type": "^21.3.1",
+    "js-yaml": "^4.1.1"
+  },
   "devDependencies": {
     "imagemin": "^9.0.1",
-    "imagemin-gifsicle": "^7.0.0",
     "stylelint": "^16.23.1",
     "stylelint-config-standard": "^39.0.0"
   },
