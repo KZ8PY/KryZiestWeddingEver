@@ -669,6 +669,37 @@
   text-shadow: var(--hero-text-glow);
 }
 
+/* small caption displayed beneath the main countdown */
+.countdown-message {
+  margin: 0.6rem auto 0;
+  /* Updated font size to 38px per user request */
+  font-size: 38px;
+
+  /* keep hero title style centered relative to the section */
+  align-self: center;
+  z-index: 20;
+  font-family: var(--font-heading);
+  color: inherit;
+  white-space: nowrap;
+  display: block;
+  line-height: 1.1;
+  text-align: center;
+  text-shadow: var(--hero-text-glow);
+  
+  /* Color-changing effect to white momentarily */
+  animation: color-pulse 7s ease-in-out infinite;
+
+  /* Hidden by default until countdown reaches zero */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease-in-out;
+}
+
+@keyframes color-pulse {
+  0%, 100% { color: var(--color-coffee-dark); }
+  50% { color: var(--color-warm-cream); text-shadow: 0 0 15px rgba(255, 253, 243, 0.8), var(--hero-text-glow); }
+}
+
 /* header-specific countdown downsized (applies to both #headerCountdown and .header-countdown for compatibility) */
 #headerCountdown .countdown-grid,
 .header-countdown .countdown-grid {

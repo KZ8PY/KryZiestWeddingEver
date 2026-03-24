@@ -1,6 +1,6 @@
 // Modern cafe countdown for KryZiest Wedding Ever
-// Target: May 8, 2026 at 14:00 (2:00 PM) local event time
-const targetDate = new Date(2026, 4, 8, 14, 0, 0);
+// Target: May 8, 2026 at 15:00 (3:00 PM) local event time
+const targetDate = new Date(2026, 4, 8, 15, 0, 0);
 // Track previous values to avoid unnecessary DOM writes
 const prev = { days: null, hours: null, minutes: null, seconds: null };
 function pad(num) {
@@ -16,6 +16,18 @@ function updateCountdown() {
   const minutes = Math.floor(diff / (1000 * 60));
   diff -= minutes * (1000 * 60);
   const seconds = Math.floor(diff / 1000);
+
+  // Toggle reveal message when countdown reaches zero
+  const msgEl = document.querySelector('.countdown-message');
+  if (msgEl) {
+    if (diff <= 0 && days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
+      msgEl.style.opacity = '1';
+      msgEl.style.visibility = 'visible';
+    } else {
+      msgEl.style.opacity = '0';
+      msgEl.style.visibility = 'hidden';
+    }
+  }
 
   if (document.getElementById('daysBox')) {
     const el = document.getElementById('daysBox');
