@@ -19,7 +19,8 @@
   "homepage": "https://github.com/KZ8PY/KryZiestWeddingEver#readme",
   "overrides": {
     "ajv": "^8.18.0",
-    "file-type": "^21.3.1",
+    "file-type": ">=21.3.2",
+    "flatted": ">=3.4.2",
     "js-yaml": "^4.1.1"
   },
   "devDependencies": {
