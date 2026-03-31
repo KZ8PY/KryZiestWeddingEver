@@ -1,4 +1,4 @@
-// Main JS: navigation, smooth scroll
+﻿// Main JS: navigation, smooth scroll
 window.addEventListener('DOMContentLoaded', () => {
   const locationPath = (window.location && window.location.pathname) ? window.location.pathname.toLowerCase() : '';
   const isSaveTheDatePage = locationPath.includes('savethedate-rsvp');
@@ -128,7 +128,7 @@ window.addEventListener('DOMContentLoaded', () => {
       let isPlaying = false;
 
       const updatePlayState = () => {
-        btn.textContent = audio.paused ? '▶' : '▌▌';
+        btn.textContent = audio.paused ? 'â–¶' : 'â–Œâ–Œ';
         isPlaying = !audio.paused;
       };
 
@@ -516,7 +516,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // Highlight the whole floating menu group (or button fallback)
     highlightTarget.classList.add('tour-highlight', 'tour-pulse');
 
-    // Position popover near the highlighted element — prefer below, fall back above.
+    // Position popover near the highlighted element â€” prefer below, fall back above.
     const rect = (highlightTarget.getBoundingClientRect && highlightTarget.getBoundingClientRect()) || btn.getBoundingClientRect();
     // Measure pop after insertion so we can center it and compute arrow offset
     const measured = pop.getBoundingClientRect();
@@ -564,7 +564,7 @@ window.addEventListener('DOMContentLoaded', () => {
       // (race conditions on some browsers), programmatically open it.
       const onBtnClick = () => { // run after existing handlers
         requestAnimationFrame(() => cleanup(true));
-        // ensure sidebar opened — call the canonical opener
+        // ensure sidebar opened â€” call the canonical opener
         try { if (window.openSidebar) window.openSidebar(); } catch (e) { /* ignore */ }
       };
       btn.addEventListener('click', onBtnClick, { once: true });
@@ -585,7 +585,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Prenup "coming soon" logic removed — prenup CTA is now a standard button
+  // Prenup "coming soon" logic removed â€” prenup CTA is now a standard button
   // Add a small popover for Prenup Photos that mirrors the mini-tour popover style
   (function initPrenupPopover() {
     const btn = document.querySelector('#prenup .prenup-cta .contact-action[data-tooltip], #prenup .prenup-cta .contact-action');
@@ -641,10 +641,12 @@ window.addEventListener('DOMContentLoaded', () => {
   if (eviteCover && eviteCover.style.display !== 'none') {
     eviteCover.addEventListener('click', () => {
       eviteCover.classList.add('opened');
-      document.body.style.overflow = ''; // Restore scroll
-      setTimeout(() => {
+      document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        setTimeout(() => {
         document.body.classList.remove('cover-active');
       }, 350); // Start hero animations a bit earlier (overlap at ~30% into the cover animation)
     }, { once: true });
   }
 });
+
