@@ -58,7 +58,8 @@
   <script>
     (function() {
       const isSaveTheDatePage = window.location.pathname.toLowerCase().includes('savethedate-rsvp');
-      if (isSaveTheDatePage) {
+        const hasHash = window.location.hash && window.location.hash.length > 1;
+        if (isSaveTheDatePage || hasHash) {
         document.getElementById('evite-cover').style.display = 'none';
       } else {
           document.body.style.setProperty('overflow', 'hidden', 'important');
@@ -84,7 +85,7 @@
     <button class="close-btn" id="sidebarClose" aria-label="Close menu">âœ•</button>
     <nav aria-label="Primary">
       <ul>
-        <li><a href="#hero">Home</a></li>
+        <li><a href="#home">Home</a></li>
         <li><a href="#story">Our Story</a></li>
         <li><a href="#details">Wedding Details</a></li>
         <li><a href="#attire-guide">Attire Guide</a></li>
@@ -99,7 +100,7 @@
     </nav>
   </aside>
   <main>
-  <section class="hero fade-in hero-topbar" aria-label="Wedding Hero" id="hero">
+  <section class="hero fade-in hero-topbar" aria-label="Wedding Hero" id="hero" data-home-anchor="home"><span id="home" aria-hidden="true" style="position:absolute;top:0"></span>
   <p class="hero-invite">REJOICE!</p>
   <p class="hero-invite">GRACEFULLY JOIN THE WEDDING OF</p>
   <h1 class="header-site-title">Ziber &amp;Krysha</h1>

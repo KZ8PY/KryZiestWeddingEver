@@ -1488,6 +1488,7 @@ h3 {
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   z-index: 999999;
   background: transparent;
   display: flex;
@@ -1528,8 +1529,8 @@ h3 {
   position: relative;
   /* Use explicit vh/vw to ensure it sizes correctly without relying on aspect-ratio which can behave unpredictably */
   width: min(100vw, calc(100vh * 3 / 4));
-  height: min(100vh, calc(100vw * 4 / 3));
-  perspective: 1200px;
+  height: min(100vh, calc(100vw * 4 / 3));    width: min(100vw, calc(100dvh * 3 / 4));
+    height: min(100dvh, calc(100vw * 4 / 3));  perspective: 1200px;
 }
 .evite-cover-half {
   position: absolute;
