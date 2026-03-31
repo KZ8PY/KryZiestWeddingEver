@@ -737,6 +737,11 @@
   -webkit-tap-highlight-color: transparent;
   user-select: none;
 }
+.evite-cover *,
+.evite-cover *::before,
+.evite-cover *::after {
+  -webkit-tap-highlight-color: transparent;
+}
 .evite-cover::before {
   content: "";
   position: absolute;

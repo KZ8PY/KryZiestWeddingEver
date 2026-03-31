@@ -641,8 +641,8 @@ window.addEventListener('DOMContentLoaded', () => {
   if (eviteCover && eviteCover.style.display !== 'none') {
     eviteCover.addEventListener('click', () => {
       eviteCover.classList.add('opened');
-      document.body.style.overflow = '';
-        document.documentElement.style.overflow = '';
+        document.body.style.removeProperty('overflow');
+        document.documentElement.style.removeProperty('overflow');
         setTimeout(() => {
         document.body.classList.remove('cover-active');
       }, 350); // Start hero animations a bit earlier (overlap at ~30% into the cover animation)
