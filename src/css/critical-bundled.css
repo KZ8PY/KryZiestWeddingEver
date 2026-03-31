@@ -1166,6 +1166,23 @@ h3 {
   text-align: left;
 }
 
+.faq-topic-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  order: 3;
+  color: var(--color-primary-dark);
+  opacity: 0.85;
+}
+
+.faq-topic-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
 .faq-item summary::-webkit-details-marker {
   display: none;
 }
