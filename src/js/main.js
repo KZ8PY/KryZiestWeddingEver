@@ -128,7 +128,10 @@ window.addEventListener('DOMContentLoaded', () => {
       let isPlaying = false;
 
       const updatePlayState = () => {
-        btn.textContent = audio.paused ? 'â–¶' : 'â–Œâ–Œ';
+        const playGlyph = String.fromCharCode(9654);
+        const pauseGlyph = String.fromCharCode(10074) + String.fromCharCode(10074);
+        btn.textContent = audio.paused ? playGlyph : pauseGlyph;
+        btn.setAttribute('aria-label', audio.paused ? 'Play' : 'Pause');
         isPlaying = !audio.paused;
       };
 
