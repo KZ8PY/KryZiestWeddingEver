@@ -635,4 +635,16 @@ window.addEventListener('DOMContentLoaded', () => {
       showTip();
     });
   })();
+
+  // Evite Cover Logic
+  const eviteCover = document.getElementById('evite-cover');
+  if (eviteCover && eviteCover.style.display !== 'none') {
+    eviteCover.addEventListener('click', () => {
+      eviteCover.classList.add('opened');
+      document.body.style.overflow = ''; // Restore scroll
+      setTimeout(() => {
+        document.body.classList.remove('cover-active');
+      }, 350); // Start hero animations a bit earlier (overlap at ~30% into the cover animation)
+    }, { once: true });
+  }
 });

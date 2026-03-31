@@ -48,6 +48,25 @@
 </head>
 
 <body>
+  <!-- Evite Cover Overlay -->
+  <div id="evite-cover" class="evite-cover" aria-hidden="true">
+    <div class="evite-img-wrapper">
+      <div class="evite-cover-half cover-left"><div class="evite-cover-bg"></div></div>
+      <div class="evite-cover-half cover-right"><div class="evite-cover-bg"></div></div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      const isSaveTheDatePage = window.location.pathname.toLowerCase().includes('savethedate-rsvp');
+      if (isSaveTheDatePage) {
+        document.getElementById('evite-cover').style.display = 'none';
+      } else {
+        document.body.style.overflow = 'hidden';
+        document.body.classList.add('cover-active');
+      }
+    })();
+  </script>
+
   <!-- Site header: static menu + monogram -->
   <header class="sticky-header latte-frame site-header" role="banner">
     <div class="floating-menu-group header-menu">
