@@ -38,7 +38,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Great Vibes is loaded via CSS @import in the bundled stylesheet -->
   <!-- Preload critical hero image used by active #hero background -->
-  <link rel="preload" href="public/images/hero/hero_img_optimized.webp" as="image" fetchpriority="high">
+  <link rel="preload" href="public/images/hero/hero-img-fin-optimized.webp" as="image" fetchpriority="high">
   <link rel="preload" href="src/fonts/tan-pearl-converted/TAN-PEARL-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="src/css/critical-bundled.css">
   <link rel="stylesheet" href="src/css/components/sidebar.css" media="print" onload="this.media='all'">
@@ -464,14 +464,14 @@
           <picture>
             <source srcset="public/images/attire/ladies_optimized.avif" type="image/avif">
             <source srcset="public/images/attire/ladies_optimized.webp" type="image/webp">
-            <img src="public/images/attire/ladies_optimized.png" alt="Ladies attire suggestions" loading="lazy">
+            <img src="public/images/attire/ladies_optimized.png" alt="Ladies attire suggestions" loading="lazy" width="4000" height="2250">
           </picture>
         </div>
         <div class="attire-item">
           <h3>Gentlemen</h3>
           <picture>
             <source srcset="public/images/attire/gentlemen_optimized.webp" type="image/webp">
-            <img src="public/images/attire/gentlemen.svg" alt="Gentlemen attire suggestions" loading="lazy">
+            <img src="public/images/attire/gentlemen.svg" alt="Gentlemen attire suggestions" loading="lazy" width="960" height="540">
           </picture>
         </div>
       </div>
@@ -491,7 +491,7 @@
       <div class="venue-grid">
         <article class="venue-card">
           <h3>Ceremony</h3>
-          <img src="public/images/venue/church.svg" alt="Church (ceremony) illustration" loading="lazy">
+          <img src="public/images/venue/church.svg" alt="Church (ceremony) illustration" loading="lazy" width="810" height="540">
           <iframe
             title="Ceremony location map"
             loading="lazy"
@@ -501,7 +501,7 @@
 
         <article class="venue-card">
           <h3>Reception</h3>
-          <img src="public/images/venue/reception.svg" alt="Reception venue illustration" loading="lazy">
+          <img src="public/images/venue/reception.svg" alt="Reception venue illustration" loading="lazy" width="810" height="540">
           <iframe
             title="Reception location map"
             loading="lazy"
@@ -645,19 +645,13 @@
     </section>
 
     <section class="prenup fade-in section" aria-label="Prenup Photos" id="prenup">
-      <picture>
-        <source srcset="public/images/hero/hero_img_optimized.avif" type="image/avif">
-        <source srcset="public/images/hero/hero_img_optimized.webp" type="image/webp">
-        <img class="prenup-placeholder" src="public/images/hero/hero_img_optimized.jpg" alt="Prenup photos placeholder">
-      </picture>
-      <div class="prenup-cta">
-        <button type="button" class="contact-action" data-tooltip="Coming Soon">Prenup Photos</button>
-      </div>
+      <h2>Prenup Photos</h2>
+      <div class="bento-grid" id="prenup-grid"></div>
     </section>
 
     <section class="monogram-section fade-in section" aria-label="Monogram" id="monogram">
       <div class="frosted-panel monogram-card">
-        <img class="monogram-image" src="public/images/icons/KZ-Monogram.png" alt="KZ Monogram">
+        <img class="monogram-image" src="public/images/icons/KZ-Monogram.png" alt="KZ Monogram" width="500" height="500">
       </div>
     </section>
 

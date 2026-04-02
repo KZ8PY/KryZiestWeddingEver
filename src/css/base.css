@@ -45,6 +45,7 @@
 /* Prevent accidental horizontal scroll caused by 100vw or wide elements */
 html {
   min-height: 100%;
+  scroll-behavior: smooth;
 }
 
 html, body {

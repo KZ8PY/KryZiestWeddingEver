@@ -155,12 +155,14 @@ scripts/DEPLOYMENT_FIX_CORS.md
 scripts/test-rsvp-integration.js
 
 # Image optimization tools (development utilities)
+scripts/optimize-*.js
 scripts/convert-date-to-animated-webp.js
 scripts/optimize-animated-gif.js
 scripts/optimize-attire-images.js
 scripts/optimize-date-gif.js
 scripts/optimize-gif-imagemin.js
 scripts/optimize-hero-image.js
+scripts/optimize-prenup.js
 QA_CHECKLIST.md
 scripts/optimize-prev-main.js
 
@@ -176,3 +178,6 @@ playwright.config.js
 playwright-report/
 test-results/
 .playwright/
+
+# Heavy raw prenup photos (source-only)
+public/images/prnup/Raw/

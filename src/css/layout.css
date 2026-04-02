@@ -27,37 +27,45 @@
   box-shadow: none; /* remove panel drop shadow */
   margin-bottom: 0;
   padding: 2.5rem 1.5rem;
-
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
   /* Perf: skip rendering offscreen sections until needed (supported browsers only). */
-  content-visibility: auto;
+  padding: 1.25rem;
+  opacity: 0;
+  transition: opacity 200ms ease;
   contain-intrinsic-size: 900px;
 }
 
 /* Improve anchor scrolling with sticky header */
+  opacity: 1;
 .section[id] {
   scroll-margin-top: calc(var(--site-header-height, 4rem) + 1rem);
+.prenup-lightbox-frame {
+  width: min(92vw, 980px);
+  max-height: min(84vh, 820px);
+  padding: clamp(8px, 1.6vw, 16px);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 18px 46px rgba(22, 18, 17, 0.26);
+  transform: scale(0.94) translateY(8px);
+  opacity: 0;
+  transition: transform 240ms cubic-bezier(0.2, 0.75, 0.2, 1), opacity 220ms ease;
 }
 
-.section-note {
+.prenup-lightbox.is-open .prenup-lightbox-frame {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.prenup-lightbox-image {
+  max-width: 100%;
+  max-height: calc(min(84vh, 820px) - 2 * clamp(8px, 1.6vw, 16px));
   opacity: 0.9;
   margin-top: 0.4rem;
-  margin-bottom: 1.5rem;
-}
-
-/* Wedding Details: placeholder photo grid */
-.details-media-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
-  perspective: 1200px;
-  align-items: flex-start;
-}
-
-/* Details cards: sized by viewport height, with a constant aspect ratio.
-   This ensures images are always fully visible (no cropping) and that
-   additional columns appear naturally when there is enough horizontal space. */
-.details-media.details-card {
+  border-radius: 14px;
+  display: block;
   margin: 0;
   padding: 0;
   background: transparent; /* override frosted-group from glass.css */
@@ -476,6 +484,31 @@
   background-color: transparent;
 }
 
+.faq-toggle-symbol {
+  display: none;
+}
+
+.faq-icon .faq-topic-icon {
+  position: absolute;
+  top: 50%;
+  right: -1.9rem;
+  transform: translateY(-50%);
+  width: 1.45rem;
+  height: 1.45rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-card-bg);
+}
+
+.faq-icon .faq-topic-icon svg {
+  width: 12px;
+  height: 12px;
+  stroke: var(--color-text);
+}
+
 @media (min-width: 880px) {
   .faq-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -483,30 +516,124 @@
   }
 }
 
-/* Prenup placeholder */
-.prenup {
-  position: relative; /* container for absolutely-positioned CTA */
-}
-.prenup-placeholder {
-  width: min(980px, 100%);
-  display: block;
-  margin: 1rem auto 0.75rem;
-  border-radius: var(--border-radius-soft);
-  box-shadow: none;
+/* Prenup Photos Bento Grid */
+.prenup h2 {
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
-.prenup-cta {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.bento-grid {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  column-count: 2;
+  column-gap: 8px;
+  padding: 0 8px;
+  margin-top: 1rem;
+}
+
+.bento-grid picture {
+  display: block;
+  margin-bottom: 8px;
+  break-inside: avoid;
+}
+
+.bento-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  cursor: zoom-in;
+  display: block;
+  border: 2px solid var(--color-primary-light);
+  box-shadow: 0 4px 12px var(--color-shadow);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.bento-grid img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px var(--color-coffee-dark);
+  border-color: var(--color-coffee);
+}
+.prenup-lightbox {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.14);
+  z-index: 1200;
+  padding: 1.25rem;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.prenup-lightbox.is-open {
+  display: flex;
+  opacity: 1;
+}
+
+.prenup-lightbox-frame {
+  width: fit-content;
+  height: fit-content;
+  max-width: min(94vw, 1240px);
+  max-height: min(88vh, 920px);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  margin: 0;
-  z-index: 30;
-  pointer-events: auto;
+  padding: clamp(8px, 1.6vw, 16px);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 18px 46px rgba(22, 18, 17, 0.26);
+  transform: scale(0.94) translateY(8px);
+  opacity: 0;
+  transition: transform 240ms cubic-bezier(0.2, 0.75, 0.2, 1), opacity 220ms ease;
+}
+
+.prenup-lightbox.is-open .prenup-lightbox-frame {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.prenup-lightbox-image {
+  max-width: min(88vw, 1200px);
+  max-height: min(82vh, 860px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 14px;
+  display: block;
+}
+
+body.prenup-lightbox-open {
+  overflow: hidden;
+}
+
+@media (min-width: 1200px) {
+  .prenup-lightbox-frame {
+    padding: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  .bento-grid {
+    column-count: 3;
+    column-gap: 16px;
+    padding: 0 16px;
+  }
+  .bento-grid picture {
+    margin-bottom: 16px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .bento-grid {
+    column-count: 4;
+    column-gap: 20px;
+    padding: 0 20px;
+  }
+  .bento-grid picture {
+    margin-bottom: 20px;
+  }
 }
 
 /* Monogram-only section */

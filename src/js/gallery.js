@@ -1,6 +1,6 @@
 // Gallery lightbox & lazy loading
 window.addEventListener('DOMContentLoaded', () => {
-  const images = document.querySelectorAll('.gallery-grid img');
+  const images = document.querySelectorAll('.gallery-grid img, .bento-grid img');
   images.forEach(img => {
     img.loading = 'lazy';
     img.addEventListener('click', () => {

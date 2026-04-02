@@ -85,12 +85,14 @@ window.addEventListener('DOMContentLoaded', () => {
     // while the element is still hugging the bottom edge.
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
+        // Trigger if intersecting OR if the item has already been scrolled past (top < 0)
+        // This handles cases where anchor links jump over the intersection band.
+        if (!entry.isIntersecting && entry.boundingClientRect.top > 0) return;
         const el = entry.target;
         el.classList.add('is-visible');
         obs.unobserve(el);
       });
-    }, { threshold: 0.01, rootMargin: '-60% 0px -20% 0px' });
+    }, { threshold: 0.01, rootMargin: '0px 0px -20% 0px' });
 
     items.forEach((it) => {
       const rect = it.getBoundingClientRect();
@@ -183,16 +185,9 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   })();
 
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
+  // Anchor links inside the sidebar: let native hash navigation handle scroll.
+  // The browser correctly accounts for scroll-margin-top and content-visibility
+  // when navigating to a hash. CSS scroll-behavior: smooth provides animation.
 
   // Header scroll behavior: toggle .scrolled to allow CSS-driven translucency
   const header = document.querySelector('.site-header');
@@ -305,8 +300,39 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     overlay.addEventListener('click', closeSidebar);
     if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
-    // Close when clicking a nav link
-    sidebar.querySelectorAll('a').forEach(a => a.addEventListener('click', closeSidebar));
+    // Close sidebar and smooth-scroll to the target section.
+    // Force-reveal the heading and show the header once scroll completes.
+    sidebar.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const href = a.getAttribute('href') || '';
+        if (!href.startsWith('#')) { closeSidebar(); return; }
+        e.preventDefault();
+        closeSidebar();
+
+        const targetId = href.slice(1);
+        const targetSection = document.getElementById(targetId);
+        if (!targetSection) return;
+
+        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        const revealAfterNav = () => {
+          // Reveal any unrevealed h2 in the target section
+          targetSection.querySelectorAll('h2').forEach(h => {
+            if (!h.classList.contains('h2-reveal')) h.classList.add('h2-reveal');
+          });
+          // Ensure the sticky header is in its visible (scrolled) state
+          const siteHeader = document.querySelector('.site-header');
+          if (siteHeader) siteHeader.classList.add('scrolled');
+        };
+
+        // scrollend fires when smooth-scroll finishes; fall back to timeout
+        if ('onscrollend' in window) {
+          window.addEventListener('scrollend', revealAfterNav, { once: true });
+        } else {
+          setTimeout(revealAfterNav, 800);
+        }
+      });
+    });
     // Close on Escape
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSidebar(); });
   })();
@@ -588,55 +614,96 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Prenup "coming soon" logic removed â€” prenup CTA is now a standard button
-  // Add a small popover for Prenup Photos that mirrors the mini-tour popover style
-  (function initPrenupPopover() {
-    const btn = document.querySelector('#prenup .prenup-cta .contact-action[data-tooltip], #prenup .prenup-cta .contact-action');
-    if (!btn) return;
+  const floatingImagePreview = (() => {
+    const lightbox = document.createElement('div');
+    lightbox.className = 'prenup-lightbox';
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightbox.innerHTML = [
+      '<div class="prenup-lightbox-frame">',
+      '  <img class="prenup-lightbox-image" src="" alt="">',
+      '</div>'
+    ].join('');
+    document.body.appendChild(lightbox);
 
-    const showTip = () => {
-      let pop = document.querySelector('.coming-soon-pop');
-      const text = btn.getAttribute('data-tooltip') || 'Coming Soon';
-      if (!pop) {
-        pop = document.createElement('div');
-        pop.className = 'tour-popover coming-soon-pop';
-        pop.setAttribute('role', 'status');
-        pop.setAttribute('aria-live', 'polite');
-        pop.innerHTML = `<div>${text}</div>`;
-        document.body.appendChild(pop);
-      } else {
-        pop.innerHTML = `<div>${text}</div>`;
-      }
+    const lightboxImage = lightbox.querySelector('.prenup-lightbox-image');
 
-      // Position above the button, centered horizontally, and set arrow position
-      const rect = btn.getBoundingClientRect();
-      // Allow DOM to render the pop so we can measure its size
-      const measured = pop.getBoundingClientRect();
-      const popW = measured.width || 200;
-      const popH = measured.height || 40;
-      // Place pop above the button (with 8px gap for the arrow)
-      let top = rect.top - popH - 12; // 12 accounts for arrow + small gap
-      if (top < 8) top = rect.bottom + 8; // fallback below if not enough room
-      let left = rect.left + (rect.width / 2) - (popW / 2);
-      // clamp to viewport
-      left = Math.max(8, Math.min(left, window.innerWidth - popW - 8));
-      pop.style.top = `${top}px`;
-      pop.style.left = `${left}px`;
-      // compute arrow left offset relative to pop left, center the arrow on the button
-      const arrowLeft = Math.max(12, (rect.left + rect.width / 2) - left - 8);
-      pop.style.setProperty('--arrow-left', `${arrowLeft}px`);
-
-      // Reset any existing hide timer
-      window.clearTimeout(pop.__hideTimer);
-      pop.__hideTimer = window.setTimeout(() => {
-        try { if (pop && pop.parentNode) pop.parentNode.removeChild(pop); } catch (e) {}
-      }, 1200);
+    const close = () => {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('prenup-lightbox-open');
+      lightboxImage.src = '';
+      lightboxImage.alt = '';
     };
 
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      showTip();
+    const open = (src, alt) => {
+      if (!src) return;
+      lightboxImage.src = src;
+      lightboxImage.alt = alt || '';
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('prenup-lightbox-open');
+    };
+
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) close();
     });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lightbox.classList.contains('is-open')) {
+        close();
+      }
+    });
+
+    return { open, close };
+  })();
+
+  const getPreviewImageSrc = (img) => {
+    if (!img) return '';
+    const current = img.currentSrc || img.src || '';
+    if (current.startsWith('data:image/') && img.dataset && img.dataset.src) {
+      return img.dataset.src;
+    }
+    return current;
+  };
+
+  // Build prenup photo groups from available landscape/portrait files.
+  (function initPrenupGallery() {
+    const grid = document.getElementById('prenup-grid');
+    if (!grid) return;
+
+    const landscapeIds = new Set([
+      1, 2, 4, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 26,
+      27, 29, 34, 35, 36, 38, 39, 42, 44, 45, 46, 47, 48, 50, 51, 52, 53,
+      56, 57, 58, 59, 62, 63, 64, 65, 66, 67, 69, 70, 73, 74, 77, 78, 79,
+      80, 81, 82, 83, 84
+    ]);
+
+    const portraitIds = new Set([
+      3, 5, 8, 17, 22, 23, 24, 25, 28, 30, 31, 32, 33, 37, 40, 41, 43, 49,
+      54, 55, 60, 61, 68, 71, 72, 75, 76, 85
+    ]);
+
+    grid.replaceChildren();
+
+    for (let photoId = 1; photoId <= 85; photoId += 1) {
+      const orientation = landscapeIds.has(photoId)
+        ? 'landscape'
+        : (portraitIds.has(photoId) ? 'portrait' : null);
+
+      if (!orientation) continue;
+
+      const picture = document.createElement('picture');
+      const img = document.createElement('img');
+      img.src = `public/images/prnup/${orientation}/prnp${photoId}.jpg`;
+      img.alt = `Prenup photo ${photoId}`;
+      img.loading = photoId <= 4 ? 'eager' : 'lazy';
+      img.decoding = 'async';
+      img.addEventListener('click', () => {
+        floatingImagePreview.open(getPreviewImageSrc(img), img.alt);
+      });
+      picture.appendChild(img);
+      grid.appendChild(picture);
+    }
   })();
 
   // Evite Cover Logic
