@@ -27,45 +27,35 @@
   box-shadow: none; /* remove panel drop shadow */
   margin-bottom: 0;
   padding: 2.5rem 1.5rem;
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(10px) saturate(130%);
-  -webkit-backdrop-filter: blur(10px) saturate(130%);
-  /* Perf: skip rendering offscreen sections until needed (supported browsers only). */
-  padding: 1.25rem;
-  opacity: 0;
-  transition: opacity 200ms ease;
-  contain-intrinsic-size: 900px;
+
+  /* content-visibility: auto removed - caused anchor nav miscalculations on first load. */
 }
 
 /* Improve anchor scrolling with sticky header */
-  opacity: 1;
 .section[id] {
   scroll-margin-top: calc(var(--site-header-height, 4rem) + 1rem);
-.prenup-lightbox-frame {
-  width: min(92vw, 980px);
-  max-height: min(84vh, 820px);
-  padding: clamp(8px, 1.6vw, 16px);
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.32);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  box-shadow: 0 18px 46px rgba(22, 18, 17, 0.26);
-  transform: scale(0.94) translateY(8px);
-  opacity: 0;
-  transition: transform 240ms cubic-bezier(0.2, 0.75, 0.2, 1), opacity 220ms ease;
 }
 
-.prenup-lightbox.is-open .prenup-lightbox-frame {
-  transform: scale(1) translateY(0);
-  opacity: 1;
-}
-
-.prenup-lightbox-image {
-  max-width: 100%;
-  max-height: calc(min(84vh, 820px) - 2 * clamp(8px, 1.6vw, 16px));
+.section-note {
   opacity: 0.9;
   margin-top: 0.4rem;
-  border-radius: 14px;
-  display: block;
+  margin-bottom: 1.5rem;
+}
+
+/* Wedding Details: placeholder photo grid */
+.details-media-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  perspective: 1200px;
+  align-items: flex-start;
+}
+
+/* Details cards: sized by viewport height, with a constant aspect ratio.
+   This ensures images are always fully visible (no cropping) and that
+   additional columns appear naturally when there is enough horizontal space. */
+.details-media.details-card {
   margin: 0;
   padding: 0;
   background: transparent; /* override frosted-group from glass.css */
