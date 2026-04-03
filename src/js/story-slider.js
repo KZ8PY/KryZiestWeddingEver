@@ -218,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let modalGhostImg = null;
   let filmSwipeDirection = 0;
+  let storyModalHistoryArmed = false;
 
   function ensureModalGhost() {
     if (!modalWrapper) return null;
@@ -254,14 +255,28 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = 'hidden'; // Prevent background scroll
     hideModalGhost();
     resetZoom();
+    if (!storyModalHistoryArmed) {
+      try {
+        const state = (window.history.state && typeof window.history.state === 'object')
+          ? window.history.state : {};
+        window.history.pushState({ ...state, __storyModal: true }, '');
+        storyModalHistoryArmed = true;
+      } catch (e) { /* ignore */ }
+    }
   }
 
-  function closeModal() {
+  function closeModal(fromHistory = false) {
     modal.close();
     modal.removeAttribute('open');
     document.body.style.overflow = '';
     hideModalGhost();
     resetZoom();
+    if (storyModalHistoryArmed && !fromHistory) {
+      storyModalHistoryArmed = false;
+      try { window.history.back(); } catch (e) { /* ignore */ }
+    } else {
+      storyModalHistoryArmed = false;
+    }
   }
 
   function updateModalImage(immediate = false, animateReset = true) {
@@ -300,6 +315,10 @@ document.addEventListener('DOMContentLoaded', () => {
       e.stopPropagation(); // Don't trigger slide navigation
       openModal();
     });
+  });
+
+  window.addEventListener('popstate', () => {
+    if (modal?.open) closeModal(true);
   });
 
   modalClose?.addEventListener('click', closeModal);

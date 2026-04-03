@@ -609,7 +609,7 @@ body.prenup-lightbox-open {
 }
 
 body.prenup-lightbox-open #prenup .bento-grid img {
-  opacity: 0.30;
+  opacity: 0.1;
 }
 
 body.prenup-lightbox-open #prenup .bento-grid img:hover {
