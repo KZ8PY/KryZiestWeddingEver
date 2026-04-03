@@ -720,10 +720,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
       if (!previewHistoryArmed) {
         try {
-          const state = (window.history.state && typeof window.history.state === 'object')
-            ? window.history.state
-            : {};
-          window.history.pushState({ ...state, __previewLightbox: true }, '');
+          // Use hash navigation instead of pushState so in-app browsers (Messenger, etc.)
+          // don't close the WebView when back is pressed — hash changes stay on the same page.
+          window.location.hash = 'prenup-lightbox';
           previewHistoryArmed = true;
         } catch (e) {
           previewHistoryArmed = false;
@@ -741,10 +740,8 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    window.addEventListener('popstate', () => {
-      if (lightbox.classList.contains('is-open')) {
-        close(true);
-      }
+    window.addEventListener('hashchange', () => {
+      if (previewHistoryArmed && window.location.hash !== '#prenup-lightbox') close(true);
     });
 
     return { open, close };

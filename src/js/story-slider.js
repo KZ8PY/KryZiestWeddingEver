@@ -257,9 +257,9 @@ document.addEventListener('DOMContentLoaded', () => {
     resetZoom();
     if (!storyModalHistoryArmed) {
       try {
-        const state = (window.history.state && typeof window.history.state === 'object')
-          ? window.history.state : {};
-        window.history.pushState({ ...state, __storyModal: true }, '');
+        // Use hash navigation instead of pushState so in-app browsers (Messenger, etc.)
+        // don't close the WebView when back is pressed — hash changes stay on the same page.
+        window.location.hash = 'story-modal';
         storyModalHistoryArmed = true;
       } catch (e) { /* ignore */ }
     }
@@ -317,8 +317,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  window.addEventListener('popstate', () => {
-    if (modal?.open) closeModal(true);
+  window.addEventListener('hashchange', () => {
+    if (storyModalHistoryArmed && window.location.hash !== '#story-modal') closeModal(true);
   });
 
   modalClose?.addEventListener('click', closeModal);
