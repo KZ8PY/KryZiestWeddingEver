@@ -525,7 +525,7 @@
 .bento-grid {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  column-count: 2;
+  columns: 2;
   column-gap: 8px;
   padding: 0 8px;
   margin-top: 1rem;
@@ -533,8 +533,8 @@
 
 .bento-grid picture {
   display: block;
-  margin-bottom: 8px;
   break-inside: avoid;
+  margin-bottom: 8px;
 }
 
 .bento-grid img {
@@ -625,23 +625,23 @@ body.prenup-lightbox-open #prenup .bento-grid img:hover {
 
 @media (min-width: 768px) {
   .bento-grid {
-    column-count: 3;
-    column-gap: 16px;
-    padding: 0 16px;
+    columns: 3;
+    column-gap: 12px;
+    padding: 0 12px;
   }
   .bento-grid picture {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
 }
 
 @media (min-width: 1200px) {
   .bento-grid {
-    column-count: 4;
-    column-gap: 20px;
-    padding: 0 20px;
+    columns: 4;
+    column-gap: 16px;
+    padding: 0 16px;
   }
   .bento-grid picture {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 }
 

@@ -697,6 +697,8 @@ window.addEventListener('DOMContentLoaded', () => {
   (function initPrenupGallery() {
     const grid = document.getElementById('prenup-grid');
     if (!grid) return;
+    const isMobile = window.matchMedia('(max-width: 760px)').matches;
+    const priorityCount = isMobile ? 18 : 10;
 
     const landscapeIds = new Set([
       1, 2, 4, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 26,
@@ -721,9 +723,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
       const picture = document.createElement('picture');
       const img = document.createElement('img');
+      const isPriorityImage = photoId <= priorityCount;
       img.src = `public/images/prnup/${orientation}/prnp${photoId}.jpg`;
       img.alt = `Prenup photo ${photoId}`;
-      img.loading = photoId <= 4 ? 'eager' : 'lazy';
+      // Set intrinsic dimensions so the browser reserves the correct space
+      // before the image loads, preventing column rebalancing mid-scroll.
+      img.width = orientation === 'landscape' ? 1600 : 1067;
+      img.height = orientation === 'landscape' ? 1067 : 1600;
+      img.loading = isPriorityImage ? 'eager' : 'lazy';
+      if (isPriorityImage) {
+        img.fetchPriority = 'high';
+      }
       img.decoding = 'async';
       img.addEventListener('click', () => {
         floatingImagePreview.open(getPreviewImageSrc(img), img.alt);
