@@ -545,7 +545,7 @@
   display: block;
   border: 2px solid var(--color-primary-light);
   box-shadow: 0 4px 12px var(--color-shadow);
-  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), opacity 200ms ease;
 }
 
 .bento-grid img:hover {
@@ -606,6 +606,15 @@
 
 body.prenup-lightbox-open {
   overflow: hidden;
+}
+
+body.prenup-lightbox-open #prenup .bento-grid img {
+  opacity: 0.30;
+}
+
+body.prenup-lightbox-open #prenup .bento-grid img:hover {
+  opacity: 0.30;
+  transform: none;
 }
 
 @media (min-width: 1200px) {

@@ -626,13 +626,22 @@ window.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(lightbox);
 
     const lightboxImage = lightbox.querySelector('.prenup-lightbox-image');
+    let previewHistoryArmed = false;
 
-    const close = () => {
+    const close = (fromHistory = false) => {
+      if (!lightbox.classList.contains('is-open')) return;
       lightbox.classList.remove('is-open');
       lightbox.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('prenup-lightbox-open');
       lightboxImage.src = '';
       lightboxImage.alt = '';
+
+      if (previewHistoryArmed && !fromHistory) {
+        previewHistoryArmed = false;
+        try { window.history.back(); } catch (e) { /* ignore */ }
+      } else {
+        previewHistoryArmed = false;
+      }
     };
 
     const open = (src, alt) => {
@@ -642,6 +651,18 @@ window.addEventListener('DOMContentLoaded', () => {
       lightbox.classList.add('is-open');
       lightbox.setAttribute('aria-hidden', 'false');
       document.body.classList.add('prenup-lightbox-open');
+
+      if (!previewHistoryArmed) {
+        try {
+          const state = (window.history.state && typeof window.history.state === 'object')
+            ? window.history.state
+            : {};
+          window.history.pushState({ ...state, __previewLightbox: true }, '');
+          previewHistoryArmed = true;
+        } catch (e) {
+          previewHistoryArmed = false;
+        }
+      }
     };
 
     lightbox.addEventListener('click', (event) => {
@@ -651,6 +672,12 @@ window.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && lightbox.classList.contains('is-open')) {
         close();
+      }
+    });
+
+    window.addEventListener('popstate', () => {
+      if (lightbox.classList.contains('is-open')) {
+        close(true);
       }
     });
 
