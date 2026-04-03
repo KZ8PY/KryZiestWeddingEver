@@ -2049,6 +2049,87 @@ body.cover-active :not(#evite-cover):not(#evite-cover *) {
   margin-top: 0.5rem;
 }
 
+.welcome-preview-marquee {
+  position: relative;
+  width: calc(100% - 1rem);
+  margin: 0.85rem auto 0;
+  padding: 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.welcome-preview-marquee::after {
+  content: 'Play our wedding song and watch this gallery dance.';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 0 1rem;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: clamp(0.72rem, 2.2vw, 0.94rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-warm-cream);
+  text-shadow: 0 1px 8px rgb(0 0 0 / 45%);
+  background: linear-gradient(180deg, rgb(0 0 0 / 32%), rgb(0 0 0 / 20%));
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.welcome-preview-marquee-rail {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.8vw, 14px);
+  width: max-content;
+  animation: welcomePreviewMarqueeRight 26s linear infinite;
+  animation-play-state: paused;
+  opacity: 0.1;
+  transition: opacity 220ms ease;
+}
+
+.welcome-preview-marquee.is-playing .welcome-preview-marquee-rail {
+  animation-play-state: running;
+  opacity: 1;
+}
+
+.welcome-preview-marquee.is-playing::after {
+  opacity: 0;
+}
+
+.welcome-preview-marquee-item {
+  flex: 0 0 auto;
+  width: auto;
+  height: clamp(96px, 16vw, 150px);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.welcome-preview-marquee-item img {
+  width: auto;
+  height: 100%;
+  display: block;
+}
+
+@keyframes welcomePreviewMarqueeRight {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (max-width: 640px) {
+  .welcome-preview-marquee-item {
+    height: clamp(88px, 24vw, 128px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-preview-marquee-rail {
+    animation: none;
+    transform: none;
+  }
+}
+
 .welcome-panel-song-player audio {
   width: 100%;
   border-radius: 0; /* remove rounded corners */

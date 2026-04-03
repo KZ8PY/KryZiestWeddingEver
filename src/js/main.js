@@ -185,6 +185,72 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   })();
 
+  (function initWelcomePreviewMarquee() {
+    const marquee = document.getElementById('welcomePreviewSlideshow');
+    if (!marquee) return;
+
+    const photoBases = [
+      'prev1',
+      'prev2',
+      'prev3',
+      'prev4',
+      'prev5',
+      'prev6',
+      'prev7'
+    ];
+
+    const rail = document.createElement('div');
+    rail.className = 'welcome-preview-marquee-rail';
+
+    const createItem = (baseName, index, duplicateIndex) => {
+      const picture = document.createElement('picture');
+      picture.className = 'welcome-preview-marquee-item';
+
+      const webpSource = document.createElement('source');
+      webpSource.type = 'image/webp';
+      webpSource.srcset = `public/images/prnup/prev/${baseName}.webp`;
+
+      const img = document.createElement('img');
+      img.src = `public/images/prnup/prev/${baseName}.jpg`;
+      img.alt = `Prenup preview ${index + 1}`;
+      img.loading = duplicateIndex === 0 && index < 3 ? 'eager' : 'lazy';
+      img.decoding = 'async';
+
+      picture.appendChild(webpSource);
+      picture.appendChild(img);
+      return picture;
+    };
+
+    for (let duplicateIndex = 0; duplicateIndex < 2; duplicateIndex += 1) {
+      photoBases.forEach((baseName, index) => {
+        rail.appendChild(createItem(baseName, index, duplicateIndex));
+      });
+    }
+
+    marquee.replaceChildren(rail);
+  })();
+
+  (function syncWelcomeMarqueeWithSong() {
+    const marquee = document.getElementById('welcomePreviewSlideshow');
+    if (!marquee) return;
+
+    const audio = document.querySelector('.welcome-panel-song .site-audio');
+    if (!audio) return;
+
+    const syncState = () => {
+      const isPlaying = !audio.paused && !audio.ended;
+      if (isPlaying) marquee.classList.add('is-playing');
+      else marquee.classList.remove('is-playing');
+    };
+
+    ['play', 'playing', 'pause', 'ended', 'emptied', 'stalled', 'waiting'].forEach((eventName) => {
+      audio.addEventListener(eventName, syncState);
+    });
+
+    document.addEventListener('visibilitychange', syncState);
+    syncState();
+  })();
+
   // Anchor links inside the sidebar: let native hash navigation handle scroll.
   // The browser correctly accounts for scroll-margin-top and content-visibility
   // when navigating to a hash. CSS scroll-behavior: smooth provides animation.
