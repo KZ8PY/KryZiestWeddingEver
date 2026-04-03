@@ -40,20 +40,6 @@
 
 /* @keyframes h2-reveal removed in favor of transition */
 
-@media (prefers-reduced-motion: reduce) {
-  .js .welcome-panel-welcome h2,
-  .js .section h2 {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  
-  .js .welcome-panel-welcome h2.h2-reveal,
-  .js .section h2.h2-reveal {
-    transition: none;
-    opacity: 1;
-    transform: none;
-  }
 }
 
 .underline {

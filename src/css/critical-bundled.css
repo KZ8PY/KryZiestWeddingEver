@@ -716,22 +716,6 @@ h3 {
 
 /* @keyframes h2-reveal removed in favor of transition */
 
-@media (prefers-reduced-motion: reduce) {
-  .js .welcome-panel-welcome h2,
-  .js .section h2 {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  
-  .js .welcome-panel-welcome h2.h2-reveal,
-  .js .section h2.h2-reveal {
-    transition: none;
-    opacity: 1;
-    transform: none;
-  }
-}
-
 .underline {
   position: relative;
 }
@@ -1994,13 +1978,6 @@ body.cover-active :not(#evite-cover):not(#evite-cover *) {
   100% { opacity: 0.55; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .welcome-song-panel::before,
-  .welcome-song-panel::after {
-    animation: none !important;
-  }
-}
-
 .welcome-panel-welcome,
 .welcome-panel-song {
   background: transparent;
@@ -2051,8 +2028,8 @@ body.cover-active :not(#evite-cover):not(#evite-cover *) {
 
 .welcome-preview-marquee {
   position: relative;
-  width: calc(100% - 1rem);
-  margin: 0.85rem auto 0;
+  width: 100%;
+  margin: 0.85rem 0 0;
   padding: 0;
   border-radius: 12px;
   overflow: hidden;
@@ -2100,34 +2077,21 @@ body.cover-active :not(#evite-cover):not(#evite-cover *) {
 
 .welcome-preview-marquee-item {
   flex: 0 0 auto;
-  width: auto;
-  height: clamp(96px, 16vw, 150px);
+  width: clamp(160px, 20vw, 260px);
+  height: auto;
   border-radius: 12px;
   overflow: hidden;
 }
 
 .welcome-preview-marquee-item img {
-  width: auto;
-  height: 100%;
+  width: 100%;
+  height: auto;
   display: block;
 }
 
 @keyframes welcomePreviewMarqueeRight {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
-}
-
-@media (max-width: 640px) {
-  .welcome-preview-marquee-item {
-    height: clamp(88px, 24vw, 128px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .welcome-preview-marquee-rail {
-    animation: none;
-    transform: none;
-  }
 }
 
 .welcome-panel-song-player audio {
