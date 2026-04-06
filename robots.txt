@@ -1,12 +1,2 @@
-# Host-root robots.txt for kz8py.github.io
-# Place this file at the repository root of the user site repo: kz8py/kz8py.github.io
-
 User-agent: *
-Disallow: /
-
-# Optional: prevent image indexing explicitly
-User-agent: Googlebot-Image
-Disallow: /
-
-# Optional crawl-rate hint (not all crawlers honor this)
-Crawl-delay: 10
+Allow: /
