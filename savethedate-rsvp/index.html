@@ -870,20 +870,6 @@
   <script src="../src/js/main.js" defer></script>
   <script src="../src/js/rsvp.js" defer></script>
   <script>
-    // Extra protection to discourage downloading: prevent context menu and set controlsList where supported
-    (function () {
-      const v = document.querySelector('video#std-video');
-      if (!v) return;
-      try {
-        v.controlsList = (v.controlsList && v.controlsList.add) ? undefined : v.getAttribute('controlsList');
-      } catch (e) {
-        // ignore
-      }
-      v.addEventListener('contextmenu', (e) => e.preventDefault());
-      // Disable remote playback APIs if available
-      if ('disableRemotePlayback' in v) v.dlayback = true;
-    })();
-
     // Ensure mobile fullscreen preserves the entire video frame when entering fullscreen.
     (function () {
       const v = document.querySelector('video#std-video');

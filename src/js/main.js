@@ -3,6 +3,82 @@ window.addEventListener('DOMContentLoaded', () => {
   const locationPath = (window.location && window.location.pathname) ? window.location.pathname.toLowerCase() : '';
   const isSaveTheDatePage = locationPath.includes('savethedate-rsvp');
 
+  (function initMediaDeterrent() {
+    const mediaSelector = 'img, video, canvas';
+    const noticeId = 'media-deterrent-notice';
+    let noticeTimer = 0;
+
+    const markMedia = (root) => {
+      if (!(root instanceof Element || root instanceof Document || root instanceof DocumentFragment)) return;
+
+      const mediaNodes = root.matches && root.matches(mediaSelector)
+        ? [root]
+        : Array.from(root.querySelectorAll ? root.querySelectorAll(mediaSelector) : []);
+
+      mediaNodes.forEach((node) => {
+        node.classList.add('media-deterrent-target');
+        node.setAttribute('draggable', 'false');
+
+        if (node.tagName === 'VIDEO') {
+          node.setAttribute('controlsList', 'nodownload noremoteplayback');
+          node.setAttribute('disablePictureInPicture', '');
+          if ('disableRemotePlayback' in node) node.disableRemotePlayback = true;
+        }
+      });
+    };
+
+    const getProtectedMedia = (target) => {
+      if (!(target instanceof Element)) return null;
+      return target.closest(mediaSelector);
+    };
+
+    const showNotice = () => {
+      if (!document.body) return;
+
+      let notice = document.getElementById(noticeId);
+      if (!notice) {
+        notice = document.createElement('div');
+        notice.id = noticeId;
+        notice.className = 'media-deterrent-notice';
+        notice.setAttribute('role', 'status');
+        notice.setAttribute('aria-live', 'polite');
+        notice.textContent = 'Image saving is disabled on this invite.';
+        document.body.appendChild(notice);
+      }
+
+      notice.classList.add('is-visible');
+      window.clearTimeout(noticeTimer);
+      noticeTimer = window.setTimeout(() => {
+        notice.classList.remove('is-visible');
+      }, 1800);
+    };
+
+    document.body.classList.add('media-deterrent-active');
+    markMedia(document);
+
+    document.addEventListener('contextmenu', (event) => {
+      if (!getProtectedMedia(event.target)) return;
+      event.preventDefault();
+      showNotice();
+    }, { capture: true });
+
+    document.addEventListener('dragstart', (event) => {
+      if (!getProtectedMedia(event.target)) return;
+      event.preventDefault();
+      showNotice();
+    }, { capture: true });
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          markMedia(node);
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+
   if (isSaveTheDatePage) {
     document.body.classList.add('page-save-the-date');
   }
