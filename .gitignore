@@ -181,3 +181,7 @@ test-results/
 
 # Heavy raw prenup photos (source-only)
 public/images/prnup/Raw/
+
+# Gift registry source QR images (optimized variants are used in page)
+public/images/gift/qc1-b.png
+public/images/gift/qc2-g.png

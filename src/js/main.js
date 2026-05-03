@@ -16,6 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
         : Array.from(root.querySelectorAll ? root.querySelectorAll(mediaSelector) : []);
 
       mediaNodes.forEach((node) => {
+        if (node.hasAttribute('data-allow-save')) return;
         node.classList.add('media-deterrent-target');
         node.setAttribute('draggable', 'false');
 
@@ -29,7 +30,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const getProtectedMedia = (target) => {
       if (!(target instanceof Element)) return null;
-      return target.closest(mediaSelector);
+        const el = target.closest(mediaSelector);
+        if (el && el.hasAttribute('data-allow-save')) return null;
+        return el;
     };
 
     const showNotice = () => {

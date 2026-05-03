@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <title>Gift Registry | Ziber&Krysha</title>
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="icon" type="image/png" href="../public/images/icons/KZ-Monogram.png">
+  <link rel="alternate icon" href="../public/favicon.ico">
+  <link rel="preload" href="../src/fonts/tan-pearl-converted/TAN-PEARL-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    /* Page-specific header title color */
+    body > header .header-site-title { color: var(--color-bg-alt); }
+    
+    /* Glass panel sizing for the Gift Registry section */
+    #gift-registry {
+      padding: 2.5rem 1.5rem;
+    }
+    
+    #gift-registry h2 {
+      color: var(--color-warm-cream);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-family: var(--font-heading);
+    }
+    
+    /* QR Code panels container */
+    .qr-panels-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+    }
+    
+    /* Individual QR code panel */
+    .qr-panel {
+      padding: 2rem 1.6rem;
+      border-radius: calc(var(--border-radius) + 2px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      backdrop-filter: blur(10px) saturate(1.05);
+      -webkit-backdrop-filter: blur(10px) saturate(1.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 10px 30px rgba(18,25,30,0.16);
+      color: var(--color-coffee-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .qr-panel h3 {
+      color: var(--color-warm-cream);
+      margin-bottom: 0;
+      font-size: 1.5rem;
+      font-family: var(--font-tan-pearl);
+      font-weight: 600;
+    }
+    
+    .qr-panel img {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .qr-download-btn {
+      margin-top: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .qr-download-btn svg {
+      width: 0.95rem;
+      height: 0.95rem;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    
+    /* Gift Registry form container */
+    .gift-registry-form-container {
+      max-width: 520px;
+      margin: 0 auto;
+      margin-bottom: 8vh;
+    }
+    
+    /* Gift form */
+    .gift-form {
+      padding: 2rem 1.6rem;
+      border-radius: calc(var(--border-radius) + 2px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      backdrop-filter: blur(10px) saturate(1.05);
+      -webkit-backdrop-filter: blur(10px) saturate(1.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 10px 30px rgba(18,25,30,0.16);
+      color: var(--color-coffee-dark);
+    }
+    
+    .form-group {
+      margin-bottom: 1.4rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--color-warm-cream);
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+    
+    /* Input styling */
+    .form-group input[type="text"],
+    .form-group textarea {
+      width: 100%;
+      padding: 0 1.25rem;
+      border-radius: 25px;
+      font-size: 1rem;
+      background: linear-gradient(180deg, var(--color-warm-cream), rgba(250,247,238,0.96));
+      border: 1.5px solid rgba(var(--color-primary-light-rgb), 0.42);
+      font-family: var(--font-tan-pearl);
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+      box-sizing: border-box;
+      color: var(--color-coffee-dark);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.09), inset 0 2px 0 rgba(255,255,255,0.7);
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .form-group input[type="text"] {
+      height: 50px;
+      line-height: 50px;
+    }
+    
+    .form-group input::placeholder {
+      color: rgba(74,44,42,0.45);
+      opacity: 1;
+      font-family: var(--font-tan-pearl);
+      font-size: 1rem;
+      transform: translateY(0.5px);
+    }
+    
+    .form-group input[type="text"]:focus {
+      outline: none;
+      border-color: rgba(var(--color-primary-rgb),0.55);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12), 0 0 0 6px rgba(var(--color-primary-rgb),0.06);
+      background: linear-gradient(180deg, var(--color-warm-cream), rgba(250,248,240,0.98));
+    }
+    
+    /* Textarea for message field */
+    .form-group textarea {
+      min-height: 120px;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.5;
+      resize: vertical;
+    }
+    
+    .form-group textarea::placeholder {
+      color: rgba(74,44,42,0.45);
+      opacity: 1;
+      font-family: var(--font-tan-pearl);
+      font-size: 0.75rem;
+    }
+    
+    .form-group textarea:focus {
+      outline: none;
+      border-color: rgba(var(--color-primary-rgb),0.55);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12), 0 0 0 6px rgba(var(--color-primary-rgb),0.06);
+      background: linear-gradient(180deg, var(--color-warm-cream), rgba(250,248,240,0.98));
+    }
+    
+    /* Form actions */
+    .gift-card .form-actions {
+      margin-top: 1.8rem;
+    }
+    
+    .form-actions button {
+      width: 100%;
+      height: 50px;
+      padding: 0 1rem;
+      border-radius: 25px;
+      background: var(--color-warm-cream);
+      color: var(--color-coffee-dark);
+      font-weight: 600;
+      border: 1px solid rgba(0,0,0,0.06);
+      font-family: var(--font-tan-pearl);
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow var(--transition);
+      box-shadow: 0 8px 20px rgba(18, 25, 30, 0.12);
+    }
+    
+    .form-actions button:hover:not(:disabled) {
+      background: var(--color-coffee);
+      color: var(--color-white);
+      box-shadow: var(--box-shadow);
+      transform: translateY(-2px);
+    }
+    
+    .form-actions button:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    
+    .form-actions button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      background: var(--color-primary-light);
+    }
+    
+    /* Form messages */
+    .form-message {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      text-align: center;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--color-warm-cream);
+      display: none;
+    }
+    
+    .form-message.show {
+      display: block;
+    }
+    
+    .form-message.success {
+      background: rgba(93, 107, 77, 0.4);
+      border: 1px solid var(--color-primary-dark);
+      color: var(--color-warm-cream);
+    }
+    
+    .form-message.error {
+      background: rgba(139, 0, 0, 0.35);
+      border: 1px solid rgba(139, 0, 0, 0.5);
+    }
+    
+    /* Make links inside form messages match surrounding text but underline to show they're links */
+    .form-message a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+    }
+    
+    /* Remove default focus/tap highlights */
+    .form-actions button,
+    .form-actions button * {
+      -webkit-tap-highlight-color: transparent !important;
+      -moz-tap-highlight-color: transparent !important;
+      touch-action: manipulation;
+      outline: none !important;
+    }
+    
+    .form-actions button:focus,
+    .form-actions button:active {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* Keyboard focus state */
+    .form-actions button:focus-visible {
+      outline: 2px solid rgba(var(--color-primary-rgb), 0.18);
+      outline-offset: 4px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .qr-panel {
+        padding: 1.5rem 1.2rem;
+      }
+      
+      .gift-form {
+        padding: 1.5rem 1.2rem;
+      }
+      
+      #gift-registry {
+        padding: 2rem 1rem;
+      }
+    }
+    
+    /* Page-specific: ensure the site title in the header matches the milk-cream background tone */
+    body > header > div > h1 { color: var(--color-bg-alt); }
+    
+    /* Home floating button */
+    .floating-home-group {
+      position: fixed;
+      top: 0.8rem;
+      left: 0.8rem;
+      display: flex;
+      align-items: center;
+      background: var(--color-card-bg-alt);
+      border-radius: 1.5rem;
+      box-shadow: 0 2px 12px 0 var(--color-subtle-shadow);
+      padding: 0.21rem 0.49rem;
+      z-index: 3000;
+      gap: 0.35rem;
+      transition: all 260ms cubic-bezier(.2,.9,.3,1);
+      pointer-events: auto;
+    }
+
+    .home-icon-btn {
+      background: none;
+      border: 0;
+      padding: 0;
+      width: 2.2rem;
+      height: 2.2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      pointer-events: auto;
+      position: relative;
+      z-index: 3100;
+    }
+
+    .home-icon-btn:hover {
+      cursor: pointer;
+    }
+
+    .home-icon-btn img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: transform 800ms cubic-bezier(.2,.9,.3,1);
+    }
+
+    .home-icon-btn:hover img {
+      transform: scale(1.1);
+    }
+  </style>
+
+  <!-- Page stylesheet links -->
+  <link rel="stylesheet" href="../src/css/variables.css">
+  <link rel="stylesheet" href="../src/css/base.css">
+  <link rel="stylesheet" href="../src/css/layout.css">
+  <link rel="stylesheet" href="../src/css/components/hero.css">
+  <link rel="stylesheet" href="../src/css/animations.css">
+  <link rel="stylesheet" href="../src/css/components/sidebar.css">
+  <link rel="stylesheet" href="../src/css/components/glass.css">
+
+</head>
+
+<body>
+  <!-- Floating home button -->
+  <div class="floating-home-group">
+    <a href="../#home" class="home-icon-btn" aria-label="Return to home page">
+      <img src="../public/images/icons/home.svg" alt="Home" aria-hidden="true">
+    </a>
+  </div>
+
+  <header class="sticky-header latte-frame site-header" role="banner">
+    <div class="header-brand">
+      <h1 class="header-site-title">Ziber &amp;Krysha</h1>
+    </div>
+  </header>
+
+  <main>
+    <section id="gift-registry" class="section" aria-label="Gift Registry">
+      <h2>Gift Registry</h2>
+      
+      <!-- QR Code Panels -->
+      <div class="qr-panels-container">
+        <!-- BPI QR Code -->
+        <div class="qr-panel">
+          <h3>BPI</h3>
+          <picture>
+            <source srcset="../public/images/gift/qc1.webp" type="image/webp">
+              <img src="../public/images/gift/qc1-opt.png" alt="BPI InstaPay QR Code" loading="lazy" width="360" height="360" data-allow-save>
+          </picture>
+            <a href="../public/images/gift/qc1-opt.png" download="BPI-QR-KZWedding.png" class="contact-action qr-download-btn" aria-label="Download BPI QR Code">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 4v10"></path>
+                <path d="m7 11 5 5 5-5"></path>
+                <path d="M5 20h14"></path>
+              </svg>
+              <span>Download QR</span>
+            </a>
+        </div>
+
+        <!-- GoTyme QR Code -->
+        <div class="qr-panel">
+          <h3>GoTyme</h3>
+          <picture>
+            <source srcset="../public/images/gift/qc2.webp" type="image/webp">
+              <img src="../public/images/gift/qc2-opt.png" alt="GoTyme InstaPay QR Code" loading="lazy" width="667" height="667" data-allow-save>
+          </picture>
+            <a href="../public/images/gift/qc2-opt.png" download="GoTyme-QR-KZWedding.png" class="contact-action qr-download-btn" aria-label="Download GoTyme QR Code">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 4v10"></path>
+                <path d="m7 11 5 5 5-5"></path>
+                <path d="M5 20h14"></path>
+              </svg>
+              <span>Download QR</span>
+            </a>
+        </div>
+      </div>
+      
+      <!-- Gift Message Form -->
+      <div class="gift-registry-form-container">
+        <form class="gift-form" novalidate>
+          <div class="form-group">
+            <label for="name">From:</label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              placeholder="Anonymous" 
+              aria-label="Your name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea 
+              id="message" 
+              name="message" 
+              placeholder="Share your thoughts, heartfelt prayers, or well wishes..."
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="submit-btn">
+              Submit
+            </button>
+          </div>
+
+          <div class="form-message" role="alert" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Ziber & Krysha. All rights reserved.</p>
+    <p>All Glory to God, and our savior Jesus Christ!</p>
+  </footer>
+
+  <script src="../src/js/main.js" defer></script>
+  <script src="../src/js/gift-registry.js" defer></script>
+
+</body>
+
+</html>

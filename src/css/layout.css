@@ -349,6 +349,34 @@
   transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
 }
 
+/* Gift Registry button */
+.gift-registry-btn {
+  display: inline-block;
+  padding: 0.85rem 1.1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-card-bg);
+  color: inherit;
+  font-size: 14px;
+  text-decoration: none;
+  box-shadow: none;
+  transition: transform 120ms ease, box-shadow 140ms ease, color 120ms ease, background 120ms ease;
+  cursor: pointer;
+}
+
+.gift-registry-btn:hover {
+  background: var(--color-bg-alt);
+  transform: translateY(-1px);
+  color: var(--color-coffee-dark);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.gift-registry-btn:focus,
+.gift-registry-btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
 .maps-btn svg {
   width: 1.1rem;
   height: 1.1rem;
