@@ -72,7 +72,14 @@
       margin-top: 0.75rem;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.45rem;
+    }
+
+    .qr-download-btn[disabled] {
+      opacity: 0.7;
+      cursor: wait;
+      transform: none;
     }
 
     .qr-download-btn svg {
@@ -89,7 +96,7 @@
     .gift-registry-form-container {
       max-width: 520px;
       margin: 0 auto;
-      margin-bottom: 8vh;
+      margin-bottom: 2rem;
     }
     
     /* Gift form */
@@ -366,63 +373,26 @@
   <main>
     <section id="gift-registry" class="section" aria-label="Gift Registry">
       <h2>Gift Registry</h2>
-      
-      <!-- QR Code Panels -->
-      <div class="qr-panels-container">
-        <!-- BPI QR Code -->
-        <div class="qr-panel">
-          <h3>BPI</h3>
-          <picture>
-            <source srcset="../public/images/gift/qc1.webp" type="image/webp">
-              <img src="../public/images/gift/qc1-opt.png" alt="BPI InstaPay QR Code" loading="lazy" width="360" height="360" data-allow-save>
-          </picture>
-            <a href="../public/images/gift/qc1-opt.png" download="BPI-QR-KZWedding.png" class="contact-action qr-download-btn" aria-label="Download BPI QR Code">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M12 4v10"></path>
-                <path d="m7 11 5 5 5-5"></path>
-                <path d="M5 20h14"></path>
-              </svg>
-              <span>Download QR</span>
-            </a>
-        </div>
 
-        <!-- GoTyme QR Code -->
-        <div class="qr-panel">
-          <h3>GoTyme</h3>
-          <picture>
-            <source srcset="../public/images/gift/qc2.webp" type="image/webp">
-              <img src="../public/images/gift/qc2-opt.png" alt="GoTyme InstaPay QR Code" loading="lazy" width="667" height="667" data-allow-save>
-          </picture>
-            <a href="../public/images/gift/qc2-opt.png" download="GoTyme-QR-KZWedding.png" class="contact-action qr-download-btn" aria-label="Download GoTyme QR Code">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M12 4v10"></path>
-                <path d="m7 11 5 5 5-5"></path>
-                <path d="M5 20h14"></path>
-              </svg>
-              <span>Download QR</span>
-            </a>
-        </div>
-      </div>
-      
       <!-- Gift Message Form -->
       <div class="gift-registry-form-container">
         <form class="gift-form" novalidate>
           <div class="form-group">
             <label for="name">From:</label>
-            <input 
-              type="text" 
-              id="name" 
-              name="name" 
-              placeholder="Anonymous" 
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Anonymous"
               aria-label="Your name"
             />
           </div>
 
           <div class="form-group">
             <label for="message">Message:</label>
-            <textarea 
-              id="message" 
-              name="message" 
+            <textarea
+              id="message"
+              name="message"
               placeholder="Share your thoughts, heartfelt prayers, or well wishes..."
               rows="3"
             ></textarea>
@@ -436,6 +406,78 @@
 
           <div class="form-message" role="alert" aria-live="polite"></div>
         </form>
+      </div>
+      
+      <!-- QR Code Panels -->
+      <div class="qr-panels-container">
+        <!-- BPI QR Code -->
+        <div class="qr-panel">
+          <h3>BPI</h3>
+          <picture>
+            <source srcset="../public/images/gift/qc1.webp" type="image/webp">
+            <img src="../public/images/gift/qc1-opt.png" alt="BPI InstaPay QR Code" loading="lazy" width="360" height="360" data-allow-save>
+          </picture>
+          <button
+            type="button"
+            class="contact-action qr-download-btn"
+            data-download-src="../public/images/gift/qc1-opt.png"
+            data-download-filename="BPI-QR-KZWedding.png"
+            aria-label="Download BPI QR Code"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 3v11"></path>
+              <path d="m7.5 10.5 4.5 4.5 4.5-4.5"></path>
+              <path d="M4 18.5h16"></path>
+            </svg>
+            <span class="qr-download-label">Download QR</span>
+          </button>
+        </div>
+
+        <!-- GoTyme QR Code -->
+        <div class="qr-panel">
+          <h3>GoTyme</h3>
+          <picture>
+            <source srcset="../public/images/gift/qc2.webp" type="image/webp">
+            <img src="../public/images/gift/qc2-opt.png" alt="GoTyme InstaPay QR Code" loading="lazy" width="667" height="667" data-allow-save>
+          </picture>
+          <button
+            type="button"
+            class="contact-action qr-download-btn"
+            data-download-src="../public/images/gift/qc2-opt.png"
+            data-download-filename="GoTyme-QR-KZWedding.png"
+            aria-label="Download GoTyme QR Code"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 3v11"></path>
+              <path d="m7.5 10.5 4.5 4.5 4.5-4.5"></path>
+              <path d="M4 18.5h16"></path>
+            </svg>
+            <span class="qr-download-label">Download QR</span>
+          </button>
+        </div>
+
+        <!-- GCash QR Code -->
+        <div class="qr-panel">
+          <h3>GCash</h3>
+          <picture>
+            <source srcset="../public/images/gift/qc3.webp" type="image/webp">
+            <img src="../public/images/gift/qc3-opt.jpg" alt="GCash QR Code" loading="lazy" width="397" height="397" data-allow-save>
+          </picture>
+          <button
+            type="button"
+            class="contact-action qr-download-btn"
+            data-download-src="../public/images/gift/qc3-opt.jpg"
+            data-download-filename="GCash-QR-KZWedding.jpg"
+            aria-label="Download GCash QR Code"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 3v11"></path>
+              <path d="m7.5 10.5 4.5 4.5 4.5-4.5"></path>
+              <path d="M4 18.5h16"></path>
+            </svg>
+            <span class="qr-download-label">Download QR</span>
+          </button>
+        </div>
       </div>
     </section>
   </main>

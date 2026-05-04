@@ -4,11 +4,64 @@
 
 window.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('.gift-form');
-  if (!form) return;
+  const downloadButtons = Array.from(document.querySelectorAll('.qr-download-btn[data-download-src]'));
+  if (!form && downloadButtons.length === 0) return;
   
   // Google Apps Script Web App URL
   // TODO: Update this with the deployed Google Apps Script URL
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby3TkEgqeSni7nYSOrGH_wgvbqsjx7MGGJ8FuVmn_KDRRco2lyMfo6DKak7d8ISdchyEw/exec';
+
+  async function triggerQrDownload(button) {
+    const source = button.dataset.downloadSrc;
+    const filename = button.dataset.downloadFilename || 'qr-code';
+    const label = button.querySelector('.qr-download-label');
+    const originalLabel = label ? label.textContent : button.textContent;
+
+    button.disabled = true;
+    button.setAttribute('aria-busy', 'true');
+    if (label) label.textContent = 'Preparing...';
+
+    try {
+      const assetUrl = new URL(source, window.location.href);
+      const response = await fetch(assetUrl.href, { cache: 'force-cache' });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+
+      link.href = blobUrl;
+      link.download = filename;
+      link.rel = 'noopener';
+      link.style.display = 'none';
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      window.setTimeout(() => {
+        window.URL.revokeObjectURL(blobUrl);
+      }, 1000);
+    } catch (error) {
+      console.error('QR download error:', error);
+      window.open(source, '_blank', 'noopener');
+    } finally {
+      button.disabled = false;
+      button.removeAttribute('aria-busy');
+      if (label) label.textContent = originalLabel;
+    }
+  }
+
+  downloadButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      triggerQrDownload(button);
+    });
+  });
+
+  if (!form) return;
 
   /**
    * Show message to user
