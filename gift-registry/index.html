@@ -76,6 +76,33 @@
       gap: 0.45rem;
     }
 
+    .qr-actions {
+      margin-top: 0.75rem;
+      display: flex;
+      gap: 0.55rem;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .qr-actions .contact-action {
+      margin-top: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .qr-details-btn svg {
+      width: 0.95rem;
+      height: 0.95rem;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     .qr-download-btn[disabled] {
       opacity: 0.7;
       cursor: wait;
@@ -427,20 +454,35 @@
             <source srcset="../public/images/gift/qc1.webp" type="image/webp">
             <img src="../public/images/gift/qc1-opt.png" alt="BPI InstaPay QR Code" loading="lazy" width="360" height="360" data-allow-save>
           </picture>
-          <button
-            type="button"
-            class="contact-action qr-download-btn"
-            data-download-src="../public/images/gift/qc1-opt.png"
-            data-download-filename="BPI-QR-KZWedding.png"
-            aria-label="Download BPI QR Code"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M12 3v11"></path>
-              <path d="m7.5 10.5 4.5 4.5 4.5-4.5"></path>
-              <path d="M4 18.5h16"></path>
-            </svg>
-            <span class="qr-download-label">Download QR</span>
-          </button>
+          <div class="qr-actions">
+            <button
+              type="button"
+              class="contact-action qr-details-btn"
+              data-account-bank="BPI"
+              aria-label="Show BPI account details"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="3.5" y="6" width="17" height="12" rx="2"></rect>
+                <path d="M8 15h4"></path>
+                <path d="M14.5 15h1.5"></path>
+              </svg>
+              <span class="account-details-label">Bank Details</span>
+            </button>
+            <button
+              type="button"
+              class="contact-action qr-download-btn"
+              data-download-src="../public/images/gift/qc1-opt.png"
+              data-download-filename="BPI-QR-KZWedding.png"
+              aria-label="Download BPI QR Code"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 3v11"></path>
+                <path d="m7.5 10.5 4.5 4.5 4.5-4.5"></path>
+                <path d="M4 18.5h16"></path>
+              </svg>
+              <span class="qr-download-label">Download QR</span>
+            </button>
+          </div>
         </div>
 
         <!-- GoTyme QR Code -->

@@ -13,6 +13,9 @@
  * 8. Click: Deploy
  * 9. Copy the Web App URL (it will look like https://script.google.com/macros/s/ABC123.../exec)
  * 10. Update the SCRIPT_URL in src/js/gift-registry.js with this URL
+ * 11. In Apps Script: Project Settings -> Script properties, add:
+ *     - BPI_ACCOUNT_NAME
+ *     - BPI_ACCOUNT_NUMBER
  * 
  * SPREADSHEET STRUCTURE:
  * The script will look for a spreadsheet named "KZ Gift Registry" in your Google Drive
@@ -22,6 +25,10 @@
  * Column A: From
  * Column B: Message
  * Column C: Timestamp
+ * 
+ * The script also creates/uses:
+ * Sheet name: "AccountDetailViews"
+ * Columns: Timestamp, Bank, ClientId, UserAgent, PagePath, Result
  * 
  * USAGE:
  * The form will POST data in this format:
@@ -34,37 +41,25 @@
 
 function doPost(e) {
   try {
-    // Parse the incoming POST data
-    var data = JSON.parse(e.postData.contents);
-    
+    var data = JSON.parse(e.postData.contents || '{}');
+
+    if (data.action === 'getAccountDetails') {
+      return handleAccountDetailsRequest(data);
+    }
+
     // Validate required fields
     if (!data.from || !data.message) {
-      return ContentService.createTextOutput(
-        JSON.stringify({
-          status: 'error',
-          message: 'Missing required fields: from or message'
-        })
-      ).setMimeType(ContentService.MimeType.JSON);
+      return asJson({
+        status: 'error',
+        message: 'Missing required fields: from or message'
+      });
     }
-    
-    // Get the active spreadsheet
+
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheetName = 'Messages';
-    
-    // Try to get the sheet, create if it doesn't exist
-    var sheet = ss.getSheetByName(sheetName);
-    if (!sheet) {
-      sheet = ss.insertSheet(sheetName);
-      // Add headers
-      sheet.getRange(1, 1, 1, 3).setValues([['From', 'Message', 'Timestamp']]);
-    }
-    
-    // Get the last row and append the new data
-    var lastRow = sheet.getLastRow();
-    var newRow = lastRow + 1;
-    
-    // Format timestamp to readable format
-    var timestamp = new Date(data.timestamp).toLocaleString('en-US', {
+    var sheet = getOrCreateSheet(ss, 'Messages', [['From', 'Message', 'Timestamp']]);
+
+    var newRow = sheet.getLastRow() + 1;
+    var timestamp = new Date(data.timestamp || new Date().toISOString()).toLocaleString('en-US', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
@@ -73,35 +68,105 @@ function doPost(e) {
       second: '2-digit',
       hour12: true
     });
-    
-    // Append the new entry
-    sheet.getRange(newRow, 1, 1, 3).setValues([
-      [
-        data.from,
-        data.message,
-        timestamp
-      ]
-    ]);
-    
-    // Return success response
-    return ContentService.createTextOutput(
-      JSON.stringify({
-        status: 'success',
-        message: 'Gift registry message added successfully',
-        row: newRow
-      })
-    ).setMimeType(ContentService.MimeType.JSON);
-    
+
+    sheet.getRange(newRow, 1, 1, 3).setValues([[data.from, data.message, timestamp]]);
+
+    return asJson({
+      status: 'success',
+      message: 'Gift registry message added successfully',
+      row: newRow
+    });
   } catch (error) {
     Logger.log('Error in doPost: ' + error.toString());
-    
-    return ContentService.createTextOutput(
-      JSON.stringify({
-        status: 'error',
-        message: 'Server error: ' + error.toString()
-      })
-    ).setMimeType(ContentService.MimeType.JSON);
+    return asJson({
+      status: 'error',
+      message: 'Server error: ' + error.toString()
+    });
   }
+}
+
+function handleAccountDetailsRequest(data) {
+  var bank = String(data.bank || '').toUpperCase();
+  var clientId = String(data.clientId || '').trim();
+  var userAgent = String(data.userAgent || '').slice(0, 200);
+  var pagePath = String(data.pagePath || '').slice(0, 100);
+
+  if (!bank) {
+    return asJson({ status: 'error', message: 'Missing bank.' });
+  }
+
+  if (!clientId || clientId.length < 8) {
+    return asJson({ status: 'error', message: 'Client validation failed.' });
+  }
+
+  var cache = CacheService.getScriptCache();
+  var rateKey = 'acct:' + clientId + ':' + bank;
+  if (cache.get(rateKey)) {
+    return asJson({
+      status: 'error',
+      message: 'Please wait a few seconds before requesting account details again.'
+    });
+  }
+  cache.put(rateKey, '1', 20);
+
+  var props = PropertiesService.getScriptProperties();
+  var accountName = props.getProperty(bank + '_ACCOUNT_NAME');
+  var accountNumber = props.getProperty(bank + '_ACCOUNT_NUMBER');
+
+  if (!accountName || !accountNumber) {
+    logAccountLookup(bank, clientId, userAgent, pagePath, 'missing-config');
+    return asJson({
+      status: 'error',
+      message: 'Bank details are not configured yet. Please try again later.'
+    });
+  }
+
+  logAccountLookup(bank, clientId, userAgent, pagePath, 'success');
+  return asJson({
+    status: 'success',
+    data: {
+      bank: bank,
+      accountName: accountName,
+      accountNumber: accountNumber
+    }
+  });
+}
+
+function logAccountLookup(bank, clientId, userAgent, pagePath, result) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = getOrCreateSheet(
+      ss,
+      'AccountDetailViews',
+      [['Timestamp', 'Bank', 'ClientId', 'UserAgent', 'PagePath', 'Result']]
+    );
+
+    sheet.appendRow([
+      new Date(),
+      bank,
+      clientId,
+      userAgent,
+      pagePath,
+      result
+    ]);
+  } catch (error) {
+    Logger.log('Failed to log account lookup: ' + error.toString());
+  }
+}
+
+function getOrCreateSheet(ss, sheetName, headerValues) {
+  var sheet = ss.getSheetByName(sheetName);
+  if (!sheet) {
+    sheet = ss.insertSheet(sheetName);
+    sheet.getRange(1, 1, 1, headerValues[0].length).setValues(headerValues);
+  }
+  return sheet;
+}
+
+function asJson(payload) {
+  return ContentService
+    .createTextOutput(JSON.stringify(payload))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 /**
