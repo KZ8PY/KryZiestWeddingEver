@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <title>Guest Seats | Ziber&Krysha</title>
+  <link rel="icon" type="image/png" href="../public/images/icons/KZ-Monogram.png">
+  <link rel="alternate icon" href="../public/favicon.ico">
+  <link rel="preload" href="../src/fonts/tan-pearl-converted/TAN-PEARL-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="../src/css/variables.css">
+  <link rel="stylesheet" href="../src/css/base.css">
+  <link rel="stylesheet" href="../src/css/layout.css">
+  <link rel="stylesheet" href="../src/css/components/hero.css">
+  <link rel="stylesheet" href="../src/css/animations.css">
+  <link rel="stylesheet" href="../src/css/components/sidebar.css">
+  <link rel="stylesheet" href="../src/css/components/glass.css">
+  <link rel="stylesheet" href="../src/css/components/guest-seats.css?v=20260506k">
+</head>
+
+<body>
+  <!-- Floating home button -->
+  <div class="floating-home-group">
+    <a href="../#home" class="home-icon-btn" aria-label="Return to home page">
+      <img src="../public/images/icons/home.svg" alt="Home" aria-hidden="true">
+    </a>
+  </div>
+
+  <header class="sticky-header latte-frame site-header" role="banner">
+    <div class="header-brand">
+      <h1 class="header-site-title">Ziber &amp;Krysha</h1>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section id="guest-seats" class="fade-in section" aria-label="Find your assigned table">
+      <div class="guest-seats-layout" id="guestSeatsShell">
+      <h2 class="guest-seats-page-title">Your Table</h2>
+
+      <div class="guest-seats-card frosted-panel std-glass">
+        <p class="guest-seats-sub">Type your name and choose from the suggestions to quickly locate your table.</p>
+
+        <form class="seat-form" id="seatLookupForm" novalidate>
+          <div class="combo-wrap">
+            <input
+              id="guestNameInput"
+              class="seat-input"
+              type="text"
+              autocomplete="off"
+              placeholder="Start typing your name"
+              role="combobox"
+              aria-expanded="false"
+              aria-controls="guestSuggestions"
+              aria-autocomplete="list"
+              aria-describedby="seatLookupMessage"
+              required
+            >
+            <ul class="seat-suggestions" id="guestSuggestions" role="listbox" hidden></ul>
+          </div>
+          <p class="seat-inline-message" id="seatLookupMessage" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <article class="seat-result frosted-panel std-glass" id="seatResultCard" aria-live="polite">
+        <h3 id="seatResultHeading">Welcome!</h3>
+        <p class="seat-result-intro" id="seatResultIntro">Your table is</p>
+        <p class="seat-table-badge" id="seatTableName">TBA</p>
+        <p class="seat-result-outro" id="seatWelcomeMessage">We cannot wait to celebrate with you!</p>
+        <p class="important-note">Kindly claim your giveaways from Ms. Mel's team.</p>
+
+        <div class="result-actions">
+          <a class="seat-cta primary" href="../#home">Go to e-vite</a>
+          <a class="seat-cta" id="tableLocationLink" href="./table-location/">View table location</a>
+        </div>
+      </article>
+
+      </div>
+    </section>
+  </main>
+
+  <script src="../src/js/main.js" defer></script>
+  <script src="../src/js/guest-seats.js?v=20260506k" defer></script>
+</body>
+</html>
