@@ -9,7 +9,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const resultIntro = document.getElementById('seatResultIntro');
   const tableNameBadge = document.getElementById('seatTableName');
   const welcomeMessage = document.getElementById('seatWelcomeMessage');
-  const tableLocationLink = document.getElementById('tableLocationLink');
 
   if (!form || !nameInput || !suggestionsList || !resultCard || !shell) {
     return;
@@ -221,7 +220,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function revealResult(guestName, tableName, layoutImage) {
+  function revealResult(guestName, tableName) {
     const firstName = getFirstName(guestName);
     if (resultHeading) {
       resultHeading.textContent = `Welcome ${firstName}`;
@@ -234,11 +233,6 @@ window.addEventListener('DOMContentLoaded', () => {
       tableNameBadge.setAttribute('data-table-theme', getTableTheme(tableName));
     }
     welcomeMessage.textContent = 'We cannot wait to celebrate with you!';
-
-    const tableParam = encodeParam(tableName);
-    const guestParam = encodeParam(guestName);
-    const imageParam = encodeParam(layoutImage || '');
-    tableLocationLink.href = `./table-location/?table=${tableParam}&guest=${guestParam}&image=${imageParam}`;
 
     shell.classList.add('has-result');
     resultCard.classList.add('show');
@@ -279,7 +273,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       const tableName = data.tableName || 'TBA';
-      revealResult(data.guestName || name, tableName, data.layoutImage || '');
+      revealResult(data.guestName || name, tableName);
       setMessage('Table found. ☕', 'success');
     } catch (error) {
       setMessage(getNetworkErrorMessage(), 'error');
